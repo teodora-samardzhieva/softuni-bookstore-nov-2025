@@ -8,7 +8,7 @@ export default function Header({ user }) {
 
   const navigation = [
     { name: "Home", href: "/" },
-    { name: "Catalog", href: "/catalog" },
+    { name: "Catalog", href: "/books" },
   ];
 
   if (!user) {

@@ -25,7 +25,7 @@ export default function Home() {
           </p>
           <div className="hidden sm:mb-8 sm:flex sm:justify-center mt-20">
             <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 hover:bg-[#9089fc]">
-              <Link to="/catalog" className="text-sm/6 font-semibold text-gray-900">
+              <Link to="/books" className="text-sm/6 font-semibold text-gray-900">
               See our book collection <span aria-hidden="true">→</span>
               </Link>
             </div>

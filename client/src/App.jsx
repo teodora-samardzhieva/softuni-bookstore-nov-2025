@@ -9,7 +9,7 @@ import FavoriteBooks from "./components/favoriteBooks/FavoriteBooks.jsx";
 import AuthGuard from "./components/routes/RouteGuard.jsx";
 import Catalog from "./components/catalog/Catalog.jsx";
 import Footer from "./components/footer/Footer.jsx";
-import CreateBook from "./components/create/createBook.jsx";
+import CreateBook from "./components/create/CreateBook.jsx";
 
 import "tw-elements";
 // import "tw-elements/dist/tw-elements.umd.min.js";
@@ -89,7 +89,7 @@ function App() {
           element={<Register onSubmit={registerSubmitHandler} />}
         />
         <Route 
-          path="/catalog"
+          path="/books"
           element={<Catalog />}
         />
 
