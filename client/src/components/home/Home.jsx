@@ -97,7 +97,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="hidden sm:mb-8 sm:flex sm:justify-center">
+          <div className="hidden sm:mb-8 sm:flex sm:justify-center mt-10">
             <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 hover:bg-[#9089fc]">
               <Link
                 to="/books"

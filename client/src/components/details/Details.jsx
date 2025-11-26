@@ -1,28 +1,40 @@
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router";
+
 export default function Details() {
-    // Placeholder data for demonstration
-    const book = {
-        title: "The Silent Watcher",
-        author: "Anya Kirov",
-        genre: "Mystery / Thriller",
-        releaseDate: "2024-05-15",
-        summary: "A thrilling tale of a detective investigating a series of seemingly unrelated disappearances, only to uncover a conspiracy reaching the highest levels of government. The summary should be long enough to wrap multiple lines.",
-        imageUrl: "https://via.placeholder.com/150x220?text=Book+Cover",
-    };
+    const {bookId} = useParams();
+    const [book, setBook] = useState();
+
+    useEffect(() => {
+        fetch(`http://localhost:3030/jsonstore/books/${bookId}`)
+            .then(response => response.json())
+            .then(result => setBook(result))
+            .catch(err => alert(err.message));
+    }, [bookId]);
+
+        // ⛑ FIX: prevent crash
+    if (!book) {
+        return (
+            <div className="flex justify-center p-10 text-lg font-semibold">
+                Loading book details...
+            </div>
+        );
+    }
 
     return (
-        <div className="flex justify-center p-8 max-h-screen mt-30">
+        <div className="flex justify-center p-8 min-h-screen mt-30">
             <div className="flex flex-col md:flex-row max-w-3xl w-full bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl">
                 
-                {/* 🖼️ Image Section (Left on Desktop, Top on Mobile) */}
-                <div className="flex-shrink-0 md:w-1/3">
+                {/* Image Section (Left on Desktop, Top on Mobile) */}
+                <div className="flex flex-col items-center justify-center flex-shrink-0 md:w-1/3 p-4">
                     <img
-                        className="object-cover w-full h-96 md:h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
-                        src={book.imageUrl}
+                        className="w-full max-w-48 h-60 md:h-80 rounded-lg shadow-lg"
+                        src={book.img}
                         alt={`Cover of ${book.title}`}
                     />
                 </div>
 
-                {/* 📝 Content Section */}
+                {/* Content Section */}
                 <div className="flex flex-col justify-start p-6 md:p-10 md:w-2/3">
                     
                     {/* Title */}
@@ -51,14 +63,21 @@ export default function Details() {
                         </p>
                     </div>
                     
+                    {/* //TODO: Check if has user */}
                     {/* Action Button */}
                     <div className="mt-10">
-                        <button
-                            type="button"
+                        <Link
+                            to='/books'
                             className="inline-flex items-center w-full md:w-auto justify-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium text-base px-6 py-3 transition duration-150"
                         >
-                            Close Details
-                        </button>
+                            Edit
+                        </Link>
+                        <Link
+                            to='/books'
+                            className="inline-flex items-center w-full md:w-auto justify-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium text-base px-6 py-3 transition duration-150 ml-10"
+                        >
+                            Delete
+                        </Link>
                     </div>
                 </div>
             </div>
