@@ -26,10 +26,6 @@ export default function BookGrid() {
     })();
   }, []);
 
-  // const onDetails = (bookId) => {
-  //   navigate(`/books/${bookId}`);
-  // };
-
   // const onBookmark = (bookId) => {
     // В реално приложение, тук бихте изпратили заявка към бекенда
     // за добавяне/премахване на книгата от списъка с отметки на потребителя.
@@ -63,7 +59,6 @@ export default function BookGrid() {
               title={book.title}
               imageUrl={book.img}
               // TODO:
-              // onDetailsClick={() => onDetails(book._id)}
               // onBookmarkClick={() => onBookmark(book._id)}
             />
           ))}
@@ -73,7 +68,3 @@ export default function BookGrid() {
     </>
   );
 }
-
-//TODO
-// function onDetails() {}
-// function onBookmark() {}

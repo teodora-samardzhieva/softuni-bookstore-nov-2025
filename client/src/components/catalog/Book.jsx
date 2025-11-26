@@ -1,4 +1,5 @@
 import { HiOutlineInformationCircle, HiOutlineBookmark } from "react-icons/hi";
+import { Link } from "react-router";
 
 /**
  * Карта за визуализация на една книга в каталога.
@@ -12,7 +13,6 @@ export default function Book({
     _id,
     title,
     imageUrl, 
-    // onDetailsClick, 
     // onBookmarkClick //TODO
 }) {
   return (
@@ -31,11 +31,12 @@ export default function Book({
 
       {/* Бутони за взаимодействие */}
       <div className="flex flex-wrap justify-center gap-2 mt-auto transform transition duration-300">
-        <button className="flex items-center justify-center bg-indigo-600 text-white px-1.5 sm:px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition duration-200 flex-1 min-w-min" 
-        // onClick={onDetailsClick} 
+        <Link 
+          to={`/books/${_id}/details`}
+          className="flex items-center justify-center bg-indigo-600 text-white px-1.5 sm:px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition duration-200 flex-1 min-w-min" 
         >
           <HiOutlineInformationCircle className="mr-2 text-lg" /> Details
-        </button>
+        </Link>
         <button className="flex items-center justify-center bg-indigo-900 text-white px-1.5 sm:px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition duration-200 flex-1 min-w-min" 
         // onClick={onBookmarkClick} //TODO
         >

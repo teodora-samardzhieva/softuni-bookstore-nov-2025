@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 const BookCard = ({ 
   _id, 
   title, 
-  imageUrl, 
-  // onDetailsClick  
+  imageUrl,  
 }) => {
   return (
     <div className="relative overflow-hidden rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 group">
@@ -25,12 +24,12 @@ const BookCard = ({
         </h3>
 
         {/* Бутон за детайли */}
-        <button
-          // onClick={onDetailsClick} //TODO
+        <Link
+          to={`/books/${_id}/details`}
           className="flex items-center justify-center bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition duration-200 mt-2"
         >
           <HiOutlineInformationCircle className="mr-2 text-lg" /> Details
-        </button>
+        </Link>
       </div>
     </div>
   );
@@ -52,11 +51,6 @@ export default function Home() {
         setLatestBooks(resultBooks);
       })
   }, []);
-
-  // const onDetails = (bookId) => {
-  //   navigate(`/books/${bookId}`);
-  // };
-
 
   return (
     <div className="relative isolate px-6 lg:px-8">
@@ -99,7 +93,6 @@ export default function Home() {
                 key={book.id}
                 title={book.title}
                 imageUrl={book.img}
-                // onDetailsClick={() => onDetails(book._id)}
               />
             ))}
           </div>
