@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 
 export default function Details() {
     const {bookId} = useParams();
     const [book, setBook] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:3030/jsonstore/books/${bookId}`)
@@ -12,7 +13,24 @@ export default function Details() {
             .catch(err => alert(err.message));
     }, [bookId]);
 
-        // ⛑ FIX: prevent crash
+    const deleteGameHandler = async () => {
+        const isConfirmed = confirm(`Are you sure you want to delete book: ${book.title}?`);
+        if(!isConfirmed) {
+            return;
+        }
+
+        try {
+            await fetch(`http://localhost:3030/jsonstore/books/${bookId}`, {
+                method: 'DELETE',
+            });
+            
+            navigate('/books');
+        } catch (error) {
+            alert('Unable to delete game: ', error.message);
+        }
+    }
+
+        // FIX: prevent crash
     if (!book) {
         return (
             <div className="flex justify-center p-10 text-lg font-semibold">
@@ -72,12 +90,18 @@ export default function Details() {
                         >
                             Edit
                         </Link>
-                        <Link
-                            to='/books'
+                        {/* <Link
+                            to={`/books/${bookId}/delete`}
                             className="inline-flex items-center w-full md:w-auto justify-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium text-base px-6 py-3 transition duration-150 ml-10"
                         >
                             Delete
-                        </Link>
+                        </Link> */}
+                        <button
+                            onClick={deleteGameHandler}
+                            className="inline-flex items-center w-full md:w-auto justify-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium text-base px-6 py-3 transition duration-150 ml-10"
+                        >
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>
