@@ -55,7 +55,7 @@ export default function BookGrid() {
         >
           {books.map((book) => (
             <Book
-              key={book._id}
+              _id={book._id}
               title={book.title}
               imageUrl={book.img}
               // TODO:

@@ -10,6 +10,7 @@ import AuthGuard from "./components/routes/RouteGuard.jsx";
 import Catalog from "./components/catalog/Catalog.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import CreateBook from "./components/create/CreateBook.jsx";
+import Details from "./components/details/Details.jsx";
 
 import "tw-elements";
 // import "tw-elements/dist/tw-elements.umd.min.js";
@@ -92,6 +93,10 @@ function App() {
         <Route 
           path="/books"
           element={<Catalog />}
+        />
+        <Route 
+          path="/books/:bookId/details"
+          element={<Details />}
         />
 
         <Route element={<AuthGuard user={user} />}>
