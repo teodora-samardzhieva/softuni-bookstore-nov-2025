@@ -1,10 +1,9 @@
 // import { useState } from 'react';
 
 import { useNavigate } from "react-router";
+import request from "../../utils/request.js";
 
-export default function CreateBook (
-  // { onAddBook }
-) {
+export default function CreateBook () {
   const navigate = useNavigate();
   // const [bookData, setBookData] = useState({
   //   title: '',
@@ -31,33 +30,34 @@ export default function CreateBook (
     data._createdOn = Date.now();
     data._id = Math.random().toString(36).substring(2, 10);
 
-    try {
-      const response = await fetch('http://localhost:3030/jsonstore/books', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
-      console.log(result);
-
-      navigate('/books');
-      
-    } catch (error) {
-      throw new Error(error.message);
+    // Basic validation
+    if (!data.title || !data.author || !data.genre || !data.releaseDate || !data.summary || !data.img) {
+      alert('Please fill in all fields.');
+      return;
     }
 
-    // Basic validation
-    // if (!bookData.title || !bookData.author || !bookData.genre || !bookData.summary || !bookData.img) {
-    //   alert('Please fill in all fields.');
-    //   return;
-    // }
-    
-    // Pass the new book data to a parent component function (e.g., to add to a list)
-    // onAddBook(bookData);
+    // try {
+    //   const response = await fetch('http://localhost:3030/jsonstore/books', {
+    //     method: 'POST',
+    //     headers: {
+    //       'content-type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data),
+    //   });
+    //   const result = await response.json();
+    //   console.log(result);
 
-    // // Optionally, clear the form after submission
+    //   navigate('/books');
+      
+    // } catch (error) {
+    //   throw new Error(error.message);
+    // }
+
+    // Pass the new book data to a parent component function (e.g., to add to a list)
+    const result = await request('http://localhost:3030/jsonstore/books', 'POST', data);
+    navigate('/books');
+    
+    //  Optionally, clear the form after submission
     // setBookData({
     //   title: '',
     //   author: '',

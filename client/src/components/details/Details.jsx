@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
+import request from "../../utils/request.js";
 
 export default function Details() {
     const {bookId} = useParams();
@@ -8,7 +9,7 @@ export default function Details() {
 
     useEffect(() => {
         fetch(`http://localhost:3030/jsonstore/books/${bookId}`)
-            .then(response => response.json())
+            .then(response => response.json()) 
             .then(result => setBook(result))
             .catch(err => alert(err.message));
     }, [bookId]);
@@ -19,15 +20,18 @@ export default function Details() {
             return;
         }
 
-        try {
-            await fetch(`http://localhost:3030/jsonstore/books/${bookId}`, {
-                method: 'DELETE',
-            });
+        // try {
+        //     await fetch(`http://localhost:3030/jsonstore/books/${bookId}`, {
+        //         method: 'DELETE',
+        //     });
             
-            navigate('/books');
-        } catch (error) {
-            alert('Unable to delete game: ', error.message);
-        }
+        //     navigate('/books');
+        // } catch (error) {
+        //     alert('Unable to delete game: ', error.message);
+        // }
+
+        await request(`http://localhost:3030/jsonstore/books/${bookId}`, 'DELETE');
+        navigate('/books');
     }
 
         // FIX: prevent crash
