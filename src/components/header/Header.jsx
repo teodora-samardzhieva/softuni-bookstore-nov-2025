@@ -60,12 +60,15 @@ export default function Header({ user }) {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {/* <a href="#" className="text-sm/6 font-semibold text-gray-900">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a> */}
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            <span aria-hidden="true"></span>
-          </a>
+          {user ? 
+            // <Link to="/profile" className="text-sm/6 font-semibold text-gray-900">
+            //     {user.email}<span aria-hidden="true">&rarr;</span>
+            // </Link> 
+            <p 
+              className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
+                {user.email}
+            </p> : ''
+          }
         </div>
       </nav>
       <Dialog
@@ -107,12 +110,13 @@ export default function Header({ user }) {
                 ))}
               </div>
               <div className="py-6">
-                <Link
+                {/* <Link
                   to="/"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
                   Log in
-                </Link>
+                </Link> */}
+                {user ? <p className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">{user.email}</p> : ''}
               </div>
             </div>
           </div>
