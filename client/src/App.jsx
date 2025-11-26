@@ -16,7 +16,7 @@ import "tw-elements";
 
 function App() {
   const [user, setUser] = useState(null);
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const loginSubmitHandler = (event) => {
@@ -48,28 +48,29 @@ function App() {
     password = password.trim();
     repeatPassword = repeatPassword.trim();
 
-    // let tempErrors = {};
+    //TODO Error handling
+    let tempErrors = {};
 
-    // if (!fullName.trim()) {
-    //   tempErrors.name = "Full name is required";
-    // }
+    if (!fullName.trim()) {
+      tempErrors.name = "Full name is required";
+    }
 
-    // if (email.length === 0 || email.length > 20) {
-    //   tempErrors.email = "Email must be 1–20 characters";
-    // }
+    if (email.length === 0 || email.length > 20) {
+      tempErrors.email = "Email must be 1–20 characters";
+    }
 
-    // if (password !== repeatPassword) {
-    //   tempErrors.confirmPassword = "Passwords do not match";
-    // }
+    if (password !== repeatPassword) {
+      tempErrors.confirmPassword = "Passwords do not match";
+    }
 
-    // // If any errors exist → stop form
-    // if (Object.keys(tempErrors).length > 0) {
-    //   setErrors(tempErrors);
-    //   return;
-    // }
+    // If any errors exist → stop form
+    if (Object.keys(tempErrors).length > 0) {
+      setErrors(tempErrors);
+      return;
+    }
 
-    // // No errors → proceed
-    // setErrors({});
+    // No errors → proceed
+    setErrors({});
     setUser({ email });
     navigate("/");
   };
