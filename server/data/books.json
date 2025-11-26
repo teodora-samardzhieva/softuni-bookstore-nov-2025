@@ -1,0 +1,32 @@
+{
+    "e0fa86e1-0f86-4fb9-9e23-f3a313c5aa49": {
+        "title": "Hooligans",
+        "author": "Andy Nicholls",
+        "genre": "Comedy",
+        "releaseDate": "2005-09-11",
+        "summary": "\"Hooligans: The A-L of Britain's Football Hooligan\" by Andy Nicholls is a book that explores the culture and history of football hooliganism in the UK. It provides insights into various hooligan firms and their activities related to football matches",
+        "img": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F71FkwYau38L._SL1176_.jpg&f=1&nofb=1&ipt=9589a35400d728cb01b0e127f4bb30d273813baee61875f7f44eae0339ab33b8",
+        "_createdOn": 1764181270275,
+        "_id": "e0fa86e1-0f86-4fb9-9e23-f3a313c5aa49"
+    },
+    "2dc1b7b6-ea9a-407d-babe-f971e2d48909": {
+        "title": "The Lord of the Rings",
+        "author": "J. R. R. Tolkien",
+        "genre": "Fantasy",
+        "releaseDate": "2023-11-07",
+        "summary": "The Lord of the Rings is a trilogy of epic high fantasy adventure films directed by Peter Jackson based on the novel The Lord of the Rings by the English author J. R. R. Tolkien. The films are titled identically to the three volumes of the novel: The Fellowship of the Ring, The Two Towers, and The Return of the King.",
+        "img": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F81nV6x2ey4L.jpg&f=1&nofb=1&ipt=e4d10d373a26b29b2d8de15608a66fd25b4c2c198565031f211079308422c6e9",
+        "_createdOn": 1764181687867,
+        "_id": "2dc1b7b6-ea9a-407d-babe-f971e2d48909"
+    },
+    "82f5438f-eeef-4ede-afe0-46fa8ccc0992": {
+        "title": "1984",
+        "author": "George Orwell",
+        "genre": "Action",
+        "releaseDate": "2022-07-10",
+        "summary": "In 1984, London is a grim city in the totalitarian state of Oceania where Big Brother is always watching you and the Thought Police can practically read your mind. Winston Smith is a man in grave danger for the simple reason that his memory still functions. Drawn into a forbidden love affair, Winston finds the courage to join a secret revolutionary organization called The Brotherhood, dedicated to the destruction of the Party. Together with his beloved Julia, he hazards his life in a deadly match against the powers that be.",
+        "img": "https://images.amazon.com/images/P/B003JTHWKU.jpg",
+        "_createdOn": 1764181785983,
+        "_id": "82f5438f-eeef-4ede-afe0-46fa8ccc0992"
+    }
+}
