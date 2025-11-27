@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import request from "../../utils/request.js";
 
 const initialValues = {
   title: "",
@@ -10,15 +12,26 @@ const initialValues = {
 };
 
 export default function Edit() {
-  const [bookData, setBookData] = useState(initialValues);
+  const {bookId} = useParams();
+  const [values, setValues] = useState(initialValues);
 
   // state = prevData
   const handleChange = (e) => {
-    setBookData((state) => ({
+    setValues((state) => ({
       ...state,
       [e.target.name]: e.target.value,
     }));
   };
+
+  useEffect(() => {
+    request(`http://localhost:3030/jsonstore/books/${bookId}`)
+        .then(result => {
+            setValues(result)
+        })
+        .catch(err => {
+            alert(err.message);
+        })
+  }, [bookId]);
 
   return (
     <div className="w-full max-w-[320px] sm:max-w-xl mx-auto p-6 rounded-lg shadow-xl mt-30 bg-stone-100 border-solid">
@@ -41,7 +54,7 @@ export default function Edit() {
             type="text"
             id="title"
             name="title"
-            value={bookData.title}
+            value={values.title}
             onChange={handleChange}
             placeholder="e.g., The Hobbit"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -61,7 +74,7 @@ export default function Edit() {
             type="text"
             id="author"
             name="author"
-            value={bookData.author}
+            value={values.author}
             onChange={handleChange}
             placeholder="e.g., J.R.R. Tolkien"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -81,7 +94,7 @@ export default function Edit() {
             type="text"
             id="genre"
             name="genre"
-            value={bookData.genre}
+            value={values.genre}
             onChange={handleChange}
             placeholder="e.g., Fantasy, Sci-Fi, Thriller"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -101,7 +114,7 @@ export default function Edit() {
             type="date"
             id="releaseDate"
             name="releaseDate"
-            value={bookData.releaseDate}
+            value={values.releaseDate}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
@@ -119,7 +132,7 @@ export default function Edit() {
           <textarea
             id="summary"
             name="summary"
-            value={bookData.summary}
+            value={values.summary}
             onChange={handleChange}
             rows="4"
             placeholder="Provide a brief summary of the book..."
@@ -140,15 +153,15 @@ export default function Edit() {
             type="url" // Use type="url" for better validation
             id="img"
             name="img"
-            value={bookData.img}
+            value={values.img}
             onChange={handleChange}
             placeholder="e.g., https://example.com/book-cover.jpg"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
-          {/* {bookData.img && (
+          {/* {values.img && (
             <div className="mt-4 flex justify-center">
-              <img src={bookData.img} alt="Book Cover Preview" className="max-h-48 rounded-md shadow-md object-cover" />
+              <img src={values.img} alt="Book Cover Preview" className="max-h-48 rounded-md shadow-md object-cover" />
             </div>
           )} */}
         </div>
