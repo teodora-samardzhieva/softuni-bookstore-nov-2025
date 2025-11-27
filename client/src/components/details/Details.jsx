@@ -4,12 +4,11 @@ import request from "../../utils/request.js";
 import Comment from "../comments/Comment.jsx";
 import DetailsComments from "../comments/DetailsComments.jsx";
 
-export default function Details({
-    user
-}) {
+export default function Details({ user }) {
   const { bookId } = useParams();
   const [book, setBook] = useState();
   const navigate = useNavigate();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:3030/jsonstore/books/${bookId}`)
@@ -47,6 +46,10 @@ export default function Details({
         Loading book details...
       </div>
     );
+  }
+
+  const refreshHandler = () => {
+    setRefresh(state => !state)
   }
 
   return (
@@ -121,17 +124,17 @@ export default function Details({
         </div>
       </div>
 
-      <section className=" w-full max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-md mt-10"> 
+      <section className=" w-full max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-md mt-10">
         {/* <!-- Title --> */}
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">
           Comments
         </h2>
 
         {/* <!-- Comments List --> */}
-        <DetailsComments />
+        <DetailsComments refresh={refresh} />
 
         {/* <!-- Add Comment Form --> */}
-        {user && <Comment user={user} />}
+        {user && <Comment user={user} onCreate={refreshHandler} />}
       </section>
     </div>
   );

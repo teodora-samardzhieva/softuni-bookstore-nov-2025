@@ -3,7 +3,8 @@ import request from "../../utils/request.js";
 import { useParams } from "react-router";
 
 export default function Comment({
-    user
+    user,
+    onCreate
 }) {
     const [comment, setComment] = useState();
     const {bookId} = useParams();
@@ -13,13 +14,19 @@ export default function Comment({
     }
 
     const submitHandler = async () => {
-        await request('/comments', 'POST', {
-            author: user.username,
-            message: comment,
-            bookId,
-        })
-
-        setComment(''); // CLEAR the form
+        try {
+            
+            await request('/comments', 'POST', {
+                author: user.username,
+                message: comment,
+                bookId,
+            });
+    
+            setComment(''); // CLEAR the form
+            onCreate();
+        } catch (error) {
+            alert(error.message);
+        }
     }
 
 
