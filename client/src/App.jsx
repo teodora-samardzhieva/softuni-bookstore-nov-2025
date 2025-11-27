@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router";
+import { Routes, Route } from "react-router";
 import { useState } from "react";
 
 import Home from "./components/home/Home.jsx";
@@ -19,7 +19,6 @@ function App() {
   const [registeredUsers, setRegisteredUsers] = useState([]);
   const [user, setUser] = useState(null);
   // const [errors, setErrors] = useState({});
-  // const navigate = useNavigate();
 
   // const loginSubmitHandler = (event) => {
   //   event.preventDefault();
@@ -43,9 +42,11 @@ function App() {
       throw new Error('Email already exists!');
     }
 
-    setRegisteredUsers((state) => [...state, {username, email, password}])
+    const newUser = { username, email, password };
+    setRegisteredUsers((state) => [...state, newUser])
 
-    //TODO: Login user after register
+    // Login user after register
+    setUser(newUser);
   }
   const loginHandler = (email, password) => {
     const user = registeredUsers.find(user => user.email === email && user.password === password);
