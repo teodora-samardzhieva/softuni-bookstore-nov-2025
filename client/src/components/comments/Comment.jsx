@@ -14,7 +14,7 @@ export default function Comment({
 
     const submitHandler = async () => {
         await request('/comments', 'POST', {
-            author: user.email,
+            author: user.username,
             message: comment,
             bookId,
         })
