@@ -1,16 +1,33 @@
 import { useNavigate } from "react-router";
 import request from "../../utils/request.js";
+import { useEffect, useState } from "react";
 
 export default function CreateBook () {
   const navigate = useNavigate();
+  const [imageUpload, setImageUpload] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageName, setImageName] = useState('');
+
+  useEffect(() => {
+    // if (!imageUpload) return;
+    
+    return () => {
+      URL.revokeObjectURL(imagePreview)
+      setImagePreview(null)
+      // setImageName(null)
+    }
+  }, [imageUpload])
+
 
   const createBookHandler = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    const bookData = Object.fromEntries(formData);
+    const {image, ...bookData} = Object.fromEntries(formData);
     // console.log(bookData);
+    bookData.img = image;
     bookData._createdOn = Date.now();
+    bookData._updatedOn = Date.now();
     bookData._id = Math.random().toString(36).substring(2, 10);
 
     // Basic validation
@@ -44,6 +61,26 @@ export default function CreateBook () {
     } catch (error) {
       alert(error.message);
     }
+
+  };
+  
+  const imageUploadClickHandler = () => {
+    setImageUpload(state => !state)
+  }
+
+  const imageChangeHandler = (e) => {
+    const image = e.target.files[0];
+    const name = image.name;
+    const imageUrl = URL.createObjectURL(image);
+    setImagePreview(imageUrl);
+    setImageName(name);
+  }
+
+  const imageUrlChangeHandler = (e) => {
+    const url = e.target.value;
+
+    setImagePreview(url);
+    setImageName(url.split("/").pop());
   };
 
   return (
@@ -116,20 +153,38 @@ export default function CreateBook () {
 
         {/* Image URL Input */}
         <div>
-          <label htmlFor="img" className="block text-sm font-medium text-gray-700">Image URL</label>
-          <input
-            type="url" // Use type="url" for better validation
-            id="img"
-            name="img"
-            placeholder="e.g., https://example.com/book-cover.jpg"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            required
-          />
-          {/* {bookData.img && (
+          <label htmlFor="img" className="block text-sm font-medium text-gray-700">{imageUpload ? "Image Upload" : "Image URL"}</label>
+          <button
+            type="button"
+            onClick={imageUploadClickHandler}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-md shadow 
+                      hover:bg-indigo-700 transition font-medium">
+            {imageUpload ? "Image URL" : "Image Upload"}
+          </button>
+          {imageUpload ? 
+            <input
+              type="file" 
+              id="img"
+              name="img"
+              placeholder="Upload file..."
+              onChange={imageChangeHandler}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            /> : 
+            <input
+              type="url" 
+              id="img"
+              name="img"
+              placeholder="e.g., https://example.com/book-cover.jpg"
+              onChange={imageUrlChangeHandler}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
+            }
+            {imagePreview && (
             <div className="mt-4 flex justify-center">
-              <img src={bookData.img} alt="Book Cover Preview" className="max-h-48 rounded-md shadow-md object-cover" />
-            </div>
-          )} */}
+              <img src={imagePreview} alt={imageName} className="max-h-48 rounded-md shadow-md object-cover" />
+            </div>)}
         </div>
 
         {/* Submit Button */}
