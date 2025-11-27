@@ -131,7 +131,7 @@ function App() {
         />
         <Route 
           path="/books/:bookId/details"
-          element={<Details />}
+          element={<Details user={user} />}
         />
 
           <Route 
