@@ -14,6 +14,7 @@ import Details from "./components/details/Details.jsx";
 
 import "tw-elements";
 import Logout from "./components/logout/Logout.jsx";
+import Edit from "./components/edit/Edit.jsx";
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
 function App() {
@@ -133,6 +134,11 @@ function App() {
           element={<Details />}
         />
 
+          <Route 
+            path="/books/:bookId/edit"
+            element={<Edit />}
+          />
+        
         <Route element={<AuthGuard user={user} />}>
           <Route path="/favorite-books" element={<FavoriteBooks />} />
           <Route path="/create" element={<CreateBook />} />

@@ -87,9 +87,9 @@ export default function Details() {
                     
                     {/* //TODO: Check if has user */}
                     {/* Action Button */}
-                    <div className="mt-10">
+                    <div className="mt-10 flex flex-wrap-10 gap-10">
                         <Link
-                            to='/books'
+                            to={`/books/${bookId}/edit`}
                             className="inline-flex items-center w-full md:w-auto justify-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium text-base px-6 py-3 transition duration-150"
                         >
                             Edit
@@ -102,7 +102,7 @@ export default function Details() {
                         </Link> */}
                         <button
                             onClick={deleteGameHandler}
-                            className="inline-flex items-center w-full md:w-auto justify-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium text-base px-6 py-3 transition duration-150 ml-10"
+                            className="inline-flex items-center w-full md:w-auto justify-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium text-base px-6 py-3 transition duration-150 "
                         >
                             Delete
                         </button>
