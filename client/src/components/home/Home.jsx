@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     //   fetch('http://localhost:3030/jsonstore/books')
     //    .then(response => response.json())
-    request('http://localhost:3030/jsonstore/books')
+    request('/books')
         .then(result => {
           const resultBooks = Object.values(result)
             .sort((a, b) => b._createdOn - a._createdOn)

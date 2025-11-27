@@ -30,7 +30,7 @@ export default function Details() {
         //     alert('Unable to delete game: ', error.message);
         // }
 
-        await request(`http://localhost:3030/jsonstore/books/${bookId}`, 'DELETE');
+        await request(`/books/${bookId}`, 'DELETE');
         navigate('/books');
     }
 

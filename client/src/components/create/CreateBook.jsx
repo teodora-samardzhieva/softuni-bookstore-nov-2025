@@ -54,7 +54,7 @@ export default function CreateBook () {
     // }
 
     // Pass the new book data to a parent component function (e.g., to add to a list)
-    const result = await request('http://localhost:3030/jsonstore/books', 'POST', data);
+    const result = await request('/books', 'POST', data);
     navigate('/books');
     
     //  Optionally, clear the form after submission
