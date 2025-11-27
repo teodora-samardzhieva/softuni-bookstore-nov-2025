@@ -33,48 +33,55 @@ function App() {
     }
   };
 
-  const registerSubmitHandler = (event) => {
-    event.preventDefault();
+  const registerHandler = (username, email) => {
+    setUser({
+      username,
+      email, 
+    })
+  }
 
-    const formData = new FormData(event.target);
+  // const registerSubmitHandler = (event) => {
+  //   event.preventDefault();
 
-    // TODO: try/catch; error handling; connect to db; fetch/useEffect ....
-    // const data = Object.fromEntries(formData);
-    // console.log(data);
+  //   const formData = new FormData(event.target);
 
-    let { fullName, email, password, repeatPassword } =
-      Object.fromEntries(formData);
-    fullName = fullName.trim();
-    email = email.trim();
-    password = password.trim();
-    repeatPassword = repeatPassword.trim();
+  //   // TODO: try/catch; error handling; connect to db; fetch/useEffect ....
+  //   // const data = Object.fromEntries(formData);
+  //   // console.log(data);
 
-    //TODO Error handling
-    let tempErrors = {};
+  //   let { username, email, password, confirmPassword } =
+  //     Object.fromEntries(formData);
+  //   username = username.trim();
+  //   email = email.trim();
+  //   password = password.trim();
+  //   confirmPassword = confirmPassword.trim();
 
-    if (!fullName.trim()) {
-      tempErrors.name = "Full name is required";
-    }
+  //   //TODO Error handling
+  //   let tempErrors = {};
 
-    if (email.length === 0 || email.length > 20) {
-      tempErrors.email = "Email must be 1–20 characters";
-    }
+  //   if (!username.trim()) {
+  //     tempErrors.name = "Full name is required";
+  //   }
 
-    if (password !== repeatPassword) {
-      tempErrors.confirmPassword = "Passwords do not match";
-    }
+  //   if (email.length === 0 || email.length > 20) {
+  //     tempErrors.email = "Email must be 1–20 characters";
+  //   }
 
-    // If any errors exist → stop form
-    if (Object.keys(tempErrors).length > 0) {
-      setErrors(tempErrors);
-      return;
-    }
+  //   if (password !== confirmPassword) {
+  //     tempErrors.confirmPassword = "Passwords do not match";
+  //   }
 
-    // No errors → proceed
-    setErrors({});
-    setUser({ email });
-    navigate("/");
-  };
+  //   // If any errors exist → stop form
+  //   if (Object.keys(tempErrors).length > 0) {
+  //     setErrors(tempErrors);
+  //     return;
+  //   }
+
+  //   // No errors → proceed
+  //   setErrors({});
+  //   setUser({ email });
+  //   navigate("/");
+  // };
 
   return (
     <div className="bg-white">
@@ -88,7 +95,8 @@ function App() {
         />
         <Route
           path="/register"
-          element={<Register onSubmit={registerSubmitHandler} />}
+          element={<Register user={user} onRegister={registerHandler} />}
+          // element={<Register onSubmit={registerSubmitHandler} />}
         />
         <Route 
           path="/books"

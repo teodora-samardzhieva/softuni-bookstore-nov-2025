@@ -1,6 +1,11 @@
+// import { useState } from "react";
 import { Link } from "react-router";
 
-export default function Register() {
+export default function Register({
+  //onSubmit
+  user,
+  onRegister
+}) {
 
   const registerSubmit = (formData) => {
     const username = formData.get('username');
@@ -8,7 +13,7 @@ export default function Register() {
     const password = formData.get('password');
     const confirmPassword = formData.get('confirmPassword');
 
-    //TODO: Validation
+    // Validation
     if(!username || !email || !password || !confirmPassword) {
       return alert('All fields are required!');
     }
@@ -16,7 +21,13 @@ export default function Register() {
       return alert('Password missmatch!');
     }
 
-    //TODO: Register user
+    // Register user
+    onRegister(
+      // _id, //TODO add _id
+      username,
+      email,
+    );
+    
     //TODO: Redirect to home page
   }
   return (
@@ -46,6 +57,7 @@ export default function Register() {
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
             </div>
+            {/* {<h2 className="text-red-500 italic">Username: {user.username} already exists!</h2>} //TODO: Check if username is taken*/}
           </div>
 
           {/* Email */}
@@ -53,7 +65,7 @@ export default function Register() {
             <label
               htmlFor="email"
               className="block text-sm/6 font-medium text-gray-900"
-            >
+              >
               Email address
             </label>
             <div className="mt-2">
@@ -64,8 +76,9 @@ export default function Register() {
                 required
                 autoComplete="email"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-              />
+                />
             </div>
+            {user && <h2 className="text-red-500 italic">You are already registered with {user.email}</h2>}
           </div>
 
           {/* Password */}
