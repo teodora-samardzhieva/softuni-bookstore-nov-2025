@@ -13,6 +13,7 @@ import CreateBook from "./components/create/CreateBook.jsx";
 import Details from "./components/details/Details.jsx";
 
 import "tw-elements";
+import Logout from "./components/logout/Logout.jsx";
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
     }
 
     setUser(user);
+  }
+  const logoutHandler = () => {
+    setUser(null);
   }
 
   // const registerSubmitHandler = (event) => {
@@ -115,6 +119,10 @@ function App() {
           path="/register"
           element={<Register onRegister={registerHandler} />}
           // element={<Register onSubmit={registerSubmitHandler} />}
+        />
+        <Route
+          path="/logout"
+          element={<Logout onLogout={logoutHandler} />}
         />
         <Route 
           path="/books"
