@@ -1,8 +1,34 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function Login({
-    onSubmit,
+    // onSubmit,
+    onLogin,
 }) {
+
+  const navigate = useNavigate();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    const email = formData.get('email');
+    const password = formData.get('password');
+
+    // empty field validation
+    if(!email || !password) {
+      return alert('Email and password are required!');
+    }
+
+    try {
+      onLogin(email, password);
+
+      navigate('/');
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
   return (
     <>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 mt-24">
@@ -18,7 +44,7 @@ export default function Login({
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form method="POST" className="space-y-6" onSubmit={onSubmit}>
+          <form className="space-y-6" onSubmit={submitHandler}>
             <div>
               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                 Email address

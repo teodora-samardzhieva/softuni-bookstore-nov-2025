@@ -21,15 +21,21 @@ export default function Register({
       return alert('Password missmatch!');
     }
 
-    // Register user
-    onRegister(
-      // _id, //TODO add _id
-      username,
-      email,
-    );
-    
-    //TODO: Redirect to home page
-    navigate('/');
+    try {
+      // Register user
+      onRegister(
+        // _id, //TODO add _id
+        username,
+        email,
+        password //TODO: Remove
+      );
+      
+      
+      //Redirect to home page
+      navigate('/');
+    } catch (error) {
+      alert(error.message);
+    }
   }
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 mt-24">
@@ -40,7 +46,7 @@ export default function Register({
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form method="POST" className="space-y-6" action={registerSubmit}>
+        <form className="space-y-6" action={registerSubmit}>
           {/* Username */}
           <div>
             <label

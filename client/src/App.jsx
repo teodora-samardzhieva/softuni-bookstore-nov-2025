@@ -16,9 +16,10 @@ import "tw-elements";
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
 function App() {
+  const [registeredUsers, setRegisteredUsers] = useState([]);
   const [user, setUser] = useState(null);
-  const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  // const [errors, setErrors] = useState({});
+  // const navigate = useNavigate();
 
   // const loginSubmitHandler = (event) => {
   //   event.preventDefault();
@@ -33,17 +34,26 @@ function App() {
   //   }
   // };
   
-  const loginHandler = (email) => {
-    setUser({
-      email, 
-    })
-  }
+  const registerHandler = (username, email, password) => {
+    
+    if(registeredUsers.some(user => user.username === username)) {
+      throw new Error('Username is taken!');
+    }
+    if(registeredUsers.some(user => user.email === email)) {
+      throw new Error('Email already exists!');
+    }
 
-  const registerHandler = (username, email) => {
-    setUser({
-      username,
-      email, 
-    })
+    setRegisteredUsers((state) => [...state, {username, email, password}])
+
+    //TODO: Login user after register
+  }
+  const loginHandler = (email, password) => {
+    const user = registeredUsers.find(user => user.email === email && user.password === password);
+    if(!user) {
+      throw new Error('Invalid email or password!');
+    }
+
+    setUser(user);
   }
 
   // const registerSubmitHandler = (event) => {
