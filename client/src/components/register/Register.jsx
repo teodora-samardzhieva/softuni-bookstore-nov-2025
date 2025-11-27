@@ -1,11 +1,11 @@
 // import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function Register({
   //onSubmit
-  user,
   onRegister
 }) {
+  const navigate = useNavigate();
 
   const registerSubmit = (formData) => {
     const username = formData.get('username');
@@ -29,6 +29,7 @@ export default function Register({
     );
     
     //TODO: Redirect to home page
+    navigate('/');
   }
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 mt-24">
@@ -78,7 +79,6 @@ export default function Register({
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
             </div>
-            {user && <h2 className="text-red-500 italic">You are already registered with {user.email}</h2>}
           </div>
 
           {/* Password */}

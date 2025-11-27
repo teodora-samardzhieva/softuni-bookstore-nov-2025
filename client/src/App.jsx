@@ -20,18 +20,24 @@ function App() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const loginSubmitHandler = (event) => {
-    event.preventDefault();
+  // const loginSubmitHandler = (event) => {
+  //   event.preventDefault();
 
-    const formData = new FormData(event.target);
+  //   const formData = new FormData(event.target);
 
-    // TODO: try/catch; error handling; connect to db; fetch/useEffect ....
-    const { email, password } = Object.fromEntries(formData);
-    if (email === "tedi1812@abv.bg" && password === "123456") {
-      setUser({ email });
-      return navigate("/");
-    }
-  };
+  //   // TODO: try/catch; error handling; connect to db; fetch/useEffect ....
+  //   const { email, password } = Object.fromEntries(formData);
+  //   if (email === "tedi1812@abv.bg" && password === "123456") {
+  //     setUser({ email });
+  //     return navigate("/");
+  //   }
+  // };
+  
+  const loginHandler = (email) => {
+    setUser({
+      email, 
+    })
+  }
 
   const registerHandler = (username, email) => {
     setUser({
@@ -91,11 +97,12 @@ function App() {
         <Route index element={<Home />} />
         <Route
           path="/login"
-          element={<Login onSubmit={loginSubmitHandler} />}
+          element={<Login onLogin={loginHandler} />}
+          // element={<Login onSubmit={loginSubmitHandler} />}
         />
         <Route
           path="/register"
-          element={<Register user={user} onRegister={registerHandler} />}
+          element={<Register onRegister={registerHandler} />}
           // element={<Register onSubmit={registerSubmitHandler} />}
         />
         <Route 
