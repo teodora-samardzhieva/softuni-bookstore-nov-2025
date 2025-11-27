@@ -11,10 +11,12 @@ export default function Header({ user }) {
     { name: "Catalog", href: "/books" },
   ];
 
+  // Guest users
   if (!user) {
     navigation.push({ name: "Login", href: "/login" });
     navigation.push({ name: "Register", href: "/register" });
   } else {
+    // Logged in users
     navigation.push({ name: "Add Book", href: "/create" });
     navigation.push({ name: "Favorites", href: "/favorite-books" });
     navigation.push({ name: "Logout", href: "/logout" });

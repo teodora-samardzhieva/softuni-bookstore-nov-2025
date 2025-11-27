@@ -1,8 +1,24 @@
 import { Link } from "react-router";
 
-export default function Register({
-    onSubmit
-}) {
+export default function Register() {
+
+  const registerSubmit = (formData) => {
+    const username = formData.get('username');
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const confirmPassword = formData.get('confirmPassword');
+
+    //TODO: Validation
+    if(!email || !password) {
+      return alert('Email and password are required!');
+    }
+    if(password !== confirmPassword) {
+      return alert('Password missmatch!');
+    }
+
+    //TODO: Register user
+    //TODO: Redirect to home page
+  }
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 mt-24">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -12,19 +28,19 @@ export default function Register({
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form method="POST" className="space-y-6" onSubmit={onSubmit}>
-          {/* Full Name */}
+        <form method="POST" className="space-y-6" action={registerSubmit}>
+          {/* Username */}
           <div>
             <label
-              htmlFor="name"
+              htmlFor="username"
               className="block text-sm/6 font-medium text-gray-900"
             >
-              Full Name
+              Username
             </label>
             <div className="mt-2">
               <input
-                id="name"
-                name="name"
+                id="username"
+                name="username"
                 type="text"
                 required
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
