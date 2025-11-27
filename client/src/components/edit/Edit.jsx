@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import request from "../../utils/request.js";
 
 const initialValues = {
@@ -12,8 +12,9 @@ const initialValues = {
 };
 
 export default function Edit() {
-  const {bookId} = useParams();
+  const { bookId } = useParams();
   const [values, setValues] = useState(initialValues);
+  const navigate = useNavigate();
 
   // state = prevData
   const handleChange = (e) => {
@@ -24,24 +25,42 @@ export default function Edit() {
   };
 
   useEffect(() => {
-    request(`http://localhost:3030/jsonstore/books/${bookId}`)
-        .then(result => {
-            setValues(result)
-        })
-        .catch(err => {
-            alert(err.message);
-        })
+    request(`/books/${bookId}`)
+      .then((result) => {
+        setValues(result);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   }, [bookId]);
+
+  const editBookHandler = async () => {
+    const bookData = { ...values, _updatedOn: Date.now() };
+
+    // Basic validation
+    if (Object.values(bookData).some((v) => v === "")) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      await request(`/books/${bookId}`, "PUT", bookData);
+
+      navigate(`/books/${bookId}/details`);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <div className="w-full max-w-[320px] sm:max-w-xl mx-auto p-6 rounded-lg shadow-xl mt-30 bg-stone-100 border-solid">
       <h2 className="text-3xl font-serif text-gray-900 mb-6 text-center">
         Edit Book
       </h2>
-      <form
-        // onSubmit={editBookHandler}
-        className="space-y-4"
-      >
+      <form 
+        action={editBookHandler}    
+        className="space-y-4">
+        {/* <form onSubmit={(e) => { e.preventDefault(); editBookHandler(); }} className="space-y-4"> */}
         {/* Title Input */}
         <div>
           <label
