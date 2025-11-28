@@ -1,5 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router";
-import { useState } from "react";
+import { Routes, Route } from "react-router";
 
 import Home from "./components/home/Home.jsx";
 import Login from "./components/login/Login.jsx";
@@ -15,47 +14,16 @@ import Details from "./components/details/Details.jsx";
 import "tw-elements";
 import Logout from "./components/logout/Logout.jsx";
 import Edit from "./components/edit/Edit.jsx";
-import UserContext from "./context/UserContext.js";
-import useRequest from "./hooks/useFetch.js";
+import UserContext from "./context/UserContext.jsx";
+import { useContext } from "react";
+
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
 function App() {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
-  const { request } = useRequest();
-
-  // Register new user
-  const registerHandler = async (username, email, password) => {
-    const newUser = { username, email, password };
-    // Register Api call
-    const result = await request("/users/register", "POST", newUser);
-
-    // Login user after register
-    setUser(result);
-    navigate("/"); // redirect after registration
-  };
-
-  const loginHandler = async (email, password) => {
-    const result = await request("/users/login", "POST", { email, password });
-
-    setUser(result);
-  };
-
-  const logoutHandler = () => {
-    setUser(null);
-    navigate("/"); // redirect after logout
-  };
-
-  const userContextValues = {
-    user,
-    isAuthenticated: !!user?.accessToken,
-    registerHandler,
-    loginHandler,
-    logoutHandler,
-  };
+  const { user } = useContext(UserContext);
 
   return (
-    <UserContext.Provider value={userContextValues}>
+    <>
       <div className="bg-white">
         <Header user={user} />
 
@@ -63,7 +31,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/logout" element={<Logout onLogout={logoutHandler} />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/books" element={<Catalog />} />
           <Route
             path="/books/:bookId/details"
@@ -79,7 +47,7 @@ function App() {
         </Routes>
         <Footer />
       </div>
-    </UserContext.Provider>
+    </>
   );
 }
 
