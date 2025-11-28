@@ -1,33 +1,34 @@
 import { Link, useNavigate } from "react-router";
+import { useContext } from "react";
+import UserContext from "../../context/UserContext.js";
+import useForm from "../../hooks/useForm.js";
 
-export default function Login({
-    // onSubmit,
-    onLogin,
-}) {
-
+export default function Login() {
   const navigate = useNavigate();
+  const {loginHandler} = useContext(UserContext);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-
-    const email = formData.get('email');
-    const password = formData.get('password');
+  const loginSubmitHandler = async (values) => {
+    const { email, password } = values;
 
     // empty field validation
-    if(!email || !password) {
-      return alert('Email and password are required!');
+    if (!email || !password) {
+      return alert("Email and password are required!");
     }
 
     try {
-      onLogin(email, password);
+      await loginHandler(email, password);
 
-      navigate('/');
+      navigate("/");
     } catch (error) {
       alert(error.message);
     }
-  }
+  };
+
+  const { formAction, register } = useForm(loginSubmitHandler, {
+    //initial state
+    email: "",
+    password: "",
+  });
 
   return (
     <>
@@ -44,18 +45,21 @@ export default function Login({
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={submitHandler}>
+          <form className="space-y-6" action={formAction}>
             <div>
-              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
                 Email address
               </label>
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
                   type="email"
                   required
                   autoComplete="email"
+                  {...register("email")}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -63,11 +67,17 @@ export default function Login({
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm/6 font-medium text-gray-900"
+                >
                   Password
                 </label>
                 <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <a
+                    href="#"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
                     Forgot password?
                   </a>
                 </div>
@@ -75,10 +85,10 @@ export default function Login({
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
                   type="password"
                   required
                   autoComplete="current-password"
+                  {...register("password")}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -95,13 +105,16 @@ export default function Login({
           </form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Don't have an account?{' '}
-            <Link to="/register" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="font-semibold text-indigo-600 hover:text-indigo-500"
+            >
               Sign up here
             </Link>
           </p>
         </div>
       </div>
     </>
-  )
+  );
 }
