@@ -33,3 +33,6 @@ It was created to further develop my React skills and explore building a full-fe
 
 The **SoftUni Practice Server** is **non-persistent** — all data will reset when the server restarts.  
 This is intentional for learning purposes.
+
+## Bonus Feature
+- Implement cloud file storage using Firebase
