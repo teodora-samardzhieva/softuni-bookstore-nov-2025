@@ -35,4 +35,10 @@ The **SoftUni Practice Server** is **non-persistent** — all data will reset wh
 This is intentional for learning purposes.
 
 ## Bonus Feature
-- Implement cloud file storage using Firebase
+
+- Implement cloud file storage using Firebase(to store photos)
+
+## Bonuses not described in the assignment but has practical use:
+
+- Search bar in Catalog for better UX
+- Responsive design for mobiles and desktop
