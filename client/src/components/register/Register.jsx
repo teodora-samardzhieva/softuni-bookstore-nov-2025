@@ -7,7 +7,7 @@ export default function Register({
 }) {
   const navigate = useNavigate();
 
-  const registerSubmitHandler = (values) => { 
+  const registerSubmitHandler = async (values) => { 
     const { username, email, password, confirmPassword } = values;
 
     // Validation
@@ -20,8 +20,7 @@ export default function Register({
 
     try {
       // Register user
-      onRegister(
-        // _id, //TODO add _id
+      await onRegister(
         username,
         email,
         password //TODO: Remove

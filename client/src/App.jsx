@@ -15,10 +15,11 @@ import Details from "./components/details/Details.jsx";
 import "tw-elements";
 import Logout from "./components/logout/Logout.jsx";
 import Edit from "./components/edit/Edit.jsx";
+import request from "./utils/request.js";
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
 function App() {
-  const [registeredUsers, setRegisteredUsers] = useState([]);
+  // const [registeredUsers, setRegisteredUsers] = useState([]);
   const [user, setUser] = useState(null);
   // const [errors, setErrors] = useState({});
 
@@ -34,33 +35,44 @@ function App() {
   //     return navigate("/");
   //   }
   // };
-  
-  const registerHandler = (username, email, password) => {
-    
-    if(registeredUsers.some(user => user.username === username)) {
-      throw new Error('Username is taken!');
-    }
-    if(registeredUsers.some(user => user.email === email)) {
-      throw new Error('Email already exists!');
-    }
+
+  const registerHandler = async (username, email, password) => {
+    // if(registeredUsers.some(user => user.username === username)) {
+    //   throw new Error('Username is taken!');
+    // }
+    // if(registeredUsers.some(user => user.email === email)) {
+    //   throw new Error('Email already exists!');
+    // }
 
     const newUser = { username, email, password };
-    setRegisteredUsers((state) => [...state, newUser])
+    // setRegisteredUsers((state) => [...state, newUser])
+
+    // Register Api call
+    const response = await fetch("http://localhost:3030/users/register", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    });
+
+    const result = await response.json();
+    console.log(result);
 
     // Login user after register
-    setUser(newUser);
-  }
+    setUser(result);
+  };
   const loginHandler = (email, password) => {
-    const user = registeredUsers.find(user => user.email === email && user.password === password);
-    if(!user) {
-      throw new Error('Invalid email or password!');
+    // const user = registeredUsers.find(user => user.email === email && user.password === password);
+    if (!user) {
+      throw new Error("Invalid email or password!");
     }
 
     setUser(user);
-  }
+  };
   const logoutHandler = () => {
     setUser(null);
-  }
+  };
 
   // const registerSubmitHandler = (event) => {
   //   event.preventDefault();
@@ -121,29 +133,19 @@ function App() {
           element={<Register onRegister={registerHandler} />}
           // element={<Register onSubmit={registerSubmitHandler} />}
         />
+        <Route path="/logout" element={<Logout onLogout={logoutHandler} />} />
+        <Route path="/books" element={<Catalog />} />
         <Route
-          path="/logout"
-          element={<Logout onLogout={logoutHandler} />}
-        />
-        <Route 
-          path="/books"
-          element={<Catalog />}
-        />
-        <Route 
           path="/books/:bookId/details"
           element={<Details user={user} />}
         />
 
-          <Route 
-            path="/books/:bookId/edit"
-            element={<Edit />}
-          />
-        
+        <Route path="/books/:bookId/edit" element={<Edit />} />
+
         <Route element={<AuthGuard user={user} />}>
           <Route path="/favorite-books" element={<FavoriteBooks />} />
           <Route path="/create" element={<CreateBook />} />
         </Route>
-
       </Routes>
       <Footer />
     </div>
