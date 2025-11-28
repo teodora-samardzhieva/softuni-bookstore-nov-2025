@@ -1,38 +1,64 @@
 import { useNavigate } from "react-router";
 import request from "../../utils/request.js";
 import { useEffect, useState } from "react";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../firebase.js";
 
-export default function CreateBook () {
+export default function CreateBook() {
   const navigate = useNavigate();
   const [imageUpload, setImageUpload] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-  const [imageName, setImageName] = useState('');
+  const [imageName, setImageName] = useState("");
 
   useEffect(() => {
-    // if (!imageUpload) return;
-    
     return () => {
-      URL.revokeObjectURL(imagePreview)
-      setImagePreview(null)
-      // setImageName(null)
-    }
-  }, [imageUpload])
+      if (imagePreview && imageUpload) {
+        URL.revokeObjectURL(imagePreview);
+      }
+      setImagePreview(null);
+    };
+  }, [imageUpload]);
 
+  // useEffect(() => {
+  //   // if (!imageUpload) return;
+
+  //   return () => {
+  //     URL.revokeObjectURL(imagePreview)
+  //     setImagePreview(null)
+  //     // setImageName(null)
+  //   }
+  // }, [imageUpload])
 
   const createBookHandler = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    const {image, ...bookData} = Object.fromEntries(formData);
+    const { img, ...bookData } = Object.fromEntries(formData);
     // console.log(bookData);
-    bookData.img = image;
+
+    if (imageUpload) {
+      //upload img
+      const imageRef = ref(storage, `images/${img.name}`);
+      await uploadBytes(imageRef, img);
+      bookData.img = await getDownloadURL(imageRef);
+    } else {
+      bookData.img = img;
+    }
+
     bookData._createdOn = Date.now();
     bookData._updatedOn = Date.now();
     bookData._id = Math.random().toString(36).substring(2, 10);
 
     // Basic validation
-    if (!bookData.title || !bookData.author || !bookData.genre || !bookData.releaseDate || !bookData.summary || !bookData.img) {
-      alert('Please fill in all fields.');
+    if (
+      !bookData.title ||
+      !bookData.author ||
+      !bookData.genre ||
+      !bookData.releaseDate ||
+      !bookData.summary ||
+      !bookData.img
+    ) {
+      alert("Please fill in all fields.");
       return;
     }
 
@@ -48,33 +74,32 @@ export default function CreateBook () {
     //   console.log(result);
 
     //   navigate('/books');
-      
+
     // } catch (error) {
     //   throw new Error(error.message);
     // }
 
     // Pass the new book data to a parent component function (e.g., to add to a list)
     try {
-      await request('/books', 'POST', bookData);
+      await request("/books", "POST", bookData);
 
-      navigate('/books');
+      navigate("/books");
     } catch (error) {
       alert(error.message);
     }
-
   };
-  
+
   const imageUploadClickHandler = () => {
-    setImageUpload(state => !state)
-  }
+    setImageUpload((state) => !state);
+  };
 
   const imageChangeHandler = (e) => {
-    const image = e.target.files[0];
-    const name = image.name;
-    const imageUrl = URL.createObjectURL(image);
+    const img = e.target.files[0];
+    const name = img.name;
+    const imageUrl = URL.createObjectURL(img);
     setImagePreview(imageUrl);
     setImageName(name);
-  }
+  };
 
   const imageUrlChangeHandler = (e) => {
     const url = e.target.value;
@@ -85,11 +110,18 @@ export default function CreateBook () {
 
   return (
     <div className="max-w-xl mx-auto p-6 rounded-lg shadow-xl mt-30 bg-stone-100 border-solid">
-      <h2 className="text-3xl font-serif text-gray-900 mb-6 text-center">Add New Book</h2>
+      <h2 className="text-3xl font-serif text-gray-900 mb-6 text-center">
+        Add New Book
+      </h2>
       <form onSubmit={createBookHandler} className="space-y-4">
         {/* Title Input */}
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">Book Title</label>
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Book Title
+          </label>
           <input
             type="text"
             id="title"
@@ -102,7 +134,12 @@ export default function CreateBook () {
 
         {/* Author Input */}
         <div>
-          <label htmlFor="author" className="block text-sm font-medium text-gray-700">Author</label>
+          <label
+            htmlFor="author"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Author
+          </label>
           <input
             type="text"
             id="author"
@@ -115,7 +152,12 @@ export default function CreateBook () {
 
         {/* Genre Input */}
         <div>
-          <label htmlFor="genre" className="block text-sm font-medium text-gray-700">Genre</label>
+          <label
+            htmlFor="genre"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Genre
+          </label>
           <input
             type="text"
             id="genre"
@@ -128,7 +170,12 @@ export default function CreateBook () {
 
         {/* Release Date Input */}
         <div>
-          <label htmlFor="releaseDate" className="block text-sm font-medium text-gray-700">Release Date</label>
+          <label
+            htmlFor="releaseDate"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Release Date
+          </label>
           <input
             type="date"
             id="releaseDate"
@@ -140,7 +187,12 @@ export default function CreateBook () {
 
         {/* Summary Textarea */}
         <div>
-          <label htmlFor="summary" className="block text-sm font-medium text-gray-700">Summary</label>
+          <label
+            htmlFor="summary"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Summary
+          </label>
           <textarea
             id="summary"
             name="summary"
@@ -153,26 +205,33 @@ export default function CreateBook () {
 
         {/* Image URL Input */}
         <div>
-          <label htmlFor="img" className="block text-sm font-medium text-gray-700">{imageUpload ? "Image Upload" : "Image URL"}</label>
+          <label
+            htmlFor="img"
+            className="block text-sm font-medium text-gray-700"
+          >
+            {imageUpload ? "Image Upload" : "Image URL"}
+          </label>
           <button
             type="button"
             onClick={imageUploadClickHandler}
             className="px-4 py-2 bg-indigo-600 text-white rounded-md shadow 
-                      hover:bg-indigo-700 transition font-medium">
+                      hover:bg-indigo-700 transition font-medium"
+          >
             {imageUpload ? "Image URL" : "Image Upload"}
           </button>
-          {imageUpload ? 
+          {imageUpload ? (
             <input
-              type="file" 
+              type="file"
               id="img"
               name="img"
               placeholder="Upload file..."
               onChange={imageChangeHandler}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
-            /> : 
+            />
+          ) : (
             <input
-              type="url" 
+              type="url"
               id="img"
               name="img"
               placeholder="e.g., https://example.com/book-cover.jpg"
@@ -180,11 +239,16 @@ export default function CreateBook () {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
-            }
-            {imagePreview && (
+          )}
+          {imagePreview && (
             <div className="mt-4 flex justify-center">
-              <img src={imagePreview} alt={imageName} className="max-h-48 rounded-md shadow-md object-cover" />
-            </div>)}
+              <img
+                src={imagePreview}
+                alt={imageName}
+                className="max-h-48 rounded-md shadow-md object-cover"
+              />
+            </div>
+          )}
         </div>
 
         {/* Submit Button */}
@@ -197,4 +261,4 @@ export default function CreateBook () {
       </form>
     </div>
   );
-};
+}
