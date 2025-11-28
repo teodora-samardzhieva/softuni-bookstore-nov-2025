@@ -20,7 +20,6 @@ export default function CreateBook() {
   }, [imageUpload]);
 
   // useEffect(() => {
-  //   // if (!imageUpload) return;
 
   //   return () => {
   //     URL.revokeObjectURL(imagePreview)
@@ -37,10 +36,15 @@ export default function CreateBook() {
     // console.log(bookData);
 
     if (imageUpload) {
-      //upload img
-      const imageRef = ref(storage, `images/${img.name}`);
-      await uploadBytes(imageRef, img);
-      bookData.img = await getDownloadURL(imageRef);
+      try {
+        //upload img
+        const imageRef = ref(storage, `images/${img.name}`);
+        await uploadBytes(imageRef, img);
+        bookData.img = await getDownloadURL(imageRef);
+      } catch (err) {
+        alert("Image upload failed: " + err.message);
+        return; // stop submission
+      }
     } else {
       bookData.img = img;
     }
