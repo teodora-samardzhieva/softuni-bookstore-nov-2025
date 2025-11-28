@@ -1,17 +1,14 @@
 // import { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import useForm from "../../hooks/useForm.js";
 
 export default function Register({
-  //onSubmit
   onRegister
 }) {
   const navigate = useNavigate();
 
-  const registerSubmit = (formData) => {
-    const username = formData.get('username');
-    const email = formData.get('email');
-    const password = formData.get('password');
-    const confirmPassword = formData.get('confirmPassword');
+  const registerSubmitHandler = (values) => { 
+    const { username, email, password, confirmPassword } = values;
 
     // Validation
     if(!username || !email || !password || !confirmPassword) {
@@ -30,13 +27,24 @@ export default function Register({
         password //TODO: Remove
       );
       
-      
       //Redirect to home page
       navigate('/');
     } catch (error) {
       alert(error.message);
     }
   }
+
+  const {
+    formAction, 
+    register,
+  } = useForm(registerSubmitHandler, {
+    //initial state
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 mt-24">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -46,7 +54,7 @@ export default function Register({
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action={registerSubmit}>
+        <form className="space-y-6" action={formAction}>
           {/* Username */}
           <div>
             <label
@@ -58,9 +66,9 @@ export default function Register({
             <div className="mt-2">
               <input
                 id="username"
-                name="username"
                 type="text"
                 required
+                {...register('username')}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
             </div>
@@ -78,10 +86,10 @@ export default function Register({
             <div className="mt-2">
               <input
                 id="email"
-                name="email"
                 type="email"
                 required
                 autoComplete="email"
+                {...register('email')}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
             </div>
@@ -98,9 +106,9 @@ export default function Register({
             <div className="mt-2">
               <input
                 id="password"
-                name="password"
                 type="password"
                 required
+                {...register('password')}
                 autoComplete="new-password"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
@@ -118,9 +126,9 @@ export default function Register({
             <div className="mt-2">
               <input
                 id="confirmPassword"
-                name="confirmPassword"
                 type="password"
                 required
+                {...register('confirmPassword')}
                 autoComplete="new-password"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
