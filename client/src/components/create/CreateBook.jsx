@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router";
-import request from "../../utils/request.js";
+// import request from "../../utils/request.js";
 import { useEffect, useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase.js";
+import { useUserContext } from "../../context/UserContext.jsx";
 
 export default function CreateBook() {
   const navigate = useNavigate();
   const [imageUpload, setImageUpload] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [imageName, setImageName] = useState("");
+  const { user } = useUserContext();
 
   useEffect(() => {
     return () => {
@@ -50,7 +52,7 @@ export default function CreateBook() {
     }
 
     bookData._createdOn = Date.now();
-    bookData._updatedOn = Date.now();
+    // bookData._updatedOn = Date.now(); 
     bookData._id = Math.random().toString(36).substring(2, 10);
 
     // Basic validation
@@ -66,31 +68,35 @@ export default function CreateBook() {
       return;
     }
 
-    // try {
-    //   const response = await fetch('http://localhost:3030/jsonstore/books', {
-    //     method: 'POST',
-    //     headers: {
-    //       'content-type': 'application/json'
-    //     },
-    //     body: JSON.stringify(bookData),
-    //   });
-    //   const result = await response.json();
-    //   console.log(result);
+    try {
+      // const response = await fetch('http://localhost:3030/jsonstore/books', {
+      const response = await fetch('http://localhost:3030/data/books', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+              'X-Authorization': user?.accessToken
+        },
+        body: JSON.stringify(bookData),
+      });
+      // const result = await response.json();
+      // console.log(result);
+      await response.json();
+      navigate('/books');
 
-    //   navigate('/books');
-
-    // } catch (error) {
-    //   throw new Error(error.message);
-    // }
+    } catch (error) {
+      throw new Error(error.message);
+    }
 
     // Pass the new book data to a parent component function (e.g., to add to a list)
-    try {
-      await request("/books", "POST", bookData);
+    // try {
+    //   await request("/data/books", "POST", bookData, 
+    //     // { accessToken: user?.accessToken }
+    // );
 
-      navigate("/books");
-    } catch (error) {
-      alert(error.message);
-    }
+    //   navigate("/books");
+    // } catch (error) {
+    //   alert(error.message);
+    // }
   };
 
   const imageUploadClickHandler = () => {
@@ -266,3 +272,4 @@ export default function CreateBook() {
     </div>
   );
 }
+
