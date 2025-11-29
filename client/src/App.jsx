@@ -35,7 +35,7 @@ function App() {
           <Route path="/books" element={<Catalog />} />
           <Route
             path="/books/:bookId/details"
-            element={<Details user={user} />}
+            element={<Details />}
           />
 
           <Route path="/books/:bookId/edit" element={<Edit />} />

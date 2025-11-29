@@ -1,21 +1,25 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import request from "../../utils/request.js";
+import useRequest from "../../hooks/useRequest.js";
 
-export default function DetailsComments({
-    refresh
-}) {
-  const [comments, setComments] = useState([]);
+export default function DetailsComments() {
   const { bookId } = useParams();
 
-  useEffect(() => {
-    request(`/comments`).then((result) => {
-      const bookComments = Object.values(result).filter(
-        (comment) => comment.bookId === bookId
-      );
-      setComments(bookComments);
-    });
-  }, [bookId, refresh]);
+  const urlSearchParams = new URLSearchParams({
+    where: `bookId="${bookId}"`,
+    load: 'author=_ownerId:users'
+  });
+
+  //TODO fix refresh
+  const {data:comments } = useRequest(`/data/comments?${urlSearchParams.toString()}`, []);
+
+  // useEffect(() => {
+  //   request(`/data/comments`).then((result) => {
+  //     const bookComments = Object.values(result).filter(
+  //       (comment) => comment.bookId === bookId
+  //     );
+  //     setComments(bookComments);
+  //   });
+  // }, [bookId, refresh]);
 
   return (
     <div>
@@ -25,7 +29,7 @@ export default function DetailsComments({
             <p className="text-sm text-gray-600 mb-1">
                 Author:{" "}
                 <span className="font-medium text-gray-800">
-                {comment.author}
+                {comment.author?.email}
                 </span>
             </p>
             <p className="text-gray-700">{comment.message}</p>
@@ -34,7 +38,7 @@ export default function DetailsComments({
         </ul>
         
         {comments.length === 0 && (
-        <p className="text-gray-600 text-center">No comments.</p>
+        <p className="text-gray-600 text-center mb-10">No comments.</p>
         )}
       </div>
   );

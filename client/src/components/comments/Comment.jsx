@@ -1,34 +1,34 @@
-import { useState } from "react";
-import request from "../../utils/request.js";
 import { useParams } from "react-router";
+import useRequest from "../../hooks/useRequest.js";
+import useForm from "../../hooks/useForm.js";
 
 export default function Comment({
     user,
     onCreate
 }) {
-    const [comment, setComment] = useState();
     const {bookId} = useParams();
+    const { request } = useRequest();  
 
-    const changeHandler = (e) => {
-        setComment(e.target.value);
-    }
 
-    const submitHandler = async () => {
+    const submitHandler = async ({comment}) => {
         try {
             
-            await request('/comments', 'POST', {
-                author: user.username,
+            await request('/data/comments', 'POST', {
                 message: comment,
                 bookId,
             });
     
-            setComment(''); // CLEAR the form
             onCreate();
         } catch (error) {
             alert(error.message);
         }
     }
 
+    // add comment (only for logged-in users, which are not creators of the current book)
+
+    const { register, formAction } = useForm(submitHandler, {
+      comment: ''
+    })
 
   return (
     <article className="bg-gray-50 rounded-lg p-6 shadow-inner">
@@ -36,20 +36,18 @@ export default function Comment({
         Add your comment
       </h3>
 
-      <form action={submitHandler} className="space-y-4">
+      <form action={formAction} className="space-y-4">
         <div>
           <label htmlFor="comment-textarea" className="sr-only">
             Comment text.....
           </label>
           <textarea
                 id="comment-textarea"
-                name="comment"
+                {...register('comment')} 
                 placeholder="Write your comment here..."
                 rows="4"
                 required
-                onChange={changeHandler}
-                value={comment}
-                // disabled={!user} 
+                disabled={!user}
                 className="w-full p-3 border border-gray-300 rounded-md shadow-sm 
                  focus:outline-none focus:ring-2 focus:ring-indigo-500 
                  text-gray-700"

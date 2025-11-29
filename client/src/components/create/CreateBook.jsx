@@ -53,7 +53,7 @@ export default function CreateBook() {
       bookData.img = img;
     }
 
-    bookData._createdOn = Date.now();
+    // bookData._createdOn = Date.now();
     // bookData._updatedOn = Date.now(); 
     bookData._id = Math.random().toString(36).substring(2, 10);
 

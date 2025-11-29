@@ -3,8 +3,10 @@ import { Link, useNavigate, useParams } from "react-router";
 import Comment from "../comments/Comment.jsx";
 import DetailsComments from "../comments/DetailsComments.jsx";
 import useRequest from "../../hooks/useRequest.js";
+import { useUserContext } from "../../context/UserContext.jsx";
 
-export default function Details({ user }) {
+export default function Details() {
+  const { user, isAuthenticated } = useUserContext();
   const { bookId } = useParams();
   const navigate = useNavigate();
   const [refresh, setRefresh] = useState(false);
@@ -88,7 +90,7 @@ export default function Details({ user }) {
               </p>
             </div>
 
-            {/* //TODO: Check if has user */}
+            {/* //TODO: Check if has user and is owner */}
             {/* Action Button */}
             <div className="mt-10 flex flex-wrap-10 gap-10">
               <Link
@@ -97,12 +99,6 @@ export default function Details({ user }) {
               >
                 Edit
               </Link>
-              {/* <Link
-                            to={`/books/${bookId}/delete`}
-                            className="inline-flex items-center w-full md:w-auto justify-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium text-base px-6 py-3 transition duration-150 ml-10"
-                        >
-                            Delete
-                        </Link> */}
               <button
                 onClick={deleteGameHandler}
                 className="inline-flex items-center w-full md:w-auto justify-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium text-base px-6 py-3 transition duration-150 "
@@ -124,7 +120,7 @@ export default function Details({ user }) {
         <DetailsComments refresh={refresh} />
 
         {/* <!-- Add Comment Form --> */}
-        {user && <Comment user={user} onCreate={refreshHandler} />}
+        {isAuthenticated && <Comment user={user} onCreate={refreshHandler} />}
       </section>
     </div>
   );
