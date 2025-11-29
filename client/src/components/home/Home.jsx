@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { HiOutlineInformationCircle } from "react-icons/hi"; // Използваме една икона за детайли
-import { useEffect, useState } from "react";
-import request from "../../utils/request.js";
+// import { useEffect, useState } from "react";
+// import request from "../../utils/request.js";
 import useRequest from "../../hooks/useRequest.js";
 
 

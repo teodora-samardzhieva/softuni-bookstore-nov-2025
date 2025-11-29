@@ -1,44 +1,38 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
-import request from "../../utils/request.js";
 import Comment from "../comments/Comment.jsx";
 import DetailsComments from "../comments/DetailsComments.jsx";
+import useRequest from "../../hooks/useRequest.js";
 
 export default function Details({ user }) {
   const { bookId } = useParams();
-  const [book, setBook] = useState();
   const navigate = useNavigate();
   const [refresh, setRefresh] = useState(false);
 
-  useEffect(() => {
-    fetch(`http://localhost:3030/jsonstore/books/${bookId}`)
-      .then((response) => response.json())
-      .then((result) => setBook(result))
-      .catch((err) => alert(err.message));
-  }, [bookId]);
+  const { data: book, request } = useRequest(`/data/books/${bookId}`, {});
 
   const deleteGameHandler = async () => {
     const isConfirmed = confirm(
       `Are you sure you want to delete book: ${book.title}?`
     );
+
     if (!isConfirmed) {
       return;
     }
 
-    // try {
-    //     await fetch(`http://localhost:3030/jsonstore/books/${bookId}`, {
-    //         method: 'DELETE',
-    //     });
-
-    //     navigate('/books');
-    // } catch (error) {
-    //     alert('Unable to delete game: ', error.message);
-    // }
-
-    await request(`/books/${bookId}`, "DELETE");
-    navigate("/books");
+    try {
+      await request(`/data/books/${bookId}`, 'DELETE');
+      navigate('/books');
+    } catch (error) {
+      alert("Unable to delete game: ", error.message);
+    }
   };
 
+  
+  const refreshHandler = () => {
+    setRefresh((state) => !state);
+  };
+  
   // FIX: prevent crash
   if (!book) {
     return (
@@ -46,10 +40,6 @@ export default function Details({ user }) {
         Loading book details...
       </div>
     );
-  }
-
-  const refreshHandler = () => {
-    setRefresh(state => !state)
   }
 
   return (
