@@ -2,28 +2,36 @@ import { Link } from "react-router";
 import { HiOutlineInformationCircle } from "react-icons/hi"; // Използваме една икона за детайли
 import { useEffect, useState } from "react";
 import request from "../../utils/request.js";
+import useRequest from "../../hooks/useRequest.js";
 
 
 // Основен компонент за началната страница
 export default function Home() {
-  const [latestBooks, setLatestBooks] = useState([]);
+  // server canno decode + to %20
+  // const urlSearchParams = new URLSearchParams({
+  //   sortBy: '_createdOn desc'
+  // })
+
+  const { data: latestBooks } = useRequest(`/data/books?sortBy=_createdOn%20desc&pageSize=3`, []);
+
+  // const [latestBooks, setLatestBooks] = useState([]);
 
   // Comment useEffect to see how it looks without books
-  useEffect(() => {
-    //   fetch('http://localhost:3030/jsonstore/books')
-    //    .then(response => response.json())
-    request('/books')
-        .then(result => {
-          const resultBooks = Object.values(result)
-            .sort((a, b) => b._createdOn - a._createdOn)
-            .slice(0, 3);
+  // useEffect(() => {
+  //   //   fetch('http://localhost:3030/jsonstore/books')
+  //   //    .then(response => response.json())
+  //   request('/books')
+  //       .then(result => {
+  //         const resultBooks = Object.values(result)
+  //           .sort((a, b) => b._createdOn - a._createdOn)
+  //           .slice(0, 3);
 
-          setLatestBooks(resultBooks);
-        })
-        .catch(err => {
-          alert(err.message);
-        })
-    }, []);
+  //         setLatestBooks(resultBooks);
+  //       })
+  //       .catch(err => {
+  //         alert(err.message);
+  //       })
+  //   }, []);
 
   return (
     <div className="relative isolate px-6 lg:px-8">
