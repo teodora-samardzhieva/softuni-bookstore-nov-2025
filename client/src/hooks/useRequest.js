@@ -23,10 +23,10 @@ export default function useRequest() {
 
         // console.log(isAuthenticated);
 
-        if(config.accessToken || isAuthenticated) {
+        if(config?.accessToken || isAuthenticated) {
             options.headers = {
                 ...options.headers,
-                'X-Authorization': config.accessToken || user.accessToken
+                'X-Authorization': config?.accessToken || user.accessToken
             }
         }
 
