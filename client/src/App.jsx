@@ -25,7 +25,7 @@ function App() {
   return (
     <>
       <div className="bg-white">
-        <Header user={user} />
+        <Header />  {/* user={user} */}
 
         <Routes>
           <Route index element={<Home />} />

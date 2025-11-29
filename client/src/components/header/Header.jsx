@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router";
+import { useUserContext } from "../../context/UserContext.jsx";
 
 export default function Header({ user }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const {isAuthenticated} = useUserContext();
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -12,7 +14,7 @@ export default function Header({ user }) {
   ];
 
   // Guest users
-  if (!user) {
+  if (!isAuthenticated) { //!user
     navigation.push({ name: "Login", href: "/login" });
     navigation.push({ name: "Register", href: "/register" });
   } else {
