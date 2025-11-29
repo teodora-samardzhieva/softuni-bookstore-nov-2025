@@ -1,14 +1,6 @@
 import { HiOutlineInformationCircle, HiOutlineBookmark } from "react-icons/hi";
 import { Link } from "react-router";
 
-/**
- * Карта за визуализация на една книга в каталога.
- * @param {string} title - Заглавието на книгата.
- * @param {string} imageUrl - URL адресът на корицата.
- * @param {function} onDetailsClick - Хендлър при клик на бутона "Детайли".
- * @param {function} onBookmarkClick - Хендлър при клик на бутона "Запази".
- */
-
 export default function Book({
     _id,
     title,
@@ -38,7 +30,7 @@ export default function Book({
           <HiOutlineInformationCircle className="mr-2 text-lg" /> Details
         </Link>
         <button className="flex items-center justify-center bg-indigo-900 text-white px-1.5 sm:px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition duration-200 flex-1 min-w-min" 
-        // onClick={onBookmarkClick} //TODO
+        // onClick={onBookmarkClick} //TODO if logged-in
         >
           <HiOutlineBookmark className="mr-2 text-lg" /> Bookmark
         </button>
