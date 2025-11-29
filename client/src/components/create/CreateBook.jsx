@@ -32,7 +32,7 @@ export default function CreateBook() {
 
   const createBookHandler = async (e) => {
     e.preventDefault();
-
+    // Uncontrolled form //TODO change to controlled form
     const formData = new FormData(e.target);
     const { img, ...bookData } = Object.fromEntries(formData);
     // console.log(bookData);
