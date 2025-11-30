@@ -6,23 +6,24 @@ export default function Favorites() {
 
   if (favorites.length === 0) {
     return (
-      <div className="App">
-        <div>
-          <h2 className="text-3xl sm:text-4xl font-serif font-extrabold text-black-800 tracking-wide text-center py-8 border-indigo-200 mb-6 mt-30">
-            📚 No favorite books yet <br></br>
+      <div className="App px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-extrabold text-black tracking-wide py-8 mb-6 mt-30">
+            📚 No favorite books yet
+            <br />
             <Link
               to="/books"
-              className="underline hover:text-indigo-800 text-2xl"
+              className="underline hover:text-indigo-800 text-lg sm:text-xl md:text-2xl"
             >
               Start bookmarking to see them here!
             </Link>
           </h2>
-          <div className="flex justify-center items-center mt-4">
+
+          <div className="flex justify-center mt-4">
             <img
               src="/assets/img/no-books-found.png"
               alt="No books found!"
-              style={{ width: "500px", height: "500px" }}
-              className="object-contain"
+              className="w-100 sm:w-150 md:w-150 lg:w-200 xl:w-[1000px] h-auto object-contain"
             />
           </div>
         </div>
