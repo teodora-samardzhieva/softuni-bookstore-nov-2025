@@ -20,7 +20,7 @@ export default function Login() {
 
       navigate("/");
     } catch (error) {
-      alert(error.message);
+      alert('Login failed: ' + error.message);
     }
   };
 

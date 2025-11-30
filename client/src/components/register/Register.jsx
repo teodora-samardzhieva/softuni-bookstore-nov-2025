@@ -30,7 +30,7 @@ export default function Register() {
       //Redirect to home page
       navigate('/');
     } catch (error) {
-      alert(error.message);
+      alert('Registration failed: ' + error.message);
     }
   }
 
