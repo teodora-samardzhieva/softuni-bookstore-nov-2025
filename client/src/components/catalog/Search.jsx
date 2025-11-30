@@ -1,4 +1,14 @@
-export default function Search() {
+import { useState } from "react";
+
+export default function Search({onSearch}) {
+    const [value, setValue] = useState("");
+
+    const handleChange = (e) => {
+        const text = e.target.value;
+        setValue(text);
+        onSearch(text);      // send to parent
+    };
+
     return (
         <div className="w-full flex justify-center mt-6">
             <div className="mb-3 md:w-96">
@@ -7,6 +17,8 @@ export default function Search() {
                         type="search"
                         className="relative m-0 -mr-0.5 block w-[1px] min-w-50 flex-auto rounded-l border border-neutral-300 bg-transparent px-3 py-[0.25rem] text-base text-neutral-700 outline-none transition duration-200 focus:z-[3] focus:border-primary dark:border-neutral-600 dark:text-neutral-200"
                         placeholder="Search"
+                        value={value}
+                        onChange={handleChange}
                     />
 
                     <button

@@ -2,11 +2,11 @@
 import Book from "./Book.jsx";
 import useRequest from "../../hooks/useRequest.js";
 
-export default function BookGrid() {
+export default function BookGrid({search, onBookmark}) {
   // const [books, setBooks] = useState([]);
 
   // Fetch once on mount
-  const {data: books} = useRequest('/data/books', []);
+  const { data: books } = useRequest("/data/books", []);
 
   // same as
   // useEffect(() => {
@@ -36,9 +36,14 @@ export default function BookGrid() {
   // Пример за API повикване: dataService.toggleBookmark(bookId);
   // };
 
+  // Filter based on search text
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <>
-      {!books || books.length === 0 ? (
+      {!books || books.length === 0 || filteredBooks.length === 0 ? (
         <div className="p-6 text-center text-black min-h-screen">
           Няма намерени книги.
         </div>
@@ -57,16 +62,23 @@ export default function BookGrid() {
           p-4 md:px-10
           justify-items-center"
         >
-          {books.map((book) => (
-            <Book
-              key={book._id}
-              _id={book._id}
-              title={book.title}
-              imageUrl={book.img}
-              // TODO:
-              // onBookmarkClick={() => onBookmark(book._id)}
-            />
-          ))}
+          {filteredBooks
+            ? filteredBooks.map((book) => (
+                <Book
+                  key={book._id}
+                  _id={book._id}
+                  title={book.title}
+                  imageUrl={book.img}
+                />
+              ))
+            : books.map((book) => (
+                <Book
+                  key={book._id}
+                  _id={book._id}
+                  title={book.title}
+                  imageUrl={book.img}
+                />
+              ))}
           {/* {books.map(book => <Book key={book._id} {...book} />)} */}
         </div>
       )}
