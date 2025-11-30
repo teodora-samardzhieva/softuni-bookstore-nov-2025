@@ -4,9 +4,9 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router";
 import { useUserContext } from "../../context/UserContext.jsx";
 
-export default function Header({ user }) {
+export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const {isAuthenticated} = useUserContext();
+  const {user, isAuthenticated} = useUserContext();
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -63,9 +63,6 @@ export default function Header({ user }) {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           {user ? 
-            // <Link to="/profile" className="text-sm/6 font-semibold text-gray-900">
-            //     {user.email}<span aria-hidden="true">&rarr;</span>
-            // </Link> 
             <p 
               className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
                 {user.email}
@@ -81,14 +78,15 @@ export default function Header({ user }) {
         <div className="fixed inset-0 z-50" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                alt=""
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
-              />
-            </a>
+            <Link to="/" className="-m-1.5 p-1.5"> 
+              <span className="font-serif font-extrabold text-indigo-800">My Bookstore</span>
+              {/* className="sr-only" */}
+              {/* <img
+                alt="Bookstore"
+                src="/assets/img/logo.png"
+                className="h-24 w-auto"
+              /> */}
+            </Link>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
@@ -112,13 +110,7 @@ export default function Header({ user }) {
                 ))}
               </div>
               <div className="py-6">
-                {/* <Link
-                  to="/"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </Link> */}
-                {user ? <p className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">{user.email}</p> : ''}
+                {isAuthenticated && (<p className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">{user.email}</p> )}
               </div>
             </div>
           </div>
