@@ -1,48 +1,68 @@
 // import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import useForm from "../../hooks/useForm.js";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../context/UserContext.jsx";
 
 export default function Register() {
   const navigate = useNavigate();
-  const {registerHandler} = useContext(UserContext);
+  const { registerHandler } = useContext(UserContext);
+  const [errors, setErrors] = useState({});
 
-  const registerSubmitHandler = async (values) => { 
+  const registerSubmitHandler = async (values) => {
     const { username, email, password, confirmPassword } = values;
 
     // Validation
-    if(!username || !email || !password || !confirmPassword) {
-      return alert('All fields are required!');
-    }
-    if(password !== confirmPassword) {
-      return alert('Password missmatch!');
-    }
+    // if(!username || !email || !password || !confirmPassword) {
+    //   return alert('All fields are required!');
+    // }
+    // if(password !== confirmPassword) {
+    //   return alert('Password missmatch!');
+    // }
 
-    try {
-      // Register user
-      await registerHandler(
-        username,
-        email,
-        password 
-      );
-      
-      //Redirect to home page
-      navigate('/');
-    } catch (error) {
-      alert('Registration failed: ' + error.message);
-    }
-  }
+    const validate = () => {
+      let tempErrors = {};
+      if (!username) {
+        tempErrors.username = "Username is required";
+      } else if (!/^[a-zA-Z0-9]{3,16}$/.test(username)) {
+        tempErrors.username = "Username is invalid";
+      }
+      if (!email) {
+        tempErrors.email = "Email is required";
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+        tempErrors.email = "Email is invalid";
+      }
+      if (!password) {
+        tempErrors.password = "Password is required";
+      } else if (password.length < 6) {
+        tempErrors.password = "Password must be at least 6 characters";
+      }
+      if (confirmPassword !== password) {
+        tempErrors.confirmPassword = "Password missmatch";
+      } 
+      setErrors(tempErrors);
+      return Object.keys(tempErrors).length === 0;
+    };
 
-  const {
-    formAction, 
-    register,
-  } = useForm(registerSubmitHandler, {
+    if (validate()) {
+      try {
+        // Register user
+        await registerHandler(username, email, password);
+
+        //Redirect to home page
+        navigate("/");
+      } catch (error) {
+        alert("Registration failed: " + error.message);
+      }
+    }
+  };
+
+  const { formAction, register } = useForm(registerSubmitHandler, {
     //initial state
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   return (
@@ -68,9 +88,12 @@ export default function Register() {
                 id="username"
                 type="text"
                 required
-                {...register('username')}
+                {...register("username")}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
+              {errors.username && (
+                <p style={{ color: "red" }}>{errors.username}</p>
+              )}
             </div>
             {/* {<h2 className="text-red-500 italic">Username: {user.username} already exists!</h2>} //TODO: Check if username is taken*/}
           </div>
@@ -80,7 +103,7 @@ export default function Register() {
             <label
               htmlFor="email"
               className="block text-sm/6 font-medium text-gray-900"
-              >
+            >
               Email address
             </label>
             <div className="mt-2">
@@ -89,9 +112,10 @@ export default function Register() {
                 type="email"
                 required
                 autoComplete="email"
-                {...register('email')}
+                {...register("email")}
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
+              />
+              {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
             </div>
           </div>
 
@@ -108,10 +132,13 @@ export default function Register() {
                 id="password"
                 type="password"
                 required
-                {...register('password')}
+                {...register("password")}
                 autoComplete="new-password"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
+              {errors.password && (
+                <p style={{ color: "red" }}>{errors.password}</p>
+              )}
             </div>
           </div>
 
@@ -128,10 +155,13 @@ export default function Register() {
                 id="confirmPassword"
                 type="password"
                 required
-                {...register('confirmPassword')}
+                {...register("confirmPassword")}
                 autoComplete="new-password"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
+              {errors.confirmPassword && (
+                <p style={{ color: "red" }}>{errors.confirmPassword}</p>
+              )}
             </div>
           </div>
 
