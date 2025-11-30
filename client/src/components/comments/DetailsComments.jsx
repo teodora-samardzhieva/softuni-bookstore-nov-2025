@@ -4,14 +4,16 @@ import useRequest from "../../hooks/useRequest.js";
 export default function DetailsComments() {
   const { bookId } = useParams();
 
+
   const urlSearchParams = new URLSearchParams({
     where: `bookId="${bookId}"`,
     load: 'author=_ownerId:users'
   });
-
-  //TODO fix refresh
-  const {data:comments } = useRequest(`/data/comments?${urlSearchParams.toString()}`, []);
-
+  // load: '_ownerId=author:users'
+  
+  //TODO fix refresh // remove = [] (without it its bad request)
+  const {data:comments = [] } = useRequest(`/data/comments?${urlSearchParams.toString()}`, []);
+ 
   // useEffect(() => {
   //   request(`/data/comments`).then((result) => {
   //     const bookComments = Object.values(result).filter(

@@ -55,7 +55,7 @@ export default function CreateBook() {
 
     // bookData._createdOn = Date.now();
     // bookData._updatedOn = Date.now(); 
-    bookData._id = Math.random().toString(36).substring(2, 10);
+    // bookData._id = Math.random().toString(36).substring(2, 10);
 
     // Basic validation
     if (
