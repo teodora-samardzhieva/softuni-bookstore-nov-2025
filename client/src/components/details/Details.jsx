@@ -89,7 +89,6 @@ export default function Details() {
               </p>
             </div>
 
-            {/* //TODO: Check if has user and is owner */}
             {/* Action Button */}
             {isAuthenticated && user._id === book._ownerId && (
               <div className="mt-10 flex flex-wrap-10 gap-10">
