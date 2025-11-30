@@ -1,9 +1,7 @@
-// import { useEffect, useState } from "react";
 import Book from "./Book.jsx";
 import useRequest from "../../hooks/useRequest.js";
 
-export default function BookGrid({search, onBookmark}) {
-  // const [books, setBooks] = useState([]);
+export default function BookGrid({search}) {
 
   // Fetch once on mount
   const { data: books } = useRequest("/data/books", []);
@@ -29,12 +27,6 @@ export default function BookGrid({search, onBookmark}) {
   //       console.log(err.messsage)
   //     });
   // }, [request]);
-
-  // const onBookmark = (bookId) => {
-  // В реално приложение, тук бихте изпратили заявка към бекенда
-  // за добавяне/премахване на книгата от списъка с отметки на потребителя.
-  // Пример за API повикване: dataService.toggleBookmark(bookId);
-  // };
 
   // Filter based on search text
   const filteredBooks = books.filter((book) =>

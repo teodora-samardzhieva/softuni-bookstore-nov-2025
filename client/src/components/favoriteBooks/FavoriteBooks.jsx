@@ -54,28 +54,24 @@ export default function Favorites() {
             key={book._id}
             className="bg-blue-100 rounded-lg p-4 text-center shadow-lg transform transition duration-300 hover:scale-105 flex flex-col w-70 sm:w-70 h-95 sm:h-100"
           >
-            {/* Изображение на корицата */}
+            {/* Image Cover */}
             <img
               src={book.img}
               alt={`Корица на ${book.title}`}
               className="w-full h-60 sm:h-60 object-cover rounded-md mb-4 border border-gray-700"
             />
 
-            {/* Заглавие */}
+            {/* Book Title */}
             <h3 className="text-sm font-semibold italic text-black mb-auto pb-6 flex-grow line-clamp-2">
               Title: {book.title}
             </h3>
-            {/* Автор */}
+            {/* Author */}
             <h3 className="text-sm font-semibold italic text-black mb-auto pb-6 flex-grow line-clamp-2 mt-5">
               Author: {book.author}
             </h3>
 
-            {/* Бутони за взаимодействие */}
+            {/* Action Buttons */}
             <div className="flex flex-wrap justify-center gap-2 mt-auto transform transition duration-300">
-              {/* <div key={book._id} className="shadow p-4 rounded bg-white">
-            <img src={book.img} className="h-64 w-full object-cover rounded" />
-            <h3 className="text-xl mt-2">{book.title}</h3> */}
-
               <button
                 onClick={() => removeFavorite(book._id)}
                 className="mt-3 w-full bg-red-500 text-white py-2 rounded"
