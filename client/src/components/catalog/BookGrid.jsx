@@ -36,8 +36,8 @@ export default function BookGrid({search}) {
   return (
     <>
       {!books || books.length === 0 || filteredBooks.length === 0 ? (
-        <div className="p-6 text-center text-black min-h-screen">
-          Няма намерени книги.
+        <div className="p-6 text-center text-xl text-black min-h-screen">
+          📚 No books found. 
         </div>
       ) : (
         <div

@@ -27,7 +27,7 @@ function App() {
     <>
       {/* <div className="bg-white"> */}
       <div>
-        <Background />
+        <Background.Top />
         <Header /> {/* user={user} */}
         <Routes>
           <Route index element={<Home />} />
@@ -45,6 +45,7 @@ function App() {
           </Route>
         </Routes>
         <Footer />
+        <Background.Bottom />
       </div>
     </>
   );

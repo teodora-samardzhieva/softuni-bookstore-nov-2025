@@ -33,7 +33,7 @@ export default function Favorites() {
 
   return (
     <div className="App">
-      <h2 className="text-3xl sm:text-4xl font-serif font-extrabold text-indigo-800 tracking-wide text-center py-8 border-b-2 border-indigo-200 mb-6 mt-30">
+      <h2 className="text-3xl sm:text-4xl font-serif font-extrabold text-rose-400 tracking-wide text-center py-8 border-b-2 border-rose-200 mb-6 mt-30">
         Favorite Books
       </h2>
       <div
@@ -53,7 +53,7 @@ export default function Favorites() {
         {favorites.map((book) => (
           <div
             key={book._id}
-            className="bg-blue-100 rounded-lg p-4 text-center shadow-lg transform transition duration-300 hover:scale-105 flex flex-col w-70 sm:w-70 h-95 sm:h-100"
+            className="bg-rose-200 rounded-lg p-4 text-center shadow-lg transform transition duration-300 hover:scale-105 flex flex-col w-70 sm:w-70 h-95 sm:h-100"
           >
             {/* Image Cover */}
             <img
@@ -75,7 +75,7 @@ export default function Favorites() {
             <div className="flex flex-wrap justify-center gap-2 mt-auto transform transition duration-300">
               <button
                 onClick={() => removeFavorite(book._id)}
-                className="mt-3 w-full bg-red-500 text-white py-2 rounded"
+                className="mt-3 w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition duration-200"
               >
                 Remove
               </button>

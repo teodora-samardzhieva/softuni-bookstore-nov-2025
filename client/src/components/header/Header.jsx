@@ -35,10 +35,8 @@ export default function Header({ user }) {
             <span className="sr-only">Bookstore</span>
             <img
               alt=""
-              //   src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
               src="/assets/img/logo.png"
-              className="h-8 w-auto scale-400 ml-5"
-              //   className="h-24 w-auto"
+              className="h-12 w-auto scale-400 ml-5"
             />
           </Link>
         </div>

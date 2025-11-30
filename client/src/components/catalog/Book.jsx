@@ -28,7 +28,7 @@ export default function Book({
   };
 
   return (
-    <div className="bg-blue-100 rounded-lg p-4 text-center shadow-lg transform transition duration-300 hover:scale-105 flex flex-col w-70 sm:w-70 h-95 sm:h-100">
+    <div className="bg-violet-300 rounded-lg p-4 text-center shadow-lg transform transition duration-300 hover:scale-105 flex flex-col w-70 sm:w-70 h-95 sm:h-100">
       {/* Image Cover */}
       <img
         src={imageUrl}
