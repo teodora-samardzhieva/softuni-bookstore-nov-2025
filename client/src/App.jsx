@@ -10,6 +10,7 @@ import Catalog from "./components/catalog/Catalog.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import CreateBook from "./components/create/CreateBook.jsx";
 import Details from "./components/details/Details.jsx";
+import Background from "./components/bg/Background.jsx";
 
 import "tw-elements";
 import Logout from "./components/logout/Logout.jsx";
@@ -24,19 +25,17 @@ function App() {
 
   return (
     <>
-      <div className="bg-white">
-        <Header />  {/* user={user} */}
-
+      {/* <div className="bg-white"> */}
+      <div>
+        <Background />
+        <Header /> {/* user={user} */}
         <Routes>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/books" element={<Catalog />} />
-          <Route
-            path="/books/:bookId/details"
-            element={<Details />}
-          />
+          <Route path="/books/:bookId/details" element={<Details />} />
 
           <Route path="/books/:bookId/edit" element={<Edit />} />
 
