@@ -41,7 +41,7 @@ function App() {
           <Route path="/books/:bookId/edit" element={<Edit />} />
 
           <Route element={<AuthGuard user={user} />}>
-            <Route path="/favorite-books" element={<FavoriteBooks />} />
+            <Route path="/favorites" element={<FavoriteBooks />} />
             <Route path="/create" element={<CreateBook />} />
           </Route>
         </Routes>

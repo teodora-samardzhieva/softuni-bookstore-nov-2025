@@ -67,6 +67,7 @@ export default function BookGrid({search, onBookmark}) {
                 <Book
                   key={book._id}
                   _id={book._id}
+                  author={book.author}
                   title={book.title}
                   imageUrl={book.img}
                 />

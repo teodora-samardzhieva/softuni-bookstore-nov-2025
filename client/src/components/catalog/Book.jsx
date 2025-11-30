@@ -1,15 +1,32 @@
 import { useContext } from "react";
 import { HiOutlineInformationCircle, HiOutlineBookmark } from "react-icons/hi";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import UserContext from "../../context/UserContext.jsx";
+import { useFavorites } from "../../context/FavoriteContext.jsx";
 
 export default function Book({
   _id,
   title,
+  author,
   imageUrl,
   // onBookmarkClick //TODO
 }) {
-  const { user, isAuthenticated } = useContext(UserContext);
+  const { isAuthenticated } = useContext(UserContext);
+  const { favorites, addFavorite } = useFavorites();
+  const navigate = useNavigate();
+
+  const bookmarkHandler = () => {
+    // Check if book is already in favorites
+    const isAlreadyFavorite = favorites.some((fav) => fav._id === _id);
+
+    if (isAlreadyFavorite) {
+      alert("This book is already in your favorites!");
+      return; // stop adding again
+    }
+
+    addFavorite({ _id, title, author, img: imageUrl });
+    navigate("/favorites");
+  };
 
   return (
     <div className="bg-blue-100 rounded-lg p-4 text-center shadow-lg transform transition duration-300 hover:scale-105 flex flex-col w-70 sm:w-70 h-95 sm:h-100">
@@ -35,6 +52,7 @@ export default function Book({
         </Link>
         {isAuthenticated ? (
           <button
+            onClick={bookmarkHandler}
             className="flex items-center justify-center bg-indigo-900 text-white px-1.5 sm:px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition duration-200 flex-1 min-w-min"
             // onClick={onBookmarkClick} //TODO if logged-in
           >

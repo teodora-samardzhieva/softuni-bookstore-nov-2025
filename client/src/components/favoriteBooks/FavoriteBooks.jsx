@@ -1,105 +1,91 @@
-
-//TODO: GET FAVORITE BOOKS
-const favoriteBooks = [
-  {
-    id: 1,
-    title: 'Boost your conversion rate',
-    href: '#',
-    description:
-      'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-    date: 'Mar 16, 2020',
-    datetime: '2020-03-16',
-    category: { title: 'Marketing', href: '#' },
-    author: {
-      name: 'Michael Foster',
-      role: 'Co-Founder / CTO',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-  },
-  {
-    id: 2,
-    title: 'How to use search engine optimization to drive sales',
-    href: '#',
-    description: 'Optio cum necessitatibus dolor voluptatum provident commodi et. Qui aperiam fugiat nemo cumque.',
-    date: 'Mar 10, 2020',
-    datetime: '2020-03-10',
-    category: { title: 'Sales', href: '#' },
-    author: {
-      name: 'Lindsay Walton',
-      role: 'Front-end Developer',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-  },
-  {
-    id: 3,
-    title: 'Improve your customer experience',
-    href: '#',
-    description:
-      'Cupiditate maiores ullam eveniet adipisci in doloribus nulla minus. Voluptas iusto libero adipisci rem et corporis. Nostrud sint anim sunt aliqua. Nulla eu labore irure incididunt velit cillum quis magna dolore.',
-    date: 'Feb 12, 2020',
-    datetime: '2020-02-12',
-    category: { title: 'Business', href: '#' },
-    author: {
-      name: 'Tom Cook',
-      role: 'Director of Product',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-  },
-]
+import { Link } from "react-router";
+import { useFavorites } from "../../context/FavoriteContext.jsx";
 
 export default function Favorites() {
-  return (
-    <div className="bg-white py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:mx-0">
-          <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">From the blog</h2>
-          <p className="mt-2 text-lg/8 text-gray-600">Learn how to grow your business with our expert advice.</p>
-        </div>
-        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {favoriteBooks.map((post) => (
-            <article key={post.id} className="flex max-w-xl flex-col items-start justify-between">
-              <div className="flex items-center gap-x-4 text-xs">
-                <time dateTime={post.datetime} className="text-gray-500">
-                  {post.date}
-                </time>
-                <a
-                  href={post.category.href}
-                  className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                >
-                  {post.category.title}
-                </a>
-              </div>
-              <div className="group relative grow">
-                <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-                  <a href={post.href}>
-                    <span className="absolute inset-0" />
-                    {post.title}
-                  </a>
-                </h3>
-                <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">{post.description}</p>
-              </div>
-              <div className="relative mt-8 flex items-center gap-x-4 justify-self-end">
-                <img alt="" src={post.author.imageUrl} className="size-10 rounded-full bg-gray-50" />
-                <div className="text-sm/6">
-                  <p className="font-semibold text-gray-900">
-                    <a href={post.author.href}>
-                      <span className="absolute inset-0" />
-                      {post.author.name}
-                    </a>
-                  </p>
-                  <p className="text-gray-600">{post.author.role}</p>
-                </div>
-              </div>
-            </article>
-          ))}
+  const { favorites, removeFavorite } = useFavorites();
+
+  if (favorites.length === 0) {
+    return (
+      <div className="App">
+        <div>
+          <h2 className="text-3xl sm:text-4xl font-serif font-extrabold text-black-800 tracking-wide text-center py-8 border-indigo-200 mb-6 mt-30">
+            📚 No favorite books yet <br></br>
+            <Link
+              to="/books"
+              className="underline hover:text-indigo-800 text-2xl"
+            >
+              Start bookmarking to see them here!
+            </Link>
+          </h2>
+          <div className="flex justify-center items-center mt-4">
+            <img
+              src="/assets/img/no-books-found.png"
+              alt="No books found!"
+              style={{ width: "500px", height: "500px" }}
+              className="object-contain"
+            />
+          </div>
         </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="App">
+      <h2 className="text-3xl sm:text-4xl font-serif font-extrabold text-indigo-800 tracking-wide text-center py-8 border-b-2 border-indigo-200 mb-6 mt-30">
+        Favorite Books
+      </h2>
+      <div
+        className="grid 
+          grid-cols-1 
+          sm:grid-cols-2 
+          md:grid-cols-2 
+          lg:grid-cols-3
+          xl:grid-cols-4 
+          2xl:grid-cols-5
+          [@media(min-width:2000px)]:grid-cols-6 
+          [@media(min-width:2500px)]:grid-cols-7
+          gap-7 
+          p-4 md:px-10
+          justify-items-center"
+      >
+        {favorites.map((book) => (
+          <div
+            key={book._id}
+            className="bg-blue-100 rounded-lg p-4 text-center shadow-lg transform transition duration-300 hover:scale-105 flex flex-col w-70 sm:w-70 h-95 sm:h-100"
+          >
+            {/* Изображение на корицата */}
+            <img
+              src={book.img}
+              alt={`Корица на ${book.title}`}
+              className="w-full h-60 sm:h-60 object-cover rounded-md mb-4 border border-gray-700"
+            />
+
+            {/* Заглавие */}
+            <h3 className="text-sm font-semibold italic text-black mb-auto pb-6 flex-grow line-clamp-2">
+              Title: {book.title}
+            </h3>
+            {/* Автор */}
+            <h3 className="text-sm font-semibold italic text-black mb-auto pb-6 flex-grow line-clamp-2 mt-5">
+              Author: {book.author}
+            </h3>
+
+            {/* Бутони за взаимодействие */}
+            <div className="flex flex-wrap justify-center gap-2 mt-auto transform transition duration-300">
+              {/* <div key={book._id} className="shadow p-4 rounded bg-white">
+            <img src={book.img} className="h-64 w-full object-cover rounded" />
+            <h3 className="text-xl mt-2">{book.title}</h3> */}
+
+              <button
+                onClick={() => removeFavorite(book._id)}
+                className="mt-3 w-full bg-red-500 text-white py-2 rounded"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-  )
+  );
 }

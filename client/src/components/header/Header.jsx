@@ -20,7 +20,7 @@ export default function Header({ user }) {
   } else {
     // Logged in users
     navigation.push({ name: "Add Book", href: "/create" });
-    navigation.push({ name: "Favorites", href: "/favorite-books" });
+    navigation.push({ name: "Favorites", href: "/favorites" });
     navigation.push({ name: "Logout", href: "/logout" });
   }
 
