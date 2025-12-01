@@ -91,7 +91,8 @@ export default function Details() {
             </div>
 
             {/* Action Button */}
-            {isAuthenticated && user._id === book._ownerId && (
+            {/* does not work for preseed data */}
+            {(isAuthenticated && user._id === book._ownerId) && (
               <div className="mt-10 flex flex-wrap-10 gap-10">
                 <Link
                   to={`/books/${bookId}/edit`}
