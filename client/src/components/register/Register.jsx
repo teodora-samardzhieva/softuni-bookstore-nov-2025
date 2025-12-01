@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router";
 import useForm from "../../hooks/useForm.js";
 import { useContext, useState } from "react";
 import UserContext from "../../context/UserContext.jsx";
+import { styles } from "../../assets/styles/styles.js";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -66,9 +67,9 @@ export default function Register() {
   });
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 mt-20">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+    <div className={styles.registerForm.container}>
+      <div className="mt-5">
+        <h2 className={styles.registerForm.h2}>
           Create your account
         </h2>
       </div>
@@ -79,7 +80,7 @@ export default function Register() {
           <div>
             <label
               htmlFor="username"
-              className="block text-sm/6 font-medium text-gray-900"
+              className={styles.registerForm.label}
             >
               Username
             </label>
@@ -89,7 +90,7 @@ export default function Register() {
                 type="text"
                 required
                 {...register("username")}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className={styles.registerForm.input}
               />
               {errors.username && (
                 <p style={{ color: "red" }}>{errors.username}</p>
@@ -102,7 +103,7 @@ export default function Register() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm/6 font-medium text-gray-900"
+              className={styles.registerForm.label}
             >
               Email address
             </label>
@@ -113,7 +114,7 @@ export default function Register() {
                 required
                 autoComplete="email"
                 {...register("email")}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className={styles.registerForm.input}
               />
               {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
             </div>
@@ -123,7 +124,7 @@ export default function Register() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm/6 font-medium text-gray-900"
+              className={styles.registerForm.label}
             >
               Password
             </label>
@@ -134,7 +135,7 @@ export default function Register() {
                 required
                 {...register("password")}
                 autoComplete="new-password"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className={styles.registerForm.input}
               />
               {errors.password && (
                 <p style={{ color: "red" }}>{errors.password}</p>
@@ -146,7 +147,7 @@ export default function Register() {
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-sm/6 font-medium text-gray-900"
+              className={styles.registerForm.label}
             >
               Confirm Password
             </label>
@@ -157,7 +158,7 @@ export default function Register() {
                 required
                 {...register("confirmPassword")}
                 autoComplete="new-password"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className={styles.registerForm.input}
               />
               {errors.confirmPassword && (
                 <p style={{ color: "red" }}>{errors.confirmPassword}</p>
@@ -169,18 +170,18 @@ export default function Register() {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className={styles.registerForm.btn}
             >
               Register
             </button>
           </div>
         </form>
 
-        <p className="mt-10 text-center text-sm/6 text-gray-500">
+        <p className={styles.registerForm.p}>
           Already have an account?{" "}
           <Link
             to="/login"
-            className="font-semibold text-indigo-600 hover:text-indigo-500"
+            className={styles.registerForm.link}
           >
             Log in here
           </Link>

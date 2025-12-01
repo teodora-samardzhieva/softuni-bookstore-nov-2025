@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import useRequest from "../../hooks/useRequest.js";
 import useForm from "../../hooks/useForm.js";
+import { styles } from "../../assets/styles/styles.js";
 
 export default function Comment({
     user,
@@ -48,17 +49,14 @@ export default function Comment({
                 rows="4"
                 required
                 disabled={!user}
-                className="w-full p-3 border border-gray-300 rounded-md shadow-sm 
-                 focus:outline-none focus:ring-2 focus:ring-indigo-500 
-                 text-gray-700"
+                className={styles.comments.textarea}
               ></textarea>
 
         </div>
 
         <button
           type="submit"
-          className="w-full bg-indigo-600 text-white font-medium py-2 
-               rounded-md shadow hover:bg-indigo-700 transition"
+          className={styles.comments.btn}
         >
           Post
         </button>

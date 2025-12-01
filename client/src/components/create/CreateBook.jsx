@@ -5,6 +5,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase.js";
 // import { useUserContext } from "../../context/UserContext.jsx";
 import useRequest from "../../hooks/useRequest.js";
+import { styles } from "../../assets/styles/styles.js";
 
 export default function CreateBook() {
   const navigate = useNavigate();
@@ -120,8 +121,8 @@ export default function CreateBook() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 rounded-lg shadow-xl mt-30 bg-stone-100 border-solid">
-      <h2 className="text-3xl font-serif text-gray-900 mb-6 text-center">
+    <div className={styles.createForm.container}>
+      <h2 className={styles.createForm.h2}>
         Add New Book
       </h2>
       <form onSubmit={createBookHandler} className="space-y-4">
@@ -129,7 +130,7 @@ export default function CreateBook() {
         <div>
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Book Title
           </label>
@@ -138,7 +139,7 @@ export default function CreateBook() {
             id="title"
             name="title"
             placeholder="e.g., The Hobbit"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className={styles.createForm.input}
             required
           />
         </div>
@@ -147,7 +148,7 @@ export default function CreateBook() {
         <div>
           <label
             htmlFor="author"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Author
           </label>
@@ -156,7 +157,7 @@ export default function CreateBook() {
             id="author"
             name="author"
             placeholder="e.g., J.R.R. Tolkien"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className={styles.createForm.input}
             required
           />
         </div>
@@ -165,7 +166,7 @@ export default function CreateBook() {
         <div>
           <label
             htmlFor="genre"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Genre
           </label>
@@ -174,7 +175,7 @@ export default function CreateBook() {
             id="genre"
             name="genre"
             placeholder="e.g., Fantasy, Sci-Fi, Thriller"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className={styles.createForm.input}
             required
           />
         </div>
@@ -183,7 +184,7 @@ export default function CreateBook() {
         <div>
           <label
             htmlFor="releaseDate"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Release Date
           </label>
@@ -191,7 +192,7 @@ export default function CreateBook() {
             type="date"
             id="releaseDate"
             name="releaseDate"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className={styles.createForm.input}
             required
           />
         </div>
@@ -200,7 +201,7 @@ export default function CreateBook() {
         <div>
           <label
             htmlFor="summary"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Summary
           </label>
@@ -209,7 +210,7 @@ export default function CreateBook() {
             name="summary"
             rows="4"
             placeholder="Provide a brief summary of the book..."
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className={styles.createForm.input}
             required
           ></textarea>
         </div>
@@ -218,15 +219,14 @@ export default function CreateBook() {
         <div>
           <label
             htmlFor="img"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             {imageUpload ? "Image Upload" : "Image URL"}
           </label>
           <button
             type="button"
             onClick={imageUploadClickHandler}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-md shadow 
-                      hover:bg-indigo-700 transition font-medium"
+            className={styles.createForm.fileBtn}
           >
             {imageUpload ? "Image URL" : "Image Upload"}
           </button>
@@ -235,9 +235,8 @@ export default function CreateBook() {
               type="file"
               id="img"
               name="img"
-              placeholder="Upload file..."
               onChange={imageChangeHandler}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className={styles.createForm.input}
               required
             />
           ) : (
@@ -245,9 +244,9 @@ export default function CreateBook() {
               type="url"
               id="img"
               name="img"
-              placeholder="e.g., https://example.com/book-cover.jpg"
+              placeholder="https://example.com/book-cover.jpg"
               onChange={imageUrlChangeHandler}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className={styles.createForm.input}
               required
             />
           )}
@@ -256,7 +255,7 @@ export default function CreateBook() {
               <img
                 src={imagePreview}
                 alt={imageName}
-                className="max-h-48 rounded-md shadow-md object-cover"
+                className={styles.createForm.img}
               />
             </div>
           )}
@@ -265,7 +264,7 @@ export default function CreateBook() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+          className={styles.createForm.btn}
         >
           Create
         </button>

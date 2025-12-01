@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { useFavorites } from "../../context/FavoriteContext.jsx";
+import { styles } from "../../assets/styles/styles.js";
 
 export default function Favorites() {
   const { favorites, removeFavorite } = useFavorites();
@@ -8,8 +9,8 @@ export default function Favorites() {
     return (
       <div className="App px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-extrabold text-black tracking-wide py-8 mb-6 mt-30">
-            📚 No favorite books yet
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-black font-serif font-extrabold tracking-wide py-8 mb-6 mt-30">
+            📚 No favorite books yet.
             <br />
             <Link
               to="/books"
@@ -33,49 +34,36 @@ export default function Favorites() {
 
   return (
     <div className="App">
-      <h2 className="text-3xl sm:text-4xl font-serif font-extrabold text-rose-400 tracking-wide text-center py-8 border-b-2 border-rose-200 mb-6 mt-30">
+      <h2 className={styles.favoriteBooks.h2}>
         Favorite Books
       </h2>
-      <div
-        className="grid 
-          grid-cols-1 
-          sm:grid-cols-2 
-          md:grid-cols-2 
-          lg:grid-cols-3
-          xl:grid-cols-4 
-          2xl:grid-cols-5
-          [@media(min-width:2000px)]:grid-cols-6 
-          [@media(min-width:2500px)]:grid-cols-7
-          gap-7 
-          p-4 md:px-10
-          justify-items-center"
-      >
+      <div className={styles.bookGrid.container}>
         {favorites.map((book) => (
           <div
             key={book._id}
-            className="bg-rose-200 rounded-lg p-4 text-center shadow-lg transform transition duration-300 hover:scale-105 flex flex-col w-70 sm:w-70 h-95 sm:h-100"
+            className={styles.favoriteBooks.div}
           >
             {/* Image Cover */}
             <img
               src={book.img}
               alt={`Корица на ${book.title}`}
-              className="w-full h-60 sm:h-60 object-cover rounded-md mb-4 border border-gray-700"
+              className={styles.book.img}
             />
 
             {/* Book Title */}
-            <h3 className="text-sm font-semibold italic text-black mb-auto pb-6 flex-grow line-clamp-2">
+            <h3 className={styles.book.h3}>
               Title: {book.title}
             </h3>
             {/* Author */}
-            <h3 className="text-sm font-semibold italic text-black mb-auto pb-6 flex-grow line-clamp-2 mt-5">
+            <h3 className={`${styles.book.h3} mt-5`}>
               Author: {book.author}
             </h3>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap justify-center gap-2 mt-auto transform transition duration-300">
+            <div className={styles.book.btnContainer}>
               <button
                 onClick={() => removeFavorite(book._id)}
-                className="mt-3 w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition duration-200"
+                className={styles.favoriteBooks.btn}
               >
                 Remove
               </button>

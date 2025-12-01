@@ -1,5 +1,6 @@
 import Book from "./Book.jsx";
 import useRequest from "../../hooks/useRequest.js";
+import { styles } from "../../assets/styles/styles.js";
 
 export default function BookGrid({search}) {
 
@@ -41,18 +42,7 @@ export default function BookGrid({search}) {
         </div>
       ) : (
         <div
-          className="grid 
-          grid-cols-1 
-          sm:grid-cols-2 
-          md:grid-cols-2 
-          lg:grid-cols-3
-          xl:grid-cols-4 
-          2xl:grid-cols-5
-          [@media(min-width:2000px)]:grid-cols-6 
-          [@media(min-width:2500px)]:grid-cols-7
-          gap-7 
-          p-4 md:px-10
-          justify-items-center"
+          className={styles.bookGrid.container}
         >
           {filteredBooks
             ? filteredBooks.map((book) => (

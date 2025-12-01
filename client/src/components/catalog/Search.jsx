@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { styles } from "../../assets/styles/styles.js";
 
 export default function Search({onSearch}) {
     const [value, setValue] = useState("");
@@ -15,7 +16,7 @@ export default function Search({onSearch}) {
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <input
                         type="search"
-                        className="relative m-0 -mr-0.5 block w-[1px] min-w-50 flex-auto rounded-l border border-neutral-300 bg-transparent px-3 py-[0.25rem] text-base text-neutral-700 outline-none transition duration-200 focus:z-[3] focus:border-primary dark:border-neutral-600 dark:text-neutral-200"
+                        className={styles.search.input}
                         placeholder="Search"
                         value={value}
                         onChange={handleChange}
@@ -24,7 +25,7 @@ export default function Search({onSearch}) {
                     <button
                         data-te-ripple-init
                         data-te-ripple-color="light"
-                        className="relative z-[2] flex items-center rounded-r bg-blue-600 px-6 py-2.5 text-xs font-medium uppercase text-white shadow-md transition duration-150 hover:bg-blue-700"
+                        className={styles.search.btn}
                         type="button"
                     >
                         <svg

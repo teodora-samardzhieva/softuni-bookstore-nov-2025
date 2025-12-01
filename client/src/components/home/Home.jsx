@@ -51,7 +51,7 @@ export default function Home() {
               <div className="bg-stone-200 shadow-xl rounded p-10 flex flex-col items-center">
                 <span className="text-5xl mb-4">📚</span>
                 <p className="text-2xl md:text-3xl font-semibold text-gray-800">
-                  Няма намерени книги
+                  No books found!
                 </p>
               </div>
             </div>

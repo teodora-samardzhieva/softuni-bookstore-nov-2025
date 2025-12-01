@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router";
 import UserContext from "../../context/UserContext.jsx";
 import { useFavorites } from "../../context/FavoriteContext.jsx";
 
+import { styles } from "../../assets/styles/styles.js";
+
 export default function Book({
   _id,
   title,
@@ -28,37 +30,33 @@ export default function Book({
   };
 
   return (
-    <div className="bg-violet-300 rounded-lg p-4 text-center shadow-lg transform transition duration-300 hover:scale-105 flex flex-col w-70 sm:w-70 h-95 sm:h-100">
+    <div className={styles.book.container}>
       {/* Image Cover */}
       <img
         src={imageUrl}
-        alt={`Корица на ${title}`}
-        className="w-full h-60 sm:h-60 object-cover rounded-md mb-4 border border-gray-700"
+        alt={`Book cover for ${title}`}
+        className={styles.book.img}
       />
 
       {/* Title */}
-      <h3 className="text-sm font-semibold italic text-black mb-auto pb-6 flex-grow line-clamp-2">
-        {title}
-      </h3>
+      <h3 className={styles.book.h3}>{title}</h3>
 
       {/* Buttons */}
-      <div className="flex flex-wrap justify-center gap-2 mt-auto transform transition duration-300">
+      <div className={styles.book.btnContainer}>
         <Link
           to={`/books/${_id}/details`}
-          className="flex items-center justify-center bg-indigo-600 text-white px-1.5 sm:px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition duration-200 flex-1 min-w-min"
+          className={styles.book.btnDetails}
         >
           <HiOutlineInformationCircle className="mr-2 text-lg" /> Details
         </Link>
         {/* For logged-in users */}
-        {isAuthenticated ? (
+        {isAuthenticated && (
           <button
             onClick={bookmarkHandler}
-            className="flex items-center justify-center bg-indigo-900 text-white px-1.5 sm:px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition duration-200 flex-1 min-w-min"
+            className={styles.book.btnFavorite}
           >
             <HiOutlineBookmark className="mr-2 text-lg" /> Bookmark
           </button>
-        ) : (
-          ""
         )}
       </div>
     </div>

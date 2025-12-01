@@ -3,6 +3,7 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router";
 import { useUserContext } from "../../context/UserContext.jsx";
+import { styles } from "../../assets/styles/styles.js";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -31,20 +32,27 @@ export default function Header() {
         className="flex items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Bookstore</span>
+          <Link to="/books" className="-m-1.5 p-1.5 flex items-center">
+            {/* <span className="sr-only">Bookstore</span> */}
+
             <img
-              alt=""
-              src="/assets/img/logo.png"
-              className="h-12 w-auto scale-400 ml-5"
+              alt="Bookstore logo"
+              src="/assets/img/book-logo.png"
+              className="h-4 w-auto scale-[4] ml-5"
             />
+
+            <div className="ml-10">
+              <h1 className={styles.homePage.logoText}>BOOKSTORE</h1>
+              <div className={styles.homePage.logoUnderline}></div>
+            </div>
           </Link>
         </div>
+
         <div className="flex lg:hidden">
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            className={styles.homePage.divMenu}
           >
             <span className="sr-only">Open main menu</span>
             <Bars3Icon aria-hidden="true" className="size-6" />
@@ -55,7 +63,7 @@ export default function Header() {
             <Link
               key={item.name}
               to={item.href}
-              className="text-sm/6 font-semibold text-gray-900 hover:text-indigo-500 hover:font-bold hover:text-lg"
+              className={styles.homePage.navLink}
             >
               {item.name}
             </Link>
@@ -64,7 +72,7 @@ export default function Header() {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           {user ? 
             <p 
-              className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
+              className={styles.homePage.p}>
                 {user.email}
             </p> : ''
           }
@@ -76,16 +84,22 @@ export default function Header() {
         className="lg:hidden"
       >
         <div className="fixed inset-0 z-50" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <DialogPanel className={styles.homePage.div}>
           <div className="flex items-center justify-between">
             <Link to="/" className="-m-1.5 p-1.5"> 
-              <span className="font-serif font-extrabold text-indigo-800">My Bookstore</span>
-              {/* className="sr-only" */}
-              {/* <img
-                alt="Bookstore"
-                src="/assets/img/logo.png"
-                className="h-24 w-auto"
-              /> */}
+            {/* <span className="sr-only">Bookstore</span> */}
+            <div className="relative flex items-center">
+            <img
+              alt="Bookstore logo"
+              src="/assets/img/book-logo.png"
+              className="h-2 w-auto scale-[3]"
+            />
+
+            <div className="ml-5">
+              <h1 className={styles.homePage.logoText}>BOOKSTORE</h1>
+              <div className={styles.homePage.logoUnderline}></div>
+            </div>
+            </div>
             </Link>
             <button
               type="button"
@@ -103,14 +117,14 @@ export default function Header() {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                    className={styles.homePage.p}
                   >
                     {item.name}
                   </Link>
                 ))}
               </div>
               <div className="py-6">
-                {isAuthenticated && (<p className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">{user.email}</p> )}
+                {isAuthenticated && (<p className={styles.homePage.p}>{user.email}</p> )}
               </div>
             </div>
           </div>

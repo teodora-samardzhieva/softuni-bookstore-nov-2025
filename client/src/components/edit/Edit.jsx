@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import useForm from "../../hooks/useForm.js";
 import useRequest from "../../hooks/useRequest.js";
+import { styles } from "../../assets/styles/styles.js";
 
 const initialValues = {
   title: "",
@@ -62,8 +63,8 @@ export default function Edit() {
   }, [bookId, setValues]);
 
   return (
-    <div className="w-full max-w-[320px] sm:max-w-xl mx-auto p-6 rounded-lg shadow-xl mt-30 bg-stone-100 border-solid">
-      <h2 className="text-3xl font-serif text-gray-900 mb-6 text-center">
+    <div className={styles.createForm.container}>
+      <h2 className={styles.createForm.h2}>
         Edit Book
       </h2>
       <form 
@@ -73,7 +74,7 @@ export default function Edit() {
         <div>
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Book Title
           </label>
@@ -81,8 +82,8 @@ export default function Edit() {
             type="text"
             id="title"
            {...register('title')}
-            placeholder="e.g., The Hobbit"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="The Hobbit"
+            className={styles.createForm.input}
             required
           />
         </div>
@@ -91,7 +92,7 @@ export default function Edit() {
         <div>
           <label
             htmlFor="author"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Author
           </label>
@@ -99,8 +100,8 @@ export default function Edit() {
             type="text"
             id="author"
            {...register('author')}
-            placeholder="e.g., J.R.R. Tolkien"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="J.R.R. Tolkien"
+            className={styles.createForm.input}
             required
           />
         </div>
@@ -109,7 +110,7 @@ export default function Edit() {
         <div>
           <label
             htmlFor="genre"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Genre
           </label>
@@ -117,8 +118,8 @@ export default function Edit() {
             type="text"
             id="genre"
             {...register('genre')}
-            placeholder="e.g., Fantasy, Sci-Fi, Thriller"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Fantasy, Sci-Fi, Thriller"
+            className={styles.createForm.input}
             required
           />
         </div>
@@ -127,7 +128,7 @@ export default function Edit() {
         <div>
           <label
             htmlFor="releaseDate"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Release Date
           </label>
@@ -135,7 +136,7 @@ export default function Edit() {
             type="date"
             id="releaseDate"
             {...register('releaseDate')}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className={styles.createForm.input}
             required
           />
         </div>
@@ -144,7 +145,7 @@ export default function Edit() {
         <div>
           <label
             htmlFor="summary"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Summary
           </label>
@@ -153,7 +154,7 @@ export default function Edit() {
             {...register('summary')}
             rows="4"
             placeholder="Provide a brief summary of the book..."
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className={styles.createForm.input}
             required
           ></textarea>
         </div>
@@ -162,7 +163,7 @@ export default function Edit() {
         <div>
           <label
             htmlFor="img"
-            className="block text-sm font-medium text-gray-700"
+            className={styles.createForm.label}
           >
             Image URL
           </label>
@@ -170,8 +171,8 @@ export default function Edit() {
             type="url" // Use type="url" for better validation
             id="img"
             {...register('img')}
-            placeholder="e.g., https://example.com/book-cover.jpg"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="https://example.com/book-cover.jpg"
+            className={styles.createForm.input}
             required
           />
         </div>
@@ -179,7 +180,7 @@ export default function Edit() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+          className={styles.createForm.btn}
         >
           Save
         </button>
