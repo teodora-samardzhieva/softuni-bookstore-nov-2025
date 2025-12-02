@@ -33,6 +33,15 @@ export const styles = {
         span: "font-normal text-gray-600",
         btn: "inline-flex items-center w-full md:w-auto justify-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium text-base px-6 py-3 transition duration-150",
         commentSection: "w-full max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-md mt-10",
+
+        formItem: "mb-6",
+        formLabel: "block text-sm font-medium text-gray-700 mb-2",
+        formInput: "w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        formTextarea: "w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
+        ratingContainer: "flex items-center gap-3",
+        starsContainer: "flex",
+        starFilled: "text-amber-400 fill-amber-400",
+        starEmpty: "text-gray-300",
     },
     // Create and Edit form styles
     createForm: {
