@@ -1,14 +1,17 @@
-import { useEffect } from "react";
+import { useEffect } from "react"; //useState
 import { useNavigate, useParams } from "react-router";
 import useForm from "../../hooks/useForm.js";
 import useRequest from "../../hooks/useRequest.js";
 import { styles } from "../../assets/styles/styles.js";
+import { Star } from "lucide-react";
+
 
 const initialValues = {
   title: "",
   author: "",
   genre: "",
   releaseDate: "",
+  rating: 0,
   summary: "",
   img: "",
 };
@@ -18,8 +21,11 @@ export default function Edit() {
   const { bookId } = useParams();
   const { request } = useRequest();
 
+  // State for visual feedback during rating selection
+  // const [hoverRating, setHoverRating] = useState(0); 
+
   const editBookHandler = async (values) => {
-    const bookData = { ...values, _updatedOn: Date.now() };
+    const bookData = { ...values, rating: Number(values.rating) || 0, _updatedOn: Date.now() };
 
     // Basic validation
     if (Object.values(bookData).some((v) => v === "")) {
@@ -39,9 +45,32 @@ export default function Edit() {
   const {
     register,
     formAction,
-    setValues
+    setValues,
+    // values
   } = useForm(editBookHandler, initialValues);
 
+  // Custom handler to update the rating value in the useForm state
+  // const handleRatingClick = (ratingValue) => {
+  //   setValues(prevValues => ({
+  //       ...prevValues,
+  //       rating: ratingValue
+  //   }));
+  // };
+
+  // useEffect(() => {
+  //   request(`/data/books/${bookId}`)
+  //     .then((result) => {
+  //       // Ensure rating is treated as a number
+  //       result.rating = Number(result.rating) || 0; 
+  //       setValues(result);
+  //     })
+  //     .catch((err) => {
+  //       alert(err.message);
+  //     });
+  // }, [bookId, setValues]);
+
+  // Determine the active rating (hover or current value)
+  // const activeRating = hoverRating || Number(values.rating) || 0;
 
   // state = prevData
   // const handleChange = (e) => {
@@ -55,7 +84,15 @@ export default function Edit() {
   useEffect(() => {
     request(`/data/books/${bookId}`)
       .then((result) => {
-        setValues(result);
+        setValues({
+          title: result.title || "",       // FIX: fallback to empty string
+          author: result.author || "",     // FIX
+          genre: result.genre || "",       // FIX
+          releaseDate: result.releaseDate || "", // FIX
+          rating: Number(result.rating) || 0,    // FIX: number
+          summary: result.summary || "",   // FIX
+          img: result.img || "",           // FIX
+        });
       })
       .catch((err) => {
         alert(err.message);
@@ -140,6 +177,59 @@ export default function Edit() {
             required
           />
         </div>
+
+
+           {/* Rating */}
+        <div className={styles.detailsForm.formItem}>
+                <label htmlFor="rating" className={styles.detailsForm.formLabel}>Rating</label>
+                <div className={styles.detailsForm.ratingContainer}>
+                  <div className={styles.detailsForm.starsContainer}>
+                    {[1, 2, 3, 4, 5].map((value) => (
+                      <span 
+                      key={value}
+                      className="text-gray-400 cursor-default"
+                      aria-label={`Rate: ${value} star${value !== 1 ? 's' : ''}`}>
+                        <Star className={`w-5 h-5 `} />
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+         {/* Rating Picker (Now editable) */}
+        {/* <div className={styles.detailsForm.formItem}>
+          <label className={styles.detailsForm.formLabel}>Rating</label>
+          <div className={styles.detailsForm.ratingContainer}>
+            <div className={styles.detailsForm.starsContainer}>
+              {[1, 2, 3, 4, 5].map((value) => (
+                <button
+                    key={value}
+                    type="button" // Important: prevent form submission
+                    onClick={() => handleRatingClick(value)}
+                    onMouseEnter={() => setHoverRating(value)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    className="p-1 focus:outline-none"
+                    aria-label={`Rate: ${value} star${value !== 1 ? 's' : ''}`}
+                >
+                    <Star
+                      key={value}
+                      className={`w-5 h-5 transition-colors duration-200 ${
+                        activeRating >= value
+                          ? styles.detailsForm.starFilled
+                          : styles.detailsForm.starEmpty
+                      }`}
+                    />
+                </button>
+              ))}
+              {/* Optional: Display current selected rating */}
+              {/* <span className="ml-2 text-sm text-gray-500">
+                ({Number(values.rating || 0).toFixed(0)} / 5)
+              </span>
+              // Hidden input to ensure 'rating' is submitted with useForm 
+              <input type="hidden" {...register('rating')} /> 
+            </div>
+          </div>
+        </div> */}
 
         {/* Summary Textarea */}
         <div>
