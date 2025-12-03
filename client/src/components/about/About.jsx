@@ -50,7 +50,7 @@ function LocationModal({ onAllow, onDeny }) {
       <div className="bg-white border-2 border-black rounded-xl p-6 max-w-md shadow-lg text-center">
         <h2 className="text-xl font-bold mb-4">Share Your Location?</h2>
         <p className="mb-6">
-          We would like to access your location to show it on this page.
+          We would like to access your location<br /> to show it on this page.
         </p>
         <div className="flex justify-around">
           <button
