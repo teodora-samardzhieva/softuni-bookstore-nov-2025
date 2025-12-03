@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router";
+import { href, Link } from "react-router";
 import { useUserContext } from "../../context/UserContext.jsx";
 import { styles } from "../../assets/styles/styles.js";
 
@@ -12,6 +12,7 @@ export default function Header() {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Catalog", href: "/books" },
+    { name: "About us", href: "/about-us"},
   ];
 
   // Guest users
