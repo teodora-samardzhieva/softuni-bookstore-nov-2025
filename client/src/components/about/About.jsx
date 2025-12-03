@@ -5,6 +5,37 @@ const STORE_NAME = "The Book Nook";
 const STORE_ADDRESS = "First Ave, Brighton and Hove, UK";
 const STORE_COORDS = { lat: 36.7118, lng: 2.9238 };
 
+// Custom hook: get user location text
+const useUserLocationText = (requestLocation, permissionDenied) => {
+  const [locationText, setLocationText] = useState("Location not requested yet");
+
+  useEffect(() => {
+    if (permissionDenied) {
+      setLocationText("Location not permitted");
+      return;
+    }
+
+    if (!requestLocation) return;
+
+    if (!navigator.geolocation) {
+      setLocationText("Geolocation not supported by this browser.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude.toFixed(4);
+        const lng = position.coords.longitude.toFixed(4);
+        setLocationText(`Lat: ${lat}, Lng: ${lng}`);
+      },
+      () => {
+        setLocationText("Location not permitted");
+      }
+    );
+  }, [requestLocation, permissionDenied]);
+
+  return locationText;
+};
 
 // Google Map URL generator
 const getGoogleMapUrl = (centerLat, centerLng, query) =>
