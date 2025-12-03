@@ -72,6 +72,16 @@ function LocationModal({ onAllow, onDeny }) {
 }
 
 export default function AboutUs() {
+  const [showModal, setShowModal] = useState(false);
+  const [requestLocation, setRequestLocation] = useState(false);
+  const [permissionDenied, setPermissionDenied] = useState(false);
+
+  const userLocationText = useUserLocationText(requestLocation, permissionDenied);
+
+  // Trigger modal only when component mounts (user navigates to About page)
+  useEffect(() => {
+    setShowModal(true);
+  }, []);
 
   return (
     <section className="max-w-4xl mx-auto text-center p-8 my-8 bg-blue-200 text-black rounded-xl shadow-2xl mt-30">
@@ -104,6 +114,11 @@ export default function AboutUs() {
       <p className="text-lg leading-relaxed mb-4 font-bold italic">
         {STORE_NAME} - {STORE_ADDRESS}
       </p>
+
+      <p className="text-lg leading-relaxed mb-4">
+        Your Location: <span className="font-semibold ml-3">{userLocationText}</span>
+      </p>
+
       <iframe
         className="iframe w-full h-96 border-4 border-black p-1.5 rounded-xl shadow-md"
         src={getGoogleMapUrl(STORE_COORDS.lat, STORE_COORDS.lng, STORE_NAME)}
@@ -112,5 +127,21 @@ export default function AboutUs() {
         referrerPolicy="no-referrer-when-downgrade"
         title="Bookstore Location Map"
       ></iframe>
+
+      {showModal && (
+        <LocationModal
+          onAllow={() => {
+            setShowModal(false);
+            setRequestLocation(true);
+            setPermissionDenied(false);
+          }}
+          onDeny={() => {
+            setShowModal(false);
+            setRequestLocation(false);
+            setPermissionDenied(true);
+          }}
+        />
+      )}
+    </section>
   );
 }
