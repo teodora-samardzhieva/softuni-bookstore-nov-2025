@@ -40,6 +40,37 @@ const useUserLocationText = (requestLocation, permissionDenied) => {
 // Google Map URL generator
 const getGoogleMapUrl = (centerLat, centerLng, query) =>
   `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=14&t=m&output=embed&center=${centerLat},${centerLng}`;
+
+// Location Permission Modal
+function LocationModal({ onAllow, onDeny }) {
+  return (
+    //items-center justify-center
+    <div className="fixed inset-0 flex items-start justify-start p-4 mt-30">
+    {/* mx-auto sets automatic left/right margins, which always centers the element horizontally. */}
+      <div className="bg-white border-2 border-black rounded-xl p-6 max-w-md shadow-lg text-center">
+        <h2 className="text-xl font-bold mb-4">Share Your Location?</h2>
+        <p className="mb-6">
+          We would like to access your location to show it on this page.
+        </p>
+        <div className="flex justify-around">
+          <button
+            onClick={onAllow}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Allow
+          </button>
+          <button
+            onClick={onDeny}
+            className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AboutUs() {
 
   return (
