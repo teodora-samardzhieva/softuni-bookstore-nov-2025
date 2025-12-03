@@ -41,6 +41,7 @@ export const styles = {
         ratingContainer: "flex items-center gap-3",
         starsContainer: "flex",
         starFilled: "text-amber-400 fill-amber-400",
+        starHalf: "text-amber-400/50 fill-amber-400/50",
         starEmpty: "text-gray-300",
     },
     // Create and Edit form styles
