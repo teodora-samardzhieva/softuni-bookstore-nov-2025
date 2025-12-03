@@ -17,6 +17,7 @@ import Logout from "./components/logout/Logout.jsx";
 import Edit from "./components/edit/Edit.jsx";
 import UserContext from "./context/UserContext.jsx";
 import { useContext } from "react";
+import AboutUs from "./components/about/About.jsx";
 
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
@@ -34,15 +35,17 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
+
           <Route path="/books" element={<Catalog />} />
           <Route path="/books/:bookId/details" element={<Details />} />
-
           <Route path="/books/:bookId/edit" element={<Edit />} />
 
           <Route element={<AuthGuard user={user} />}>
             <Route path="/favorites" element={<FavoriteBooks />} />
             <Route path="/create" element={<CreateBook />} />
           </Route>
+
+          <Route path="/about-us" element={<AboutUs />} />
         </Routes>
         <Footer />
         <Background.Bottom />
