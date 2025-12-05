@@ -2,34 +2,35 @@ import { useParams } from "react-router";
 import useRequest from "../../hooks/useRequest.js";
 import useForm from "../../hooks/useForm.js";
 import { styles } from "../../assets/styles/styles.js";
+import {v4 as uuid} from 'uuid';
 
-export default function Comment({
-    user,
-    onCreate
-}) {
-    const {bookId} = useParams();
-    const { request } = useRequest();  
+export default function Comment({ user, onCreateStart, onCreateEnd }) {
+  const { bookId } = useParams();
+  const { request } = useRequest();
+  
+  const submitHandler = async ({ comment }) => {
+    const data = {
+      _id: uuid(),
+      message: comment,
+      bookId,
+    };
 
+    onCreateStart(data);
 
-    const submitHandler = async ({comment}) => {
-        try {
-            
-            await request('/data/comments', 'POST', {
-                message: comment,
-                bookId,
-            });
-    
-            onCreate();
-        } catch (error) {
-            alert(error.message);
-        }
+    try {
+      const newComment = await request("/data/comments", "POST", data);
+
+      onCreateEnd(newComment);
+    } catch (error) {
+      alert(error.message);
     }
+  };
 
-    // add comment (only for logged-in users, which are not creators of the current book)
+  // add comment (only for logged-in users, which are not creators of the current book)
 
-    const { register, formAction } = useForm(submitHandler, {
-      comment: ''
-    })
+  const { register, formAction } = useForm(submitHandler, {
+    comment: "",
+  });
 
   return (
     <article className="bg-gray-50 rounded-lg p-6 shadow-inner">
@@ -43,24 +44,20 @@ export default function Comment({
             Comment text.....
           </label>
           <textarea
-                id="comment-textarea"
-                {...register('comment')} 
-                placeholder="Write your comment here..."
-                rows="4"
-                required
-                disabled={!user}
-                className={styles.comments.textarea}
-              ></textarea>
-
+            id="comment-textarea"
+            {...register("comment")}
+            placeholder="Write your comment here..."
+            rows="4"
+            required
+            disabled={!user}
+            className={styles.comments.textarea}
+          ></textarea>
         </div>
 
-        <button
-          type="submit"
-          className={styles.comments.btn}
-        >
+        <button type="submit" className={styles.comments.btn}>
           Post
         </button>
       </form>
-    </article> 
+    </article>
   );
 }
