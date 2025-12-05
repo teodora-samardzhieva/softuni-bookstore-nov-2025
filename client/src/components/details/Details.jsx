@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useOptimistic, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import Comment from "../comments/Comment.jsx";
 import DetailsComments from "../comments/DetailsComments.jsx";
@@ -6,27 +6,62 @@ import useRequest from "../../hooks/useRequest.js";
 import { useUserContext } from "../../context/UserContext.jsx";
 import { styles } from "../../assets/styles/styles.js";
 import { Star, StarHalf } from "lucide-react";
+import Review from "../reviews/Review.jsx";
+import DetailsReviews from "../reviews/DetailsReviews.jsx";
+
+// import {v4 as uuid} from 'uuid';
 
 export default function Details() {
+  const navigate = useNavigate();
   const { user, isAuthenticated } = useUserContext();
   const { bookId } = useParams();
-  const navigate = useNavigate();
-  const [refresh, setRefresh] = useState(false);
   const [hoverRating, setHoverRating] = useState(0);
-  const [optimisticUserRating, setOptimisticUserRating] = useState(null);
-
   const { data: book, request } = useRequest(`/data/books/${bookId}`, {});
-  const { data: ratings } = useRequest(
-    `/data/ratings?where=bookId%3D%22${bookId}%22`,
-    {},
-    refresh
+
+  const urlSearchParams = new URLSearchParams({
+    where: `bookId="${bookId}"`,
+    load: "author=_ownerId:users",
+  });
+
+  const { data: comments = [], setData: setComments } = useRequest(
+    `/data/comments?${urlSearchParams.toString()}`,
+    []
   );
-  const { data: userRating } = useRequest(
+
+  const [optimisticComments, setOptimisticComments] = useOptimistic(
+    comments,
+    (state, action) => {
+      switch (action.type) {
+        case "ADD_COMMENT":
+          return [...state, action.payload];
+        default:
+          return state;
+      }
+    }
+  );
+
+  const { data: ratings = [] } = useRequest(
+    `/data/ratings?where=bookId%3D%22${bookId}%22`,
+    {}
+    // refresh
+  );
+  const { data: userRating, setData: setRatings } = useRequest(
     isAuthenticated
       ? `/data/ratings?where=bookId%3D%22${bookId}%22%20AND%20userId%3D%22${user._id}%22`
       : null,
-    {},
-    refresh
+    {}
+    // refresh
+  );
+  const [optimisticUserRating, setOptimisticUserRating] = useOptimistic(
+    ratings,
+    (state, action) => {
+      switch (action.type) {
+        case "ADD_RATING":
+          return [...state, action.payload];
+        default:
+          return state;
+      }
+    }
   );
 
   const averageRating = ratings?.length
@@ -44,8 +79,17 @@ export default function Details() {
 
   const canRate =
     isAuthenticated &&
-    user._id !== book._ownerId &&
-    (!userRating || userRating.length === 0);
+    user._id !== book._ownerId;
+    // && (!userRating || userRating.length === 0);
+
+  const displayRating = canRate
+    ? hoverRating || optimisticUserRating || visualAverage
+    : visualUserRating || visualAverage;
+
+  //     const allRatings = [
+  //   ...(Array.isArray(ratings) ? ratings : []),
+  //   ...(optimisticUserRating?.payload ? [optimisticUserRating.payload] : []),
+  // ];
 
   const submitRating = async (ratingValue) => {
     if (!isAuthenticated) return;
@@ -54,16 +98,29 @@ export default function Details() {
     if (userRating && userRating.length > 0)
       return alert("You already rated this book.");
 
-    setOptimisticUserRating(ratingValue);
+    // setOptimisticUserRating(ratingValue);
+    // Optimistic update: add the new rating to the ratings array
+    setOptimisticUserRating({
+      type: "ADD_RATING",
+      payload: { userId: user._id, rating: ratingValue },
+    });
+
+    const data = {
+      // _id: uuid(),
+      bookId,
+      userId: user._id,
+      // author: user.author,
+      rating: ratingValue,
+    };
+
+    createRatingHandlerStart(data);
 
     try {
-      await request("/data/ratings", "POST", {
-        bookId,
-        userId: user._id,
-        rating: ratingValue,
-      });
+      const newRating = await request("/data/ratings", "POST", data);
+
+      createRatingHandlerEnd(newRating);
       setOptimisticUserRating(null);
-      setRefresh((s) => !s);
+      // setRefresh((s) => !s);
     } catch (err) {
       alert(err.message);
       setOptimisticUserRating(null);
@@ -84,8 +141,32 @@ export default function Details() {
     }
   };
 
-  const refreshHandler = () => {
-    setRefresh((state) => !state);
+  //TODO FIX pending
+  const createCommentHandlerEnd = (newComment) => {
+    // setRefresh((state) => !state);
+    setComments((prevComments) => [
+      ...prevComments,
+      { ...newComment, author: user },
+    ]);
+  };
+
+  const createCommentHandlerStart = (newComment) => {
+    setOptimisticComments({
+      type: "ADD_COMMENT",
+      payload: { ...newComment, author: user, pending: true },
+    });
+  };
+
+  const createRatingHandlerEnd = (newRating) => {
+    // setRefresh((state) => !state);
+    setRatings((prevRatings) => [...prevRatings, newRating]);
+  };
+
+  const createRatingHandlerStart = (newRating) => {
+    setOptimisticComments({
+      type: "ADD_RATING",
+      payload: { ...newRating, author: user },
+    });
   };
 
   if (!book) {
@@ -96,9 +177,19 @@ export default function Details() {
     );
   }
 
-  const displayRating = canRate
-    ? hoverRating || optimisticUserRating || visualAverage
-    : visualUserRating || visualAverage;
+  // const displayRating = canRate
+  //   ? hoverRating || optimisticUserRating || visualAverage
+  //   : visualUserRating || visualAverage;
+
+  const HalfStar = () => (
+    <div className="relative w-6 h-6 inline-block">
+      {/* full gray star behind */}
+      <Star className="absolute w-6 h-6 text-gray-300" />
+
+      {/* left half filled */}
+      <Star className="absolute w-6 h-6 text-amber-400 fill-amber-400 [clip-path:inset(0_50%_0_0)]" />
+    </div>
+  );
 
   return (
     <div>
@@ -143,30 +234,44 @@ export default function Details() {
                     if (visualAverage >= i) {
                       StarIcon = Star; // full
                     } else if (visualAverage >= i - 0.5) {
-                      StarIcon = StarHalf; // half
+                      // StarIcon = StarHalf; // half
+                      StarIcon = HalfStar; // half
                     } else {
                       StarIcon = Star; // empty
                     }
 
                     const starColor =
-                      displayRating >= i - 0.5
-                        ? `${styles.detailsForm.starFilled}` // Filled or half-filled stars are amber "text-amber-400" 
+                      visualAverage >= i - 0.5
+                        ? `${styles.detailsForm.starFilled}` // Filled or half-filled stars are amber "text-amber-400"
                         : `${styles.detailsForm.starEmpty}`; // Empty stars are gray "text-gray-300"
 
-                    if (canRate) {
-                      return (
-                        <button
-                          key={i}
-                          type="button"
-                          onClick={() => submitRating(i)}
-                          onMouseEnter={() => setHoverRating(i)}
-                          onMouseLeave={() => setHoverRating(0)}
-                          className="focus:outline-none"
-                        >
-                          <StarIcon className={`w-6 h-6 ${starColor}`} />
-                        </button>
+                    {
+                      StarIcon === HalfStar ? (
+                        <HalfStar />
+                      ) : (
+                        <StarIcon className={`w-6 h-6 ${starColor}`} />
                       );
                     }
+
+                    // if (canRate) {
+                    //   return (
+                    //     <button
+                    //       key={i}
+                    //       type="button"
+                    //       onClick={() => submitRating(i)}
+                    //       onMouseEnter={() => setHoverRating(i)}
+                    //       onMouseLeave={() => setHoverRating(0)}
+                    //       className="focus:outline-none"
+                    //     >
+                    //       {/* <StarIcon className={`w-6 h-6 ${starColor}`} /> */}
+                    //       {StarIcon === HalfStar ? (
+                    //         <HalfStar />
+                    //       ) : (
+                    //         <StarIcon className={`w-6 h-6 ${starColor}`} />
+                    //       )}
+                    //     </button>
+                    //   );
+                    // }
 
                     return (
                       <StarIcon key={i} className={`w-6 h-6 ${starColor}`} />
@@ -216,13 +321,58 @@ export default function Details() {
         </div>
       </div>
 
+      <section className={styles.detailsForm.commentSection}>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">
+          Reviews
+        </h2>
+        <div className="mb-4 flex items-center space-x-3">
+          <h3 className="font-semibold text-gray-700">Your Rating:</h3>
+          <div className="flex">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <button
+                key={i}
+                type="button"
+                // onClick={() => submitRating(i)}
+                onMouseEnter={() => setHoverRating(i)}
+                onMouseLeave={() => setHoverRating(0)}
+                className="focus:outline-none transition-transform duration-100 ease-in-out transform hover:scale-110"
+              >
+                <Star
+                  className={`w-6 h-6 ${
+                    displayRating >= i
+                      ? "text-yellow-400 fill-current"
+                      : "text-gray-300"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <DetailsReviews reviews={optimisticUserRating || []} />
+        {isAuthenticated && (
+          // !userRating
+          <Review
+            user={user}
+            onCreateStart={createRatingHandlerStart}
+            onCreateEnd={createRatingHandlerEnd}
+          />
+        )}
+      </section>
+
       {/* Comments */}
       <section className={styles.detailsForm.commentSection}>
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">
           Comments
         </h2>
-        <DetailsComments refresh={refresh} />
-        {isAuthenticated && <Comment user={user} onCreate={refreshHandler} />}
+        <DetailsComments comments={optimisticComments || []} />
+        {isAuthenticated && (
+          <Comment
+            user={user}
+            onCreateStart={createCommentHandlerStart}
+            onCreateEnd={createCommentHandlerEnd}
+          />
+        )}
       </section>
     </div>
   );
