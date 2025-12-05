@@ -15,14 +15,15 @@ import Background from "./components/bg/Background.jsx";
 import "tw-elements";
 import Logout from "./components/logout/Logout.jsx";
 import Edit from "./components/edit/Edit.jsx";
-import UserContext from "./context/UserContext.jsx";
-import { useContext } from "react";
 import AboutUs from "./components/about/About.jsx";
+
+import { useUserContext } from "./context/UserContext.jsx";
 
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
 function App() {
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
+  const { user } = useUserContext();
 
   return (
     <>
