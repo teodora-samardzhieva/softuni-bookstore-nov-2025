@@ -14,7 +14,7 @@ export default function DetailsReviews({ reviews = [] }) {
           >
             <p className="text-sm text-gray-600 mb-1">
               Reviewer:{" "}
-              <span className="font-medium text-gray-800">
+              <span className="font-bold text-blue-500">
                 {r.author?.username ||
                   r.author?.email ||
                   r.userId ||
