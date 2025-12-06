@@ -1,11 +1,11 @@
-import { useOptimistic, useState } from "react";
+import { useOptimistic } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import Comment from "../comments/Comment.jsx";
 import DetailsComments from "../comments/DetailsComments.jsx";
 import useRequest from "../../hooks/useRequest.js";
 import { useUserContext } from "../../context/UserContext.jsx";
 import { styles } from "../../assets/styles/styles.js";
-import { Star, StarHalf } from "lucide-react";
+import { Star } from "lucide-react";
 import Review from "../reviews/Review.jsx";
 import DetailsReviews from "../reviews/DetailsReviews.jsx";
 
@@ -15,7 +15,7 @@ export default function Details() {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useUserContext();
   const { bookId } = useParams();
-  const [hoverRating, setHoverRating] = useState(0);
+
   const { data: book, request } = useRequest(`/data/books/${bookId}`, {});
 
   const urlSearchParams = new URLSearchParams({
@@ -40,19 +40,19 @@ export default function Details() {
     }
   );
 
-  const { data: ratings = [] } = useRequest(
+  const { data: ratings = [], setData: setRatings } = useRequest(
     `/data/ratings?where=bookId%3D%22${bookId}%22`,
-    {}
-    // refresh
   );
-  const { data: userRating, setData: setRatings } = useRequest(
+
+  const { data: userRating = [], setData: setUserRating } = useRequest(
     isAuthenticated
       ? `/data/ratings?where=bookId%3D%22${bookId}%22%20AND%20userId%3D%22${user._id}%22`
       : null,
-    {}
-    // refresh
+    []
   );
+
   const [optimisticUserRating, setOptimisticUserRating] = useOptimistic(
+    // userRating,
     ratings,
     (state, action) => {
       switch (action.type) {
@@ -75,57 +75,15 @@ export default function Details() {
   const totalVotes = ratings?.length || 0;
 
   const visualAverage = Math.round(averageRating * 2) / 2;
-  const visualUserRating = userRating?.[0]?.rating;
 
-  const canRate =
-    isAuthenticated &&
-    user._id !== book._ownerId;
-    // && (!userRating || userRating.length === 0);
-
-  const displayRating = canRate
-    ? hoverRating || optimisticUserRating || visualAverage
-    : visualUserRating || visualAverage;
+  const hasUserRated =
+    (Array.isArray(userRating) && userRating.length > 0) 
+    // || (Array.isArray(optimisticUserRating) && optimisticUserRating.length > 0);
 
   //     const allRatings = [
   //   ...(Array.isArray(ratings) ? ratings : []),
   //   ...(optimisticUserRating?.payload ? [optimisticUserRating.payload] : []),
   // ];
-
-  const submitRating = async (ratingValue) => {
-    if (!isAuthenticated) return;
-    if (user._id === book._ownerId)
-      return alert("Owners cannot rate their own book.");
-    if (userRating && userRating.length > 0)
-      return alert("You already rated this book.");
-
-    // setOptimisticUserRating(ratingValue);
-    // Optimistic update: add the new rating to the ratings array
-    setOptimisticUserRating({
-      type: "ADD_RATING",
-      payload: { userId: user._id, rating: ratingValue },
-    });
-
-    const data = {
-      // _id: uuid(),
-      bookId,
-      userId: user._id,
-      // author: user.author,
-      rating: ratingValue,
-    };
-
-    createRatingHandlerStart(data);
-
-    try {
-      const newRating = await request("/data/ratings", "POST", data);
-
-      createRatingHandlerEnd(newRating);
-      setOptimisticUserRating(null);
-      // setRefresh((s) => !s);
-    } catch (err) {
-      alert(err.message);
-      setOptimisticUserRating(null);
-    }
-  };
 
   const deleteBookHandler = async () => {
     const isConfirmed = confirm(
@@ -158,12 +116,32 @@ export default function Details() {
   };
 
   const createRatingHandlerEnd = (newRating) => {
-    // setRefresh((state) => !state);
-    setRatings((prevRatings) => [...prevRatings, newRating]);
+    // append to both the overall ratings list and the user-specific rating
+    try {
+      setRatings((prevRatings) => [
+        ...(Array.isArray(prevRatings) ? prevRatings : []),
+        // {...newRating, author: user}
+        newRating,
+      ]);
+    } catch {
+      // noop
+    }
+
+    try {
+      setUserRating((prev) => [
+        ...(Array.isArray(prev) ? prev : []),
+        newRating,
+        // {...newRating, author: user}
+      ]);
+    } catch {
+      // noop
+    }
+    // keep selectedRating so UI shows the user's value
   };
 
   const createRatingHandlerStart = (newRating) => {
-    setOptimisticComments({
+    // optimistic add for user rating
+    setOptimisticUserRating({
       type: "ADD_RATING",
       payload: { ...newRating, author: user },
     });
@@ -245,14 +223,6 @@ export default function Details() {
                         ? `${styles.detailsForm.starFilled}` // Filled or half-filled stars are amber "text-amber-400"
                         : `${styles.detailsForm.starEmpty}`; // Empty stars are gray "text-gray-300"
 
-                    {
-                      StarIcon === HalfStar ? (
-                        <HalfStar />
-                      ) : (
-                        <StarIcon className={`w-6 h-6 ${starColor}`} />
-                      );
-                    }
-
                     // if (canRate) {
                     //   return (
                     //     <button
@@ -325,14 +295,15 @@ export default function Details() {
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">
           Reviews
         </h2>
+        {/*
         <div className="mb-4 flex items-center space-x-3">
-          <h3 className="font-semibold text-gray-700">Your Rating:</h3>
+           <h3 className="font-semibold text-gray-700">Your Rating:</h3>
           <div className="flex">
             {[1, 2, 3, 4, 5].map((i) => (
               <button
                 key={i}
                 type="button"
-                // onClick={() => submitRating(i)}
+                onClick={() => submitRating(i)}
                 onMouseEnter={() => setHoverRating(i)}
                 onMouseLeave={() => setHoverRating(0)}
                 className="focus:outline-none transition-transform duration-100 ease-in-out transform hover:scale-110"
@@ -345,18 +316,29 @@ export default function Details() {
                   }`}
                 />
               </button>
-            ))}
-          </div>
-        </div>
+            ))} 
+          </div> 
+        </div> */}
 
-        <DetailsReviews reviews={optimisticUserRating || []} />
-        {isAuthenticated && (
-          // !userRating
+        <DetailsReviews
+          reviews={
+            [...(Array.isArray(ratings) ? ratings : [])]
+            // ...(Array.isArray(optimisticUserRating)
+            //   ? optimisticUserRating
+            //   : []),]
+            }
+        />
+        {isAuthenticated && !hasUserRated && (
           <Review
             user={user}
             onCreateStart={createRatingHandlerStart}
             onCreateEnd={createRatingHandlerEnd}
           />
+        )}
+        {isAuthenticated && hasUserRated && (
+          <p className="text-sm text-gray-600">
+            You have already left a review for this book.
+          </p>
         )}
       </section>
 
