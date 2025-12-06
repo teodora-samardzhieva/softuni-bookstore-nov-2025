@@ -1407,20 +1407,13 @@
                 _createdOn: 1614260681375,
                 _id: "0a272c58-b7ea-4e09-a000-7ec988248f66"
             },
-            // "00615200-8437-4a7b-84d8-f54fedc0cd73": {
-            //     _ownerId: "85bb435a...",
-            //     message: "Awesome book!",
-            //     bookId: "c34ff39c-27bb...",
-            //     _createdOn: 1764532820419,
-            //     _id: "00615200-8437-4a7b-84d8-f54fedc0cd73"
-            // },
-            // "4399464a-3320-4602-bb44-74f7a70d463f": {
-            //     _ownerId: "85bb435a...",
-            //     message: "This book is a top-tier!",
-            //     bookId: "2e8c457b-21ea...",
-            //     _createdOn: 1764533029476,
-            //     _id: "4399464a-3320-4602-bb44-74f7a70d463f"
-            // }
+            "2230dc12-0530-4608-b8a9-acfcac0f064b": {
+                _ownerId: "b47c0d38-a648-4ff5-baeb-1383bf4f997b",
+                message: "Seriously, if you're looking for a short read that hits like a full-length novel, pick this up immediately. David Baldacci is a master, and this short story, \"No Time Left,\" is absolutely perfect for binge-reading on a plane or a quiet afternoon.",
+                bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7",
+                _createdOn: 1765037881972,
+                _id: "2230dc12-0530-4608-b8a9-acfcac0f064b"
+            }
         },
 
     	records: {
@@ -1712,7 +1705,7 @@
             genre: "Action",
             releaseDate: "2025-10-04",
             summary:
-            "Duty. Blood. Honor. Power.\n Saeris Fane doesn’t want power... (truncated for brevity)",
+            "Duty. Blood. Honor. Power.\n Saeris Fane doesn’t want power...",
             img: "https://m.media-amazon.com/images/I/71rWYi2CqXL._SY385_.jpg",
             _createdOn: 1764530840864,
             _id: "0ed35d98-231d-4fd8-8877-a1e933d68678",
@@ -1725,7 +1718,7 @@
             genre: "Fantasy",
             releaseDate: "2024-09-27",
             summary:
-            "Simon Latch is a lawyer in rural Virginia... (truncated)",
+            "Simon Latch is a lawyer in rural Virginia...",
             img: "https://m.media-amazon.com/images/I/81nEGYZXtzL._SY385_.jpg",
             _createdOn: 1764530954959,
             _id: "d1e8a4ce-092f-402f-966f-91283c7a5c21",
@@ -1738,7 +1731,7 @@
             genre: "Comedy",
             releaseDate: "2025-08-12",
             summary:
-            "Nash is an intelligent man... (truncated)",
+            "Nash is an intelligent man who gets lost in...",
             img: "https://m.media-amazon.com/images/I/513eDEtZJrL._SY445_SX342_QL70_FMwebp_.jpg",
             _createdOn: 1764531034040,
             _id: "c34ff39c-27bb-46ee-9be6-eb49ffefe6a6",
@@ -1751,7 +1744,7 @@
             genre: "Thriller",
             releaseDate: "2025-10-27",
             summary:
-            "Frank Becker is a highly sought after assassin... (truncated)",
+            "Frank Becker is a highly sought after assassin...",
             img: "https://m.media-amazon.com/images/I/51CoRwyM4cL._SY445_SX342_QL70_FMwebp_.jpg",
             _createdOn: 1764531657914,
             _id: "2e8c457b-21ea-4b42-99df-94f3b01c94c7",
