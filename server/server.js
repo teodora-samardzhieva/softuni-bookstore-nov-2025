@@ -1418,7 +1418,55 @@
                     username: "tss",
                     email: "tedi1812@abv.bg"
                 },
-            }
+            },
+            "ca5fcd4f-0832-4256-8609-3de5e700a81a": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                bookId: "580f7012-d325-403e-851f-f4026922c5f3",
+                message: "This book gets my inner child out I might re-read it soon.",
+                author: {
+                    _id: "35c62d76-8152-4626-8712-eeb96381bea8",
+                    username: "Peter",
+                    email: "peter@abv.bg"
+                },
+                _createdOn: 1765040946376,
+                _id: "ca5fcd4f-0832-4256-8609-3de5e700a81a"
+            },
+            "3bea797a-c9ff-4e8e-b4c9-a7168be7cc3d": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                bookId: "0ed35d98-231d-4fd8-8877-a1e933d68678",
+                message: "Very intimidating book!",
+                author: {
+                    _id: "35c62d76-8152-4626-8712-eeb96381bea8",
+                    username: "Peter",
+                    email: "peter@abv.bg"
+                },
+                _createdOn: 1765041064014,
+                _id: "3bea797a-c9ff-4e8e-b4c9-a7168be7cc3d"
+            },
+            "ab53b4f7-25dc-427c-8617-80e413a6b8dd": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                bookId: "0ed35d98-231d-4fd8-8877-a1e933d68678",
+                message: "The caracters were fire!",
+                author: {
+                    _id: "35c62d76-8152-4626-8712-eeb96381bea8",
+                    username: "Peter",
+                    email: "peter@abv.bg"
+                },
+                _createdOn: 1765041190524,
+                _id: "ab53b4f7-25dc-427c-8617-80e413a6b8dd"
+            },
+            "7d0bdb0a-ffec-492a-a232-c6adf9874b41": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                bookId: "c09cba1d-227a-4e2a-8575-4dbc83a350a3",
+                message: "The book was good!",
+                author: {
+                    _id: "35c62d76-8152-4626-8712-eeb96381bea8",
+                    username: "Peter",
+                    email: "peter@abv.bg"
+                },
+                _createdOn: 1765041376130,
+                _id: "7d0bdb0a-ffec-492a-a232-c6adf9874b41"
+            },
         },
 
     	records: {
