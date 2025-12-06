@@ -20,7 +20,7 @@ export default function Details() {
 
   const urlSearchParams = new URLSearchParams({
     where: `bookId="${bookId}"`,
-    load: "author=_ownerId:users",
+    // load: "author=_ownerId:users",
   });
 
   const { data: comments = [], setData: setComments } = useRequest(
