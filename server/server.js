@@ -1467,6 +1467,30 @@
                 _createdOn: 1765041376130,
                 _id: "7d0bdb0a-ffec-492a-a232-c6adf9874b41"
             },
+            "57e45804-08e2-413b-a1a5-8b2dc8655142": {
+                _ownerId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                bookId: "c34ff39c-27bb-46ee-9be6-eb49ffefe6a6",
+                message: "Predictable plot and flat characters. It lacked originality and real substance.",
+                author: {
+                    _id: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                    username: "vasko21",
+                    email: "vasil21@abv.bg"
+                },
+                _createdOn: 1765049243054,
+                _id: "57e45804-08e2-413b-a1a5-8b2dc8655142"
+            },
+            "d531376d-3ae2-471e-827e-9a0de7f80c59": {
+                _ownerId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7",
+                message: "A pleasant read, but ultimately forgettable. It needed conflict and a reason to keep reading",
+                author: {
+                    _id: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                    username: "vasko21",
+                    email: "vasil21@abv.bg"
+                },
+                _createdOn: 1765051198528,
+                _id: "d531376d-3ae2-471e-827e-9a0de7f80c59"
+            }
         },
 
     	records: {
@@ -1856,6 +1880,34 @@
             },
             _createdOn: 1765040893093,
             _id: "7d485186-abbd-4e94-a94d-ca2f287190c2"
+        },
+        "ef340e06-3e92-43cb-ac63-a0c1cdb81b2f": {
+            _ownerId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+            bookId: "c34ff39c-27bb-46ee-9be6-eb49ffefe6a6",
+            userId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+            rating: 3,
+            message: "The book was nice but a little bit boring.",
+            author: {
+                _id: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                username: "vasko21",
+                email: "vasil21@abv.bg"
+            },
+            _createdOn: 1765049126673,
+            _id: "ef340e06-3e92-43cb-ac63-a0c1cdb81b2f"
+        },
+        "0b934aa2-9d07-446e-8f8e-98bed7c4c719": {
+            _ownerId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+            bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7",
+            userId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+            rating: 2,
+            message: "The book wasn't scary at all.",
+            author: {
+                _id: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                username: "vasko21",
+                email: "vasil21@abv.bg"
+            },
+            _createdOn: 1765050866375,
+            _id: "0b934aa2-9d07-446e-8f8e-98bed7c4c719"
         }
     }
     
