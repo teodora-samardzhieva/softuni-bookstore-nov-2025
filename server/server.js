@@ -1412,7 +1412,12 @@
                 message: "Seriously, if you're looking for a short read that hits like a full-length novel, pick this up immediately. David Baldacci is a master, and this short story, \"No Time Left,\" is absolutely perfect for binge-reading on a plane or a quiet afternoon.",
                 bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7",
                 _createdOn: 1765037881972,
-                _id: "2230dc12-0530-4608-b8a9-acfcac0f064b"
+                _id: "2230dc12-0530-4608-b8a9-acfcac0f064b",
+                author: {
+                    _id: "b47c0d38-a648-4ff5-baeb-1383bf4f997b",
+                    username: "tss",
+                    email: "tedi1812@abv.bg"
+                },
             }
         },
 
