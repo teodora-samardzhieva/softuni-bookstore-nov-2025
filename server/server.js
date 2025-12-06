@@ -1802,6 +1802,17 @@
             _createdOn: 1764531657914,
             _id: "2e8c457b-21ea-4b42-99df-94f3b01c94c7",
         },
+        "580f7012-d325-403e-851f-f4026922c5f3": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "Winnie-the-Pooh",
+            author: "A.A. Milne",
+            genre: "Fantasy",
+            releaseDate: "2022-05-11",
+            summary: "Step into the enchanting world of Winnie-the-Pooh, the beloved bear of very little rain, and his loyal friends, who live in the Hundred Acre Wood.",
+            img: "https://m.media-amazon.com/images/I/71+IwITqpRL._SY385_.jpg",
+            _createdOn: 1765040839005,
+            _id: "580f7012-d325-403e-851f-f4026922c5f3"
+        }
     },
     ratings: {
         "a84c4e4f-b723-4686-b48d-6108f21e7eae": {
@@ -1831,6 +1842,20 @@
             },
             _createdOn: 1765037226070,
             _id: "0c8ed294-2c9a-4880-a318-6b40df52cc92"
+        },
+        "7d485186-abbd-4e94-a94d-ca2f287190c2": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            bookId: "580f7012-d325-403e-851f-f4026922c5f3",
+            userId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            rating: 5,
+            message: "My favourite book when I was little!",
+            author: {
+                _id: "35c62d76-8152-4626-8712-eeb96381bea8",
+                username: "Peter",
+                email: "peter@abv.bg"
+            },
+            _createdOn: 1765040893093,
+            _id: "7d485186-abbd-4e94-a94d-ca2f287190c2"
         }
     }
     
