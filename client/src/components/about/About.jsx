@@ -52,7 +52,7 @@ const getGoogleMapUrl = (lat, lng) =>
 function LocationModal({ onAllow, onDeny }) {
   return (
     //items-center justify-center
-    <div className="fixed inset-0 flex items-start justify-start p-4 mt-30">
+    <div className="fixed inset-0 flex items-start justify-start p-4 mt-20">
     {/* mx-auto sets automatic left/right margins, which always centers the element horizontally. */}
       <div className="bg-white border-2 border-black rounded-xl p-6 max-w-md shadow-lg text-center">
         <h2 className="text-xl font-bold mb-4">Share Your Location?</h2>
