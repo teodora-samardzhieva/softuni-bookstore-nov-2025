@@ -99,6 +99,18 @@ export default function Details() {
     }
   };
 
+  const deleteCommentHandler = async (commentId) => {
+    const isConfirmed = confirm("Are you sure you want to delete this comment?");
+    if (!isConfirmed) return;
+
+    try {
+      await request(`/data/comments/${commentId}`, "DELETE");
+      setComments((oldComments) => oldComments.filter((c) => c._id !== commentId));
+    } catch (error) {
+      alert("Unable to delete comment: " + error.message);
+    }
+  };
+
   //TODO FIX pending
   const createCommentHandlerEnd = (newComment) => {
     // setRefresh((state) => !state);
@@ -143,7 +155,7 @@ export default function Details() {
     // optimistic add for user rating
     setOptimisticUserRating({
       type: "ADD_RATING",
-      payload: { ...newRating, author: user },
+      payload: { ...newRating, author: user, pending: true },
     });
   };
 
@@ -347,7 +359,7 @@ export default function Details() {
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">
           Comments
         </h2>
-        <DetailsComments comments={optimisticComments || []} />
+        <DetailsComments comments={optimisticComments || []} onDeleteComment={deleteCommentHandler} />
         {isAuthenticated && (
           <Comment
             user={user}
