@@ -8,9 +8,12 @@ export default function useRequest(url, initState) {
     // or state, setState
     const [data, setData] = useState(initState);
     
-    //TODO fix infinite loop problem(on mount request with useEffect)
     // differ request
     const request = async (url, method, data, config={}) => {
+        if (!url) {
+            return {}; 
+        } //TODO remove if unnesessary (for guest to remove the 403 req)
+
         let options = {};
         
         if (method) {
