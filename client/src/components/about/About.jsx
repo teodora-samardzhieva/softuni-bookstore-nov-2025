@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 
 // --- Bookstore's location ---
-const STORE_NAME = "The Book Nook";
-const STORE_ADDRESS = "First Ave, Brighton and Hove, UK";
-const STORE_COORDS = { lat: 36.7118, lng: 2.9238 };
+// const STORE_NAME = "The Book Nook";
+// const STORE_ADDRESS = "First Ave, Brighton and Hove, UK";
+// const STORE_COORDS = { lat: 36.7118, lng: 2.9238 };
+const STORE_NAME = "The Golden Gate Reads";
+const STORE_ADDRESS = "101 Embarcadero, San Francisco, CA 94105, USA";
+const STORE_COORDS = { lat: 37.7956, lng: -122.3934 };
 
 // Custom hook: get user location text
 const useUserLocationText = (requestLocation, permissionDenied) => {
@@ -38,8 +41,12 @@ const useUserLocationText = (requestLocation, permissionDenied) => {
 };
 
 // Google Map URL generator
-const getGoogleMapUrl = (centerLat, centerLng, query) =>
-  `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=14&t=m&output=embed&center=${centerLat},${centerLng}`;
+// const getGoogleMapUrl = (centerLat, centerLng, query) =>
+//   `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=14&t=m&output=embed&center=${centerLat},${centerLng}`;
+const getGoogleMapUrl = (lat, lng) =>
+  `https://maps.google.com/maps?q=${lat},${lng}&z=15&t=m&output=embed`;
+
+
 
 // Location Permission Modal
 function LocationModal({ onAllow, onDeny }) {
@@ -120,8 +127,9 @@ export default function AboutUs() {
       </p>
 
       <iframe
-        className="iframe w-full h-96 border-4 border-black p-1.5 rounded-xl shadow-md"
-        src={getGoogleMapUrl(STORE_COORDS.lat, STORE_COORDS.lng, STORE_NAME)}
+        className="iframe w-full h-96 border-4 border-black p-1.5 rounded-xl shadow-md"      
+        src={getGoogleMapUrl(STORE_COORDS.lat, STORE_COORDS.lng)}
+        // src={getGoogleMapUrl(STORE_COORDS.lat, STORE_COORDS.lng, STORE_NAME)}
         allowFullScreen=""
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
