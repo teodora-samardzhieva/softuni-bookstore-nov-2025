@@ -8,9 +8,10 @@ export default function DetailsComments({
         {comments.map((comment) => (
             <li key={comment._id} style={comment.pending ? {color: 'gray'} : {}} className="p-4 bg-gray-100 rounded-lg shadow">
             <p className="text-sm text-gray-600 mb-1">
-                Author:{" "}
-                <span className="font-medium text-gray-800">
-                {comment.author?.email} 
+                {/* Author:{" "} */}
+                <span className="text-lg font-bold text-blue-500">
+                {/* {comment.author?.email}  */}
+                {comment.author?.username} 
                 </span>
             </p>
             <p className="text-gray-700">{comment.message}</p>
