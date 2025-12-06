@@ -11,8 +11,9 @@ export default function Comment({ user, onCreateStart, onCreateEnd }) {
   const submitHandler = async ({ comment }) => {
     const data = {
       _id: uuid(),
-      message: comment,
       bookId,
+      message: comment,
+      author: { _id: user._id, username: user.username, email: user.email },
     };
 
     onCreateStart(data);
