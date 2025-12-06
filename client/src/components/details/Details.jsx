@@ -1,4 +1,4 @@
-import { useOptimistic } from "react";
+import { useOptimistic, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import Comment from "../comments/Comment.jsx";
 import DetailsComments from "../comments/DetailsComments.jsx";
@@ -41,7 +41,7 @@ export default function Details() {
   );
 
   const { data: ratings = [], setData: setRatings } = useRequest(
-    `/data/ratings?where=bookId%3D%22${bookId}%22`,
+    `/data/ratings?where=bookId%3D%22${bookId}%22`
   );
 
   const { data: userRating = [], setData: setUserRating } = useRequest(
@@ -76,9 +76,8 @@ export default function Details() {
 
   const visualAverage = Math.round(averageRating * 2) / 2;
 
-  const hasUserRated =
-    (Array.isArray(userRating) && userRating.length > 0) 
-    // || (Array.isArray(optimisticUserRating) && optimisticUserRating.length > 0);
+  const hasUserRated = Array.isArray(userRating) && userRating.length > 0;
+  // || (Array.isArray(optimisticUserRating) && optimisticUserRating.length > 0);
 
   //     const allRatings = [
   //   ...(Array.isArray(ratings) ? ratings : []),
@@ -100,12 +99,16 @@ export default function Details() {
   };
 
   const deleteCommentHandler = async (commentId) => {
-    const isConfirmed = confirm("Are you sure you want to delete this comment?");
+    const isConfirmed = confirm(
+      "Are you sure you want to delete this comment?"
+    );
     if (!isConfirmed) return;
 
     try {
       await request(`/data/comments/${commentId}`, "DELETE");
-      setComments((oldComments) => oldComments.filter((c) => c._id !== commentId));
+      setComments((oldComments) =>
+        oldComments.filter((c) => c._id !== commentId)
+      );
     } catch (error) {
       alert("Unable to delete comment: " + error.message);
     }
@@ -180,6 +183,53 @@ export default function Details() {
       <Star className="absolute w-6 h-6 text-amber-400 fill-amber-400 [clip-path:inset(0_50%_0_0)]" />
     </div>
   );
+
+  const [commentSortOrder, setCommentSortOrder] = useState("Newest");
+  const [reviewSortOrder, setReviewSortOrder] = useState("Newest"); // For reviews section
+
+  // ... existing handlers (deleteBookHandler, deleteCommentHandler, etc.) ...
+
+  // ✅ NEW: Sorting logic for comments
+  const sortComments = (comments, order) => {
+    // Create a copy to avoid mutating the original state array directly
+    const sorted = [...comments];
+
+    sorted.sort((a, b) => {
+      const dateA = new Date(a._createdOn);
+      const dateB = new Date(b._createdOn);
+
+      if (order === "Newest") {
+        // Newest first (descending date)
+        return dateB - dateA;
+      } else {
+        // Oldest first (ascending date)
+        return dateA - dateB;
+      }
+    });
+    return sorted;
+  };
+
+  const sortReviews = (ratings, order) => {
+    const sorted = [...ratings];
+
+    sorted.sort((a, b) => {
+      const dateA = new Date(a._createdOn);
+      const dateB = new Date(b._createdOn);
+
+      if (order === "Newest") {
+        return dateB - dateA;
+      } else {
+        return dateA - dateB;
+      }
+    });
+    return sorted;
+  };
+
+  const sortedComments = sortComments(
+    optimisticComments || [],
+    commentSortOrder
+  );
+  const sortedReviews = sortReviews(ratings || [], reviewSortOrder);
 
   return (
     <div>
@@ -304,41 +354,42 @@ export default function Details() {
       </div>
 
       <section className={styles.detailsForm.commentSection}>
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">
-          Reviews
-        </h2>
-        {/*
-        <div className="mb-4 flex items-center space-x-3">
-           <h3 className="font-semibold text-gray-700">Your Rating:</h3>
-          <div className="flex">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => submitRating(i)}
-                onMouseEnter={() => setHoverRating(i)}
-                onMouseLeave={() => setHoverRating(0)}
-                className="focus:outline-none transition-transform duration-100 ease-in-out transform hover:scale-110"
-              >
-                <Star
-                  className={`w-6 h-6 ${
-                    displayRating >= i
-                      ? "text-yellow-400 fill-current"
-                      : "text-gray-300"
-                  }`}
-                />
-              </button>
-            ))} 
-          </div> 
-        </div> */}
+        <div className="flex justify-between items-center mb-6 border-b pb-2">
+          {" "}
+          {/* New Flex container */}
+          <h2 className="text-2xl font-semibold text-gray-800">Reviews</h2>
+          <div className="flex space-x-3 text-sm font-medium">
+            <button
+              onClick={() => setReviewSortOrder("Newest")}
+              className={`${
+                reviewSortOrder === "Newest"
+                  ? "text-blue-600 font-bold"
+                  : "text-gray-500 hover:text-gray-800"
+              }`}
+            >
+              Newest
+            </button>
+            <button
+              onClick={() => setReviewSortOrder("Oldest")}
+              className={`${
+                reviewSortOrder === "Oldest"
+                  ? "text-blue-600 font-bold"
+                  : "text-gray-500 hover:text-gray-800"
+              }`}
+            >
+              Oldest
+            </button>
+          </div>
+        </div>
 
         <DetailsReviews
-          reviews={
-            [...(Array.isArray(ratings) ? ratings : [])]
-            // ...(Array.isArray(optimisticUserRating)
-            //   ? optimisticUserRating
-            //   : []),]
-            }
+          reviews={sortedReviews}
+          // reviews={
+          //   [...(Array.isArray(ratings) ? ratings : [])]
+          //   // ...(Array.isArray(optimisticUserRating)
+          //   //   ? optimisticUserRating
+          //   //   : []),]
+          // }
         />
         {isAuthenticated && !hasUserRated && (
           <Review
@@ -356,10 +407,37 @@ export default function Details() {
 
       {/* Comments */}
       <section className={styles.detailsForm.commentSection}>
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">
-          Comments
-        </h2>
-        <DetailsComments comments={optimisticComments || []} onDeleteComment={deleteCommentHandler} />
+        <div className="flex justify-between items-center mb-6 border-b pb-2">
+          {" "}
+          <h2 className="text-2xl font-semibold text-gray-800">Comments</h2>
+          <div className="flex space-x-3 text-sm font-medium">
+            <button
+              onClick={() => setCommentSortOrder("Newest")}
+              className={`${
+                commentSortOrder === "Newest"
+                  ? "text-blue-600 font-bold"
+                  : "text-gray-500 hover:text-gray-800"
+              }`}
+            >
+              Newest
+            </button>
+            <button
+              onClick={() => setCommentSortOrder("Oldest")}
+              className={`${
+                commentSortOrder === "Oldest"
+                  ? "text-blue-600 font-bold"
+                  : "text-gray-500 hover:text-gray-800"
+              }`}
+            >
+              Oldest
+            </button>
+          </div>
+        </div>
+        <DetailsComments
+          // comments={optimisticComments || []}
+          comments={sortedComments}
+          onDeleteComment={deleteCommentHandler}
+        />
         {isAuthenticated && (
           <Comment
             user={user}
