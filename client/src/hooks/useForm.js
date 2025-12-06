@@ -12,7 +12,13 @@ export default function useForm(callback, initialValues) {
 
     const formAction = async (formData) => {
         await callback(values, formData);
+        reset();
     }
+
+      // NEW: RESET FUNCTION
+    const reset = () => {
+        setValues(initialValues);
+    };
 
     const register = (fieldName) => {
         return {

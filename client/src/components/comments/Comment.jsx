@@ -22,7 +22,6 @@ export default function Comment({ user, onCreateStart, onCreateEnd }) {
       const newComment = await request("/data/comments", "POST", data);
 
       onCreateEnd(newComment);
-      reset();
     } catch (error) {
       alert(error.message);
     }
@@ -30,7 +29,7 @@ export default function Comment({ user, onCreateStart, onCreateEnd }) {
 
   // add comment (only for logged-in users, which are not creators of the current book)
 
-  const { register, formAction, reset } = useForm(submitHandler, {
+  const { register, formAction } = useForm(submitHandler, {
     comment: "",
   });
 
