@@ -1758,59 +1758,33 @@
         },
     },
     ratings: {
-        //No Time Left
-        "7df494da-c6aa-47ea-8883-ee40d360e893": {
+        "a84c4e4f-b723-4686-b48d-6108f21e7eae": {
             _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-            bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7",
-            userId: "35c62d76-8152-4626-8712-eeb96381bea8", // peter@abv.bg
-            rating: 3,
-            _createdOn: 1764792142342,
-            _id: "7df494da-c6aa-47ea-8883-ee40d360e893"
-        },
-        // The Kill Clause
-        "970fe3fa-b56b-44fe-8c03-facd42678841": {
-            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-            bookId: "cc668e06-c40a-4b73-8d87-4e7ecef05b9d",
-            userId: "35c62d76-8152-4626-8712-eeb96381bea8", // peter@abv.bg
+            bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7", // No Time Left
+            userId: "35c62d76-8152-4626-8712-eeb96381bea8",
             rating: 4,
-            _createdOn: 1764792354331,
-            _id: "970fe3fa-b56b-44fe-8c03-facd42678841"
+            message: "Great book!",
+            author: {
+                _id: "35c62d76-8152-4626-8712-eeb96381bea8",
+                username: "Peter",
+                email: "peter@abv.bg"
+            },
+            _createdOn: 1765036629810,
+            _id: "a84c4e4f-b723-4686-b48d-6108f21e7eae"
         },
-        // The Widow
-        "fc446b68-8991-47b5-a983-24fa3886c020": {
-            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-            bookId: "d1e8a4ce-092f-402f-966f-91283c7a5c21",
-            userId: "35c62d76-8152-4626-8712-eeb96381bea8", // peter@abv.bg
-            rating: 2,
-            _createdOn: 1764792527224,
-            _id: "fc446b68-8991-47b5-a983-24fa3886c020"
-        },
-        // The Widow
-        "e9d369fa-8d51-436d-9565-ce0bc44f77e3": {
-        _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-        bookId: "d1e8a4ce-092f-402f-966f-91283c7a5c21",
-        userId: "847ec027-f659-4086-8032-5173e2f9c93a", //george@abv.bg
-        rating: 4,
-        _createdOn: 1764792836176,
-        _id: "e9d369fa-8d51-436d-9565-ce0bc44f77e3"
-        },
-        // The Lost Heiress
-        "a6c731d2-9c96-483e-8703-3663c93dcf67": {
-            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-            bookId: "c09cba1d-227a-4e2a-8575-4dbc83a350a3",
-            userId: "847ec027-f659-4086-8032-5173e2f9c93a", // george@abv.bg
+        "0c8ed294-2c9a-4880-a318-6b40df52cc92": {
+            _ownerId: "b47c0d38-a648-4ff5-baeb-1383bf4f997b",
+            bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7", // No Time Left
+            userId: "b47c0d38-a648-4ff5-baeb-1383bf4f997b",
             rating: 5,
-            _createdOn: 1764793072289,
-            _id: "a6c731d2-9c96-483e-8703-3663c93dcf67"
-        },
-        // The Kill Clause
-        "408686b4-a222-499f-a588-340382536e4a": {
-            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-            bookId: "cc668e06-c40a-4b73-8d87-4e7ecef05b9d",
-            userId: "847ec027-f659-4086-8032-5173e2f9c93a", // george@abv.bg
-            rating: 5,
-            _createdOn: 1764794087938,
-            _id: "408686b4-a222-499f-a588-340382536e4a"
+            message: "I liked it very much!",
+            author: {
+                _id: "b47c0d38-a648-4ff5-baeb-1383bf4f997b",
+                username: "tss",
+                email: "tedi1812@abv.bg"
+            },
+            _createdOn: 1765037226070,
+            _id: "0c8ed294-2c9a-4880-a318-6b40df52cc92"
         }
     }
     
