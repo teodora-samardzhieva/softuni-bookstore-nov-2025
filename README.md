@@ -69,11 +69,12 @@ This is intentional for learning purposes.
 ## Private Part / Authenticated users can:
 - users:
 
-email: "tedi@abv.bg"; password: 123456
-email: "vasil21@abv.bg"; password: 123456
-email: "peter@abv.bg" ; password: 123456
-email: "george@abv.bg"; password: 123456
-Feel free to register new one :)
+    - email: "tedi@abv.bg"; password: 123456
+    - email: "vasil21@abv.bg"; password: 123456
+    - email: "peter@abv.bg" ; password: 123456
+    - email: "george@abv.bg"; password: 123456
+
+You can register a new one if you want to! :)
 
 - access Home page;
 
