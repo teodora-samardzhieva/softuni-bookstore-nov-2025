@@ -1836,6 +1836,116 @@
             img: "https://m.media-amazon.com/images/I/71+IwITqpRL._SY385_.jpg",
             _createdOn: 1765040839005,
             _id: "580f7012-d325-403e-851f-f4026922c5f3"
+        },
+        "b87c65a4-d3e2-1f0g-9h8i-7j6k5l4m3n2o": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "To Kill a Mockingbird",
+            author: "Harper Lee",
+            genre: "Southern Gothic",
+            releaseDate: "1960-07-11",
+            summary: "A story of racial injustice and the loss of childhood innocence in the American South, told from the perspective of young Scout Finch.",
+            img: "https://m.media-amazon.com/images/I/51zPPlr4cTL._SY300_SX300_QL70_FMwebp_.jpg",
+            _createdOn: 1765200000000,
+            _id: "b87c65a4-d3e2-1f0g-9h8i-7j6k5l4m3n2o"
+        },
+        "c9d8e7f6-a5b4-3c2d-1e0f-9g8h7i6j5k4l": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "The Martian",
+            author: "Andy Weir",
+            genre: "Science Fiction",
+            releaseDate: "2011-09-27",
+            summary: "An astronaut is stranded alone on Mars and must rely on his ingenuity and wit to find a way to signal to Earth that he is alive.",
+            img: "https://m.media-amazon.com/images/I/414J3xG+7+L._SY300_SX300_QL70_FMwebp_.jpg",
+            _createdOn: 1765200500000,
+            _id: "c9d8e7f6-a5b4-3c2d-1e0f-9g8h7i6j5k4l"
+        },
+        "d0e1f2g3-h4i5-j6k7-l8m9-n0o1p2q3r4s5": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "Where the Crawdads Sing",
+            author: "Delia Owens",
+            genre: "Mystery",
+            releaseDate: "2018-08-14",
+            summary: "Kya, the 'Marsh Girl,' grows up alone in the North Carolina marshes and becomes the prime suspect in a murder investigation.",
+            img: "https://m.media-amazon.com/images/I/81QBiWvvr-L._SX342_.jpg",
+            _createdOn: 1765201000000,
+            _id: "d0e1f2g3-h4i5-j6k7-l8m9-n0o1p2q3r4s5"
+        },
+        "e1f2g3h4-i5j6-k7l8-m9n0-o1p2q3r4s5t6": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "The Great Gatsby",
+            author: "F. Scott Fitzgerald",
+            genre: "Classic",
+            releaseDate: "1925-04-10",
+            summary: "A portrait of the Jazz Age, following the mysterious millionaire Jay Gatsby and his unrequited love for the beautiful Daisy Buchanan.",
+            img: "https://m.media-amazon.com/images/I/51Uorf8f+3L._SY300_SX300_QL70_FMwebp_.jpg",
+            _createdOn: 1765201500000,
+            _id: "e1f2g3h4-i5j6-k7l8-m9n0-o1p2q3r4s5t6"
+        },
+        "f2g3h4i5-j6k7-l8m9-n0o1-p2q3r4s5t6u7": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "Sapiens: A Brief History of Humankind",
+            author: "Yuval Noah Harari",
+            genre: "Non-Fiction",
+            releaseDate: "2011-01-01",
+            summary: "An investigation into the history of humanity, exploring how biology and history have defined us and what our future holds.",
+            img: "https://m.media-amazon.com/images/I/41HWFhtig3L._SY300_SX300_QL70_FMwebp_.jpg",
+            _createdOn: 1765202000000,
+            _id: "f2g3h4i5-j6k7-l8m9-n0o1-p2q3r4s5t6u7"
+        },
+        "g3h4i5j6-k7l8-m9n0-o1p2-q3r4s5t6u7v8": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "A Game of Thrones",
+            author: "George R.R. Martin",
+            genre: "Fantasy",
+            releaseDate: "1996-08-01",
+            summary: "The first book in the epic fantasy series 'A Song of Ice and Fire,' detailing the struggle for control over the Iron Throne of Westeros.",
+            img: "https://m.media-amazon.com/images/I/515O7L5pm1L._SY445_SX342_FMwebp_.jpg",
+            _createdOn: 1765202500000,
+            _id: "g3h4i5j6-k7l8-m9n0-o1p2-q3r4s5t6u7v8"
+        },
+        "h4i5j6k7-l8m9-n0o1-p2q3-r4s5t6u7v8w9": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "The Vanishing Half",
+            author: "Brit Bennett",
+            genre: "Historical Fiction",
+            releaseDate: "2020-06-02",
+            summary: "The story of twin sisters who choose to live radically different lives—one passing as white, the other staying in their Black Southern community.",
+            img: "https://m.media-amazon.com/images/I/41oUp9qMNDL._SY445_SX342_FMwebp_.jpg",
+            _createdOn: 1765203000000,
+            _id: "h4i5j6k7-l8m9-n0o1-p2q3-r4s5t6u7v8w9"
+        },
+        "i5j6k7l8-m9n0-o1p2-q3r4-s5t6u7v8w9x0": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "1984",
+            author: "George Orwell",
+            genre: "Dystopian",
+            releaseDate: "1949-06-08",
+            summary: "Winston Smith struggles against the totalitarian regime of Big Brother, where thoughtcrime is the ultimate sin and reality is controlled by the Party.",
+            img: "https://m.media-amazon.com/images/I/91YxI9voPUL._SX342_.jpg",
+            _createdOn: 1765203500000,
+            _id: "i5j6k7l8-m9n0-o1p2-q3r4-s5t6u7v8w9x0"
+        },
+        "j6k7l8m9-n0o1-p2q3-r4s5-t6u7v8w9x0y1": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "The Midnight Library",
+            author: "Matt Haig",
+            genre: "Fantasy",
+            releaseDate: "2020-08-13",
+            summary: "A woman gets a chance to revisit the lives she could have lived in a mysterious library that exists between life and death.",
+            img: "https://m.media-amazon.com/images/I/414GhW3ZqML._SY445_SX342_FMwebp_.jpg",
+            _createdOn: 1765204000000,
+            _id: "j6k7l8m9-n0o1-p2q3-r4s5-t6u7v8w9x0y1"
+        },
+        "k7l8m9n0-o1p2-q3r4-s5t6-u7v8w9x0y1z2": {
+            _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+            title: "Atomic Habits",
+            author: "James Clear",
+            genre: "Self-Help",
+            releaseDate: "2018-10-16",
+            summary: "Offers a practical, proven framework for improving every day by focusing on small changes that yield remarkable results over time.",
+            img: "https://m.media-amazon.com/images/I/513Y5o-DYtL._SY300_SX300_QL70_FMwebp_.jpg",
+            _createdOn: 1765204500000,
+            _id: "k7l8m9n0-o1p2-q3r4-s5t6-u7v8w9x0y1z2"
         }
     },
     ratings: {
