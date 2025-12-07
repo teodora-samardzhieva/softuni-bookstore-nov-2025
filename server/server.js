@@ -1340,7 +1340,23 @@
     			email: "admin@abv.bg",
     			username: "Admin",
     			hashedPassword: "fac7060c3e17e6f151f247eacb2cd5ae80b8c36aedb8764e18a41bbdc16aa302"
-    		}
+    		},
+            "942e9be3-83eb-446e-bf2c-f334ed64c6a7": {
+                "username": "tss",
+                "email": "tedi@abv.bg",
+                "hashedPassword": "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1",
+                "_createdOn": 1765140038147,
+                "_id": "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
+                "accessToken": "30abda94a576ac6252650b6289dd1f4dd224f9f9b59479af774b76cc262e41da"
+            },
+            "18068b13-d8a6-4de5-bcfc-cf6ddb20d934": {
+                "username": "vasko21",
+                "email": "vasil21@abv.bg",
+                "hashedPassword": "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1",
+                "_createdOn": 1765139410611,
+                "_id": "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+                "accessToken": "0689569a8a9774804ff08fcbe7ba27d3bff8577847df0b835629e0f7b9e6680f"
+            }
     	},
     	sessions: {
     	}
@@ -1408,15 +1424,15 @@
                 _id: "0a272c58-b7ea-4e09-a000-7ec988248f66"
             },
             "2230dc12-0530-4608-b8a9-acfcac0f064b": {
-                _ownerId: "b47c0d38-a648-4ff5-baeb-1383bf4f997b",
+                _ownerId: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
                 message: "Seriously, if you're looking for a short read that hits like a full-length novel, pick this up immediately. David Baldacci is a master, and this short story, \"No Time Left,\" is absolutely perfect for binge-reading on a plane or a quiet afternoon.",
                 bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7",
                 _createdOn: 1765037881972,
                 _id: "2230dc12-0530-4608-b8a9-acfcac0f064b",
                 author: {
-                    _id: "b47c0d38-a648-4ff5-baeb-1383bf4f997b",
+                    _id: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
                     username: "tss",
-                    email: "tedi1812@abv.bg"
+                    email: "tedi@abv.bg"
                 },
             },
             "ca5fcd4f-0832-4256-8609-3de5e700a81a": {
@@ -1468,11 +1484,11 @@
                 _id: "7d0bdb0a-ffec-492a-a232-c6adf9874b41"
             },
             "57e45804-08e2-413b-a1a5-8b2dc8655142": {
-                _ownerId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                _ownerId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
                 bookId: "c34ff39c-27bb-46ee-9be6-eb49ffefe6a6",
                 message: "Predictable plot and flat characters. It lacked originality and real substance.",
                 author: {
-                    _id: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                    _id: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
                     username: "vasko21",
                     email: "vasil21@abv.bg"
                 },
@@ -1480,11 +1496,11 @@
                 _id: "57e45804-08e2-413b-a1a5-8b2dc8655142"
             },
             "d531376d-3ae2-471e-827e-9a0de7f80c59": {
-                _ownerId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                _ownerId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
                 bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7",
                 message: "A pleasant read, but ultimately forgettable. It needed conflict and a reason to keep reading",
                 author: {
-                    _id: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                    _id: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
                     username: "vasko21",
                     email: "vasil21@abv.bg"
                 },
@@ -1737,7 +1753,7 @@
     	},
         books: {
         "cc668e06-c40a-4b73-8d87-4e7ecef05b9d": {
-            _ownerId: "38ca8eed-d6f4-49ba-8c1b-789a884bb4a8",
+            _ownerId: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
             title: "The Kill Clause",
             author: "Lisa Unger",
             genre: "Action",
@@ -1964,15 +1980,15 @@
             _id: "a84c4e4f-b723-4686-b48d-6108f21e7eae"
         },
         "0c8ed294-2c9a-4880-a318-6b40df52cc92": {
-            _ownerId: "b47c0d38-a648-4ff5-baeb-1383bf4f997b",
+            _ownerId: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
             bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7", // No Time Left
-            userId: "b47c0d38-a648-4ff5-baeb-1383bf4f997b",
+            userId: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
             rating: 5,
             message: "I liked it very much!",
             author: {
-                _id: "b47c0d38-a648-4ff5-baeb-1383bf4f997b",
+                _id: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
                 username: "tss",
-                email: "tedi1812@abv.bg"
+                email: "tedi@abv.bg"
             },
             _createdOn: 1765037226070,
             _id: "0c8ed294-2c9a-4880-a318-6b40df52cc92"
@@ -1992,13 +2008,13 @@
             _id: "7d485186-abbd-4e94-a94d-ca2f287190c2"
         },
         "ef340e06-3e92-43cb-ac63-a0c1cdb81b2f": {
-            _ownerId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+            _ownerId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
             bookId: "c34ff39c-27bb-46ee-9be6-eb49ffefe6a6",
-            userId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+            userId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
             rating: 3,
             message: "The book was nice but a little bit boring.",
             author: {
-                _id: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                _id: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
                 username: "vasko21",
                 email: "vasil21@abv.bg"
             },
@@ -2006,13 +2022,13 @@
             _id: "ef340e06-3e92-43cb-ac63-a0c1cdb81b2f"
         },
         "0b934aa2-9d07-446e-8f8e-98bed7c4c719": {
-            _ownerId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+            _ownerId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
             bookId: "2e8c457b-21ea-4b42-99df-94f3b01c94c7",
-            userId: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+            userId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
             rating: 2,
             message: "The book wasn't scary at all.",
             author: {
-                _id: "494a9346-cb7d-4c8d-9fbd-dfe5633188d4",
+                _id: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
                 username: "vasko21",
                 email: "vasil21@abv.bg"
             },
