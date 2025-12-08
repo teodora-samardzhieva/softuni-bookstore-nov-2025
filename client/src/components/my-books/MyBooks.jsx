@@ -9,7 +9,7 @@ export default function MyBooks() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    if (!user?._id) return;
+    if (!user?._id || !user?.accessToken) return;
 
     const urlSearchParams = new URLSearchParams({
       where: `_ownerId="${user._id}"`, // Filter by the user's ID
