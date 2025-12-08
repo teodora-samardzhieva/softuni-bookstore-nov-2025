@@ -2,23 +2,26 @@ import { Routes, Route } from "react-router";
 
 import Home from "./components/home/Home.jsx";
 import Login from "./components/login/Login.jsx";
-import Header from "./components/header/Header.jsx";
 import Register from "./components/register/Register.jsx";
+import Logout from "./components/logout/Logout.jsx";
+
 import FavoriteBooks from "./components/favoriteBooks/FavoriteBooks.jsx";
-import AuthGuard from "./components/routes/RouteGuard.jsx";
-import Catalog from "./components/catalog/Catalog.jsx";
-import Footer from "./components/footer/Footer.jsx";
 import CreateBook from "./components/create/CreateBook.jsx";
+
+import Header from "./components/header/Header.jsx";
+import Footer from "./components/footer/Footer.jsx";
+import Catalog from "./components/catalog/Catalog.jsx";
+import AboutUs from "./components/about/About.jsx";
 import Details from "./components/details/Details.jsx";
+import Edit from "./components/edit/Edit.jsx";
+import NotFound from "./components/not-found/NotFound.jsx";
+
+import AuthGuard from "./components/routes/RouteGuard.jsx";
 import Background from "./components/bg/Background.jsx";
 
 import "tw-elements";
-import Logout from "./components/logout/Logout.jsx";
-import Edit from "./components/edit/Edit.jsx";
-import AboutUs from "./components/about/About.jsx";
 
 import { useUserContext } from "./context/UserContext.jsx";
-import NotFound from "./components/not-found/NotFound.jsx";
 
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
