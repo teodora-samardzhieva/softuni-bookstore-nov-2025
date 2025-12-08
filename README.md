@@ -213,11 +213,11 @@ You can register a new one if you want to! :)
 
 ### React Hooks
 
-    - useRef, useState, useParams, useContext, useEffect, useNavigate
+    - useRef, useState, useParams, useContext, useEffect, useNavigate, useOptimistic
 
 ### Custom Hooks
 
-    - useForm, usePersistedState, useRequest
+    - useForm, usePersistedState, useRequest, useUserContext, useUserLocationText, useFavorites
 
 ### Context API
 
