@@ -18,6 +18,7 @@ import Edit from "./components/edit/Edit.jsx";
 import AboutUs from "./components/about/About.jsx";
 
 import { useUserContext } from "./context/UserContext.jsx";
+import NotFound from "./components/not-found/NotFound.jsx";
 
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
@@ -47,6 +48,8 @@ function App() {
           </Route>
 
           <Route path="/about-us" element={<AboutUs />} />
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
         <Background.Bottom />
