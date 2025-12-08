@@ -244,8 +244,10 @@ Stateless and stateful components
 ## Bonus Feature
 
 - Implement cloud file storage using Firebase(to store photos)
+- Connect to an external API(Google Maps)
+
 <!-- - Unit tests and component tests using vitest -->
-<!-- Deployed app at ..... -->
+<!-- Deploy the application in a cloud (Firebase) -->
 
 ## Bonuses not described in the assignment but has practical use:
 
