@@ -252,3 +252,4 @@ Stateless and stateful components
 - Search bar in Catalog for better UX
 - Manual Pagination to load data at small parts in Catalog
 - Responsive design for mobiles and desktop
+- Navigate to Not Found Page (when a user navigates to a URL that doesn't exist)
