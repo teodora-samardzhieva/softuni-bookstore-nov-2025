@@ -99,6 +99,9 @@ You can register a new one if you want to! :)
 - access Favorites page:
     - Add/remove book to/from wishlist collection(book is accesable from Catalog and appear in Favorites after adding to collection)
 
+- access My Books page;
+    - displays only the books created by the currently logged-in user
+
 - CRUD for Authenticated user:
 
     - Create book (from Add Book in Navigation)
@@ -132,6 +135,7 @@ You can register a new one if you want to! :)
     - Catalog
     - About-us
     - Add Book
+    - My Books
     - Logout
 
 ## General requirements
@@ -141,6 +145,7 @@ You can register a new one if you want to! :)
     - Catalog
     - Favorites
     - Add Book
+    - My Books
     - Book details
 
 
