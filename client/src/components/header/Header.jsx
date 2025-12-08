@@ -23,6 +23,7 @@ export default function Header() {
     // Logged in users
     navigation.push({ name: "Add Book", href: "/create" });
     navigation.push({ name: "Favorites", href: "/favorites" });
+    navigation.push({ name: "My Books", href: "/my-books" });
     navigation.push({ name: "Logout", href: "/logout" });
   }
 

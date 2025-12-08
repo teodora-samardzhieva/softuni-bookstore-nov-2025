@@ -22,6 +22,7 @@ import Background from "./components/bg/Background.jsx";
 import "tw-elements";
 
 import { useUserContext } from "./context/UserContext.jsx";
+import MyBooks from "./components/my-books/MyBooks.jsx";
 
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/books" element={<Catalog />} />
           <Route path="/books/:bookId/details" element={<Details />} />
           <Route path="/books/:bookId/edit" element={<Edit />} />
+          <Route path="/my-books" element={<MyBooks />} />
 
           <Route element={<AuthGuard user={user} />}>
             <Route path="/favorites" element={<FavoriteBooks />} />
