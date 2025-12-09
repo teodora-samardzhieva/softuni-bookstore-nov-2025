@@ -96,7 +96,6 @@ export default function Register() {
                 <p style={{ color: "red" }}>{errors.username}</p>
               )}
             </div>
-            {/* {<h2 className="text-red-500 italic">Username: {user.username} already exists!</h2>} //TODO: Check if username is taken*/}
           </div>
 
           {/* Email */}

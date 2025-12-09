@@ -233,6 +233,7 @@ export default function Details() {
 
   return (
     <div>
+      <h2>Book Details</h2>
       <div className={styles.detailsForm.container}>
         <div className={styles.detailsForm.div}>
           {/* Image Section */}
