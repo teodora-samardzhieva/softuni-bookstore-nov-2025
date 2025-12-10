@@ -340,7 +340,6 @@
             tokens = [context.params.collection, ...tokens];
             console.log('Request body:\n', body);
 
-            // TODO handle collisions, replacement
             let responseData = data;
             for (let token of tokens) {
                 if (responseData.hasOwnProperty(token) == false) {

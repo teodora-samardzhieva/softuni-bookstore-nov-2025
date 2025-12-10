@@ -12,7 +12,7 @@ export default function useRequest(url, initState) {
     const request = async (url, method, data, config={}) => {
         if (!url) {
             return {}; 
-        } //TODO remove if unnesessary (for guest to remove the 403 req)
+        } // needed (for guest users to remove the 403 request err)
 
         let options = {};
         

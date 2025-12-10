@@ -114,7 +114,6 @@ export default function Details() {
     }
   };
 
-  //TODO FIX pending
   const createCommentHandlerEnd = (newComment) => {
     // setRefresh((state) => !state);
     setComments((prevComments) => [
