@@ -17,7 +17,6 @@ import Edit from "./components/edit/Edit.jsx";
 import NotFound from "./components/not-found/NotFound.jsx";
 
 import AuthGuard from "./components/routes/RouteGuard.jsx";
-import Background from "./components/bg/Background.jsx";
 
 import "tw-elements";
 
@@ -67,7 +66,6 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
-        <Background.Bottom />
         <div className="relative">
           <div
             aria-hidden="true"
