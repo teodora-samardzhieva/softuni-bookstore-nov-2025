@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3030/jsonstore';
+const BASE_URL = 'https://europe-west4-bookstore-nov-2025.cloudfunctions.net/server/jsonstore';
 
 export default async function request(url, method, data) {
     let options = {};

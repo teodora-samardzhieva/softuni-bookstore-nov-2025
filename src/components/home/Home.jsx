@@ -20,8 +20,8 @@ export default function Home() {
 
   // Comment useEffect to see how it looks without books
   // useEffect(() => {
-  //   //   fetch('http://localhost:3030/jsonstore/books')
-  //   //    .then(response => response.json())
+      // // fetch('https://europe-west4-bookstore-nov-2025.cloudfunctions.net/server/data/books')
+      // //  .then(response => response.json())
   //   request('/books')
   //       .then(result => {
   //         const resultBooks = Object.values(result)
