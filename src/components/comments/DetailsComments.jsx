@@ -3,7 +3,6 @@ import { useUserContext } from "../../context/UserContext.jsx";
 export default function DetailsComments({ comments, onDeleteComment }) {
   const { user } = useUserContext();
 
-  // Helper variable for cleaner access
   const currentUserId = user?._id;
 
   return (

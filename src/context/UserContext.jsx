@@ -44,11 +44,6 @@ export function UserProvider({ children }) {
     setUser(result);
   };
 
-  // const logoutHandler = () => {
-  //     return request('/users/logout', 'GET', null, {accessToken: user.accessToken})
-  //         .finally(() => setUser(null));
-  // };
-
   const logoutHandler = () => {
     if (!user) {
       return Promise.resolve(); // nothing to do

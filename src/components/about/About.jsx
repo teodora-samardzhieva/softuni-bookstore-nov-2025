@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
 
-// --- Bookstore's location ---
-// const STORE_NAME = "The Book Nook";
-// const STORE_ADDRESS = "First Ave, Brighton and Hove, UK";
-// const STORE_COORDS = { lat: 36.7118, lng: 2.9238 };
 const STORE_NAME = "The Golden Gate Reads";
 const STORE_ADDRESS = "101 Embarcadero, San Francisco, CA 94105, USA";
 const STORE_COORDS = { lat: 37.7956, lng: -122.3934 };
@@ -87,7 +83,6 @@ export default function AboutUs() {
       <iframe
         className="iframe w-full h-96 border-4 border-black p-1.5 rounded-xl shadow-md"
         src={getGoogleMapUrl(STORE_COORDS.lat, STORE_COORDS.lng)}
-        // src={getGoogleMapUrl(STORE_COORDS.lat, STORE_COORDS.lng, STORE_NAME)}
         allowFullScreen=""
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"

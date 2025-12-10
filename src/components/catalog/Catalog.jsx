@@ -20,7 +20,7 @@ export default function Catalog() {
       <div className="flex justify-center items-center space-x-4 mb-6 pt-4 text-sm pb-5">
         <span className="font-semibold text-gray-800">Sort By:</span>
 
-        {/* Newest/Oldest (by creation date) */}
+        {/* sort by creation date */}
         <button
           onClick={() => setSortOrder("Newest")}
           className={getSortButtonClass("Newest")}
@@ -34,7 +34,7 @@ export default function Catalog() {
           Oldest
         </button>
 
-        {/* A-Z/Z-A (by title) */}
+        {/* sort by title */}
         <button
           onClick={() => setSortOrder("TitleAsc")}
           className={getSortButtonClass("TitleAsc")}

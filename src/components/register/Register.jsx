@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import useForm from "../../hooks/useForm.js";
 import { useContext, useState } from "react";
@@ -14,27 +13,19 @@ export default function Register() {
   const registerSubmitHandler = async (values) => {
     const { username, email, password, confirmPassword } = values;
 
-    // Validation
-    // if(!username || !email || !password || !confirmPassword) {
-    //   return alert('All fields are required!');
-    // }
-    // if(password !== confirmPassword) {
-    //   return alert('Password missmatch!');
-    // }
-
     const validate = () => {
       let tempErrors = {};
-      if (!username) {
+      if (!username.trim()) {
         tempErrors.username = "Username is required";
       } else if (!/^[a-zA-Z0-9]{3,16}$/.test(username)) {
         tempErrors.username = "Username is invalid";
       }
-      if (!email) {
+      if (!email.trim()) {
         tempErrors.email = "Email is required";
       } else if (!/\S+@\S+\.\S+/.test(email)) {
         tempErrors.email = "Email is invalid";
       }
-      if (!password) {
+      if (!password.trim()) {
         tempErrors.password = "Password is required";
       } else if (password.length < 6) {
         tempErrors.password = "Password must be at least 6 characters";
@@ -48,10 +39,8 @@ export default function Register() {
 
     if (validate()) {
       try {
-        // Register user
         await registerHandler(username, email, password);
         toast.success(`Successfull Register!`);
-        //Redirect to home page
         navigate("/");
       } catch (error) {
         // alert("Registration failed: " + error.message);
@@ -78,7 +67,6 @@ export default function Register() {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" action={formAction}>
-          {/* Username */}
           <div>
             <label
               htmlFor="username"
@@ -100,7 +88,6 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Email */}
           <div>
             <label
               htmlFor="email"
@@ -121,7 +108,6 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Password */}
           <div>
             <label
               htmlFor="password"
@@ -144,7 +130,6 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Confirm Password */}
           <div>
             <label
               htmlFor="confirmPassword"
@@ -167,7 +152,6 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div>
             <button
               type="submit"

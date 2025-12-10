@@ -5,15 +5,12 @@ const BASE_URL = import.meta.env.VITE_APP_SERVER_URL;
 export default function useRequest(url, initState) {
 
     const {user, isAuthenticated} = useContext(UserContext);
-    // or state, setState
     const [data, setData] = useState(initState);
     
-    // differ request
     const request = async (url, method, data, config={}) => {
         if (!url) {
             return {}; 
-        } // needed (for guest users to remove the 403 request err)
-
+        } 
         let options = {};
         
         if (method) {
@@ -27,9 +24,7 @@ export default function useRequest(url, initState) {
 
             options.body = JSON.stringify(data);
         }
-        
-        // console.log(isAuthenticated);
-        
+                
         if(config?.accessToken || isAuthenticated) {
             options.headers = {
                 ...options.headers,
@@ -52,7 +47,6 @@ export default function useRequest(url, initState) {
         return result;
     }
 
-    // първоначален request(onMount)
     useEffect(() => {
         if(!url) return;
         request(url)

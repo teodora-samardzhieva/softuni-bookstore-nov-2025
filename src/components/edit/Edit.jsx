@@ -1,4 +1,4 @@
-import { useEffect } from "react"; //useState
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import useForm from "../../hooks/useForm.js";
 import useRequest from "../../hooks/useRequest.js";
@@ -28,7 +28,6 @@ export default function Edit() {
       _updatedOn: Date.now(),
     };
 
-    // Basic validation
     if (Object.values(bookData).some((v) => v === "")) {
       toast.error("Please fill in all fields.");
       return;
@@ -48,7 +47,6 @@ export default function Edit() {
     register,
     formAction,
     setValues,
-    // values
   } = useForm(editBookHandler, initialValues);
 
   useEffect(() => {
@@ -74,7 +72,6 @@ export default function Edit() {
     <div className={styles.createForm.container}>
       <h2 className={styles.createForm.h2}>Edit Book</h2>
       <form action={formAction} className="space-y-4">
-        {/* Title Input */}
         <div>
           <label htmlFor="title" className={styles.createForm.label}>
             Book Title
@@ -89,7 +86,6 @@ export default function Edit() {
           />
         </div>
 
-        {/* Author Input */}
         <div>
           <label htmlFor="author" className={styles.createForm.label}>
             Author
@@ -104,7 +100,6 @@ export default function Edit() {
           />
         </div>
 
-        {/* Genre Input */}
         <div>
           <label htmlFor="genre" className={styles.createForm.label}>
             Genre
@@ -119,7 +114,6 @@ export default function Edit() {
           />
         </div>
 
-        {/* Release Date Input */}
         <div>
           <label htmlFor="releaseDate" className={styles.createForm.label}>
             Release Date
@@ -133,7 +127,6 @@ export default function Edit() {
           />
         </div>
 
-        {/* Rating */}
         <div className={styles.detailsForm.formItem}>
           <label htmlFor="rating" className={styles.detailsForm.formLabel}>
             Rating
@@ -153,7 +146,6 @@ export default function Edit() {
           </div>
         </div>
 
-        {/* Summary Textarea */}
         <div>
           <label htmlFor="summary" className={styles.createForm.label}>
             Summary
@@ -168,7 +160,6 @@ export default function Edit() {
           ></textarea>
         </div>
 
-        {/* Image URL Input */}
         <div>
           <label htmlFor="img" className={styles.createForm.label}>
             Image URL
@@ -183,7 +174,6 @@ export default function Edit() {
           />
         </div>
 
-        {/* Submit Button */}
         <button type="submit" className={styles.createForm.btn}>
           Save
         </button>

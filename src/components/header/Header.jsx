@@ -16,7 +16,7 @@ export default function Header() {
   ];
 
   // Guest users
-  if (!isAuthenticated) { //!user
+  if (!isAuthenticated) { 
     navigation.push({ name: "Login", href: "/login" });
     navigation.push({ name: "Register", href: "/register" });
   } else {
@@ -28,7 +28,6 @@ export default function Header() {
   }
 
   return (
-    //bg-violet-200
     <header className="absolute inset-x-0 top-0 z-50 bg-blue-200"> 
       <nav
         aria-label="Global"
@@ -36,8 +35,6 @@ export default function Header() {
       >
         <div className="flex lg:flex-1">
           <Link to="/" className="-m-1.5 p-1.5 flex items-center">
-            {/* <span className="sr-only">Home</span> */}
-
             <img
               alt="Bookstore logo"
               src="/assets/img/book-logo.png"
@@ -90,7 +87,6 @@ export default function Header() {
         <DialogPanel className={styles.homePage.div}>
           <div className="flex items-center justify-between">
             <Link to="/" className="-m-1.5 p-1.5"> 
-            {/* <span className="sr-only">Bookstore</span> */}
             <div className="relative flex items-center">
             <img
               alt="Bookstore logo"

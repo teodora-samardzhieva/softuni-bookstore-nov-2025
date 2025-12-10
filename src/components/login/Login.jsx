@@ -14,12 +14,10 @@ export default function Login() {
     const { email, password } = values;
 
     let tempErrors = {};
-    // empty field validation
     const validate = () => {
-      if (!email) {
-        // return alert("Email is required!");
+      if (!email.trim()) {
         tempErrors.email = "Email is required!";
-      } else if (!password) {
+      } else if (!password.trim()) {
         tempErrors.password = "Password is required!";
       }
 
@@ -33,8 +31,6 @@ export default function Login() {
         toast.success(`Successfull Login!`);
         navigate("/");
       } catch (error) {
-        // alert('Login failed: ' + error.message);
-        // alert("Login failed: " + error.message);
         toast.error(`Cannot login`);
         tempErrors.error = "Invalid email or password!";
         

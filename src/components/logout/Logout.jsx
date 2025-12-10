@@ -6,13 +6,6 @@ export default function Logout() {
     const {logoutHandler} = useContext(UserContext);
     const navigate = useNavigate();
 
-    // logoutHandler()
-    //     .then(() => navigate('/'))
-    //     .catch(() => {
-    //         alert('Problem with logout');
-    //         navigate('/');
-    //     })
-
     useEffect(() => {
         logoutHandler()
             .finally(() => navigate('/'));

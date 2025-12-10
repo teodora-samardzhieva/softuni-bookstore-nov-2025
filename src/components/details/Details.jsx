@@ -1,5 +1,5 @@
 import { useOptimistic, useState, useCallback, useMemo } from "react";
-import { Link, useNavigate, useParams } from "react-router"; 
+import { Link, useNavigate, useParams } from "react-router";
 import Comment from "../comments/Comment.jsx";
 import DetailsComments from "../comments/DetailsComments.jsx";
 import useRequest from "../../hooks/useRequest.js";
@@ -15,10 +15,8 @@ export default function Details() {
   const { user, isAuthenticated } = useUserContext();
   const { bookId } = useParams();
 
-  // --- 1. Data Fetching ---
   const { data: book = {}, request } = useRequest(`/data/books/${bookId}`, {});
 
-  // URLSearchParams for fetching comments linked to this book
   const commentParams = new URLSearchParams({
     where: `bookId="${bookId}"`,
   });
@@ -33,7 +31,7 @@ export default function Details() {
     []
   );
 
-  // Fetch the current user's rating, only if authenticated
+  // fetch the current user's rating, only if authenticated
   const { data: userRating = [], setData: setUserRating } = useRequest(
     isAuthenticated
       ? `/data/ratings?where=bookId%3D%22${bookId}%22%20AND%20userId%3D%22${user._id}%22`
@@ -68,22 +66,22 @@ export default function Details() {
     }
   );
 
-
   const hasUserRated = Array.isArray(userRating) && userRating.length > 0;
   const isOwner = user?._id === book?._ownerId;
   // user can rate only if:
   const canRate = isAuthenticated && !hasUserRated && !isOwner;
 
-
   const { averageRating, totalVotes, visualAverage } = useMemo(() => {
-    const safeRatings = Array.isArray(optimisticUserRating) ? optimisticUserRating : []; 
-    
+    const safeRatings = Array.isArray(optimisticUserRating)
+      ? optimisticUserRating
+      : [];
+
     const totalRatingSum = safeRatings.reduce((sum, r) => sum + r.rating, 0);
     const votes = safeRatings.length;
-    
-    const avg = votes 
-      ? Number((totalRatingSum / votes).toFixed(1)) 
-      : book?.rating || 0; 
+
+    const avg = votes
+      ? Number((totalRatingSum / votes).toFixed(1))
+      : book?.rating || 0;
     // round to the nearest 0.5 for half-star display
     const visualAvg = Math.round(avg * 2) / 2;
 
@@ -92,9 +90,9 @@ export default function Details() {
       totalVotes: votes,
       visualAverage: visualAvg,
     };
-}, [optimisticUserRating, book]);
+  }, [optimisticUserRating, book]);
 
-  // sorting state 
+  // sorting state
   const [commentSortOrder, setCommentSortOrder] = useState("Newest");
   const [reviewSortOrder, setReviewSortOrder] = useState("Newest");
 
@@ -123,8 +121,7 @@ export default function Details() {
   // use optimisticUserRating (includes the base ratings) for sorting reviews
   const sortedReviews = sortItems(optimisticUserRating, reviewSortOrder);
 
-  // action handlers 
-
+  // action handlers
   const deleteBookHandler = useCallback(async () => {
     if (!window.confirm(`Are you sure you want to delete book: ${book.title}?`))
       return;
@@ -218,14 +215,11 @@ export default function Details() {
     [setOptimisticUserRating, user]
   );
 
-
   // components
 
   const HalfStar = () => (
     <div className="relative w-6 h-6 inline-block">
       <Star className="absolute w-6 h-6 text-gray-300" />{" "}
-      {/* full empty gray star behind */}
-      {/* Left half filled */}
       <Star className="absolute w-6 h-6 text-amber-400 fill-amber-400 [clip-path:inset(0_50%_0_0)]" />
     </div>
   );
@@ -237,7 +231,6 @@ export default function Details() {
       </div>
     );
   }
-
 
   return (
     <div>
@@ -271,18 +264,16 @@ export default function Details() {
                 </span>
               </p>
 
-              {/* rating section */}
               <div className="mt-4">
                 <label className={styles.detailsForm.formLabel}>Rating</label>
                 <div className={styles.detailsForm.starsContainer}>
                   {[1, 2, 3, 4, 5].map((i) => {
-                    // Determine which Star icon to render based on the visualAverage
+                    // render star icon based on the visualAverage
                     const isFull = visualAverage >= i;
                     const isHalf =
                       visualAverage >= i - 0.5 && visualAverage < i;
 
                     if (isHalf) {
-                      // Render the custom HalfStar component
                       return <HalfStar key={i} />;
                     }
 
@@ -290,7 +281,6 @@ export default function Details() {
                       ? `${styles.detailsForm.starFilled}`
                       : `${styles.detailsForm.starEmpty}`;
 
-                    // Render Star icon (full or empty)
                     return (
                       <Star
                         key={i}
@@ -322,7 +312,6 @@ export default function Details() {
               </p>
             </div>
 
-            {/* owner actions */}
             {isAuthenticated && isOwner && (
               <div className="mt-10 flex flex-wrap-10 gap-4">
                 {" "}
@@ -344,7 +333,6 @@ export default function Details() {
         </div>
       </div>
 
-      {/* reviews section */}
       <section className={styles.detailsForm.commentSection}>
         <div className="flex justify-between items-center mb-6 border-b pb-2">
           <h2 className="text-2xl font-semibold text-gray-800">
@@ -390,7 +378,6 @@ export default function Details() {
         )}
       </section>
 
-      {/* comments section */}
       <section className={styles.detailsForm.commentSection}>
         <div className="flex justify-between items-center mb-6 border-b pb-2">
           <h2 className="text-2xl font-semibold text-gray-800">

@@ -65,7 +65,6 @@ export default function CreateBook() {
       await request("/data/books", "POST", bookData);
 
       navigate("/books");
-      // setFormData(initialValues);
     } catch (error) {
       // alert(error.message);
       toast.error('Create failed');
@@ -98,7 +97,6 @@ export default function CreateBook() {
         Add New Book
       </h2>
       <form onSubmit={createBookHandler} className="space-y-4">
-        {/* Title Input */}
         <div>
           <label
             htmlFor="title"
@@ -116,7 +114,6 @@ export default function CreateBook() {
           />
         </div>
 
-        {/* Author Input */}
         <div>
           <label
             htmlFor="author"
@@ -134,7 +131,6 @@ export default function CreateBook() {
           />
         </div>
 
-        {/* Genre Input */}
         <div>
           <label
             htmlFor="genre"
@@ -152,7 +148,6 @@ export default function CreateBook() {
           />
         </div>
 
-        {/* Release Date Input */}
         <div>
           <label
             htmlFor="releaseDate"
@@ -169,7 +164,6 @@ export default function CreateBook() {
           />
         </div>
 
-      {/* Rating */}
         <div className={styles.detailsForm.formItem}>
                 <label htmlFor="rating" className={styles.detailsForm.formLabel}>Rating</label>
                 <div className={styles.detailsForm.ratingContainer}>
@@ -186,7 +180,6 @@ export default function CreateBook() {
                 </div>
               </div>
 
-        {/* Summary Textarea */}
         <div>
           <label
             htmlFor="summary"
@@ -204,7 +197,6 @@ export default function CreateBook() {
           ></textarea>
         </div>
 
-        {/* Image URL Input */}
         <div>
           <label
             htmlFor="img"
@@ -250,7 +242,6 @@ export default function CreateBook() {
           )}
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className={styles.createForm.btn}
