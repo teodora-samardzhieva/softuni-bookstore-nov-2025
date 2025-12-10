@@ -2,8 +2,8 @@ import { useState } from "react";
 
 export default function usePersistedState(initialState, key) {
     const [state, setState] = useState(() => {
-        // const storageData = localStorage.getItem(key);
-        const storageData = sessionStorage.getItem(key);
+        const storageData = localStorage.getItem(key);
+        // const storageData = sessionStorage.getItem(key);
 
         if (!storageData) {
             return initialState;
