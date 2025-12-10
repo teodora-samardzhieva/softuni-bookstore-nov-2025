@@ -1,27 +1,45 @@
 import { Link, useNavigate } from "react-router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../context/UserContext.jsx";
 import useForm from "../../hooks/useForm.js";
 import { styles } from "../../assets/styles/styles.js";
 
 export default function Login() {
   const navigate = useNavigate();
-  const {loginHandler} = useContext(UserContext);
+  const { loginHandler } = useContext(UserContext);
+  const [errors, setErrors] = useState({});
 
   const loginSubmitHandler = async (values) => {
     const { email, password } = values;
 
+    let tempErrors = {};
     // empty field validation
-    if (!email || !password) {
-      return alert("Email and password are required!");
-    }
+    const validate = () => {
+      if (!email) {
+        // return alert("Email is required!");
+        tempErrors.email = "Email is required!";
+      } else if (!password) {
+        tempErrors.password = "Password is required!";
+      }
 
-    try {
-      await loginHandler(email, password);
+      setErrors(tempErrors);
+      return Object.keys(tempErrors).length === 0;
+    };
 
-      navigate("/");
-    } catch (error) {
-      alert('Login failed: ' + error.message);
+    if (validate()) {
+      try {
+        await loginHandler(email, password);
+
+        navigate("/");
+      } catch (error) {
+        // alert('Login failed: ' + error.message);
+        alert("Login failed: " + error.message);
+        tempErrors.error = "Invalid email/password";
+        
+        setErrors(tempErrors);
+        return Object.keys(tempErrors).length === 0;
+      }
+
     }
   };
 
@@ -35,18 +53,15 @@ export default function Login() {
     <>
       <div className={styles.registerForm.container}>
         <div className="mt-15">
-          <h2 className={styles.registerForm.h2}>
-            Log in to your account
-          </h2>
+          <h2 className={styles.registerForm.h2}>Log in to your account</h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action={formAction}>
             <div>
-              <label
-                htmlFor="email"
-                className={styles.registerForm.label}
-              >
+              {errors.error && (
+                <p style={{ color: "red" }}>{errors.error}</p> )}
+              <label htmlFor="email" className={styles.registerForm.label}>
                 Email address
               </label>
               <div className="mt-2">
@@ -58,15 +73,15 @@ export default function Login() {
                   {...register("email")}
                   className={styles.registerForm.input}
                 />
+                {errors.email && (
+                <p style={{ color: "red" }}>{errors.email}</p>
+              )}
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className={styles.registerForm.label}
-                >
+                <label htmlFor="password" className={styles.registerForm.label}>
                   Password
                 </label>
               </div>
@@ -79,14 +94,14 @@ export default function Login() {
                   {...register("password")}
                   className={styles.registerForm.input}
                 />
+                {errors.password && (
+                <p style={{ color: "red" }}>{errors.password}</p>
+              )}
               </div>
             </div>
 
             <div>
-              <button
-                type="submit"
-                className={styles.registerForm.btn}
-              >
+              <button type="submit" className={styles.registerForm.btn}>
                 Login
               </button>
             </div>
@@ -94,10 +109,7 @@ export default function Login() {
 
           <p className={styles.registerForm.p}>
             Don't have an account?{" "}
-            <Link
-              to="/register"
-              className={styles.registerForm.link}
-            >
+            <Link to="/register" className={styles.registerForm.link}>
               Sign up here
             </Link>
           </p>
