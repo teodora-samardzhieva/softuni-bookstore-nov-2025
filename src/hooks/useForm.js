@@ -15,7 +15,6 @@ export default function useForm(callback, initialValues) {
         reset();
     }
 
-      // NEW: RESET FUNCTION
     const reset = () => {
         setValues(initialValues);
     };
@@ -27,7 +26,6 @@ export default function useForm(callback, initialValues) {
             value: values[fieldName] 
         }
 
-        // Instead of saying:  name="email" onChange={changeHandler} value={values.email} in the form
     }
 
     return {

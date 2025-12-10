@@ -31,17 +31,14 @@ export default function Book({
 
   return (
     <div className={styles.book.container}>
-      {/* Image Cover */}
       <img
         src={imageUrl}
         alt={`Book cover for ${title}`}
         className={styles.book.img}
       />
 
-      {/* Title */}
       <h3 className={styles.book.h3}>{title}</h3>
 
-      {/* Buttons */}
       <div className={styles.book.btnContainer}>
         <Link
           to={`/books/${_id}/details`}
@@ -49,7 +46,6 @@ export default function Book({
         >
           <HiOutlineInformationCircle className="mr-2 text-lg" /> Details
         </Link>
-        {/* For logged-in users */}
         {isAuthenticated && (
           <button
             onClick={bookmarkHandler}

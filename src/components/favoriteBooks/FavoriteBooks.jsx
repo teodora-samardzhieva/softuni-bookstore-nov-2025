@@ -43,23 +43,19 @@ export default function Favorites() {
             key={book._id}
             className={styles.favoriteBooks.div}
           >
-            {/* Image Cover */}
             <img
               src={book.img}
               alt={`Корица на ${book.title}`}
               className={styles.book.img}
             />
 
-            {/* Book Title */}
             <h3 className={styles.book.h3}>
               Title: {book.title}
             </h3>
-            {/* Author */}
             <h3 className={`${styles.book.h3} mt-5`}>
               Author: {book.author}
             </h3>
 
-            {/* Action Buttons */}
             <div className={styles.book.btnContainer}>
               <button
                 onClick={() => removeFavorite(book._id)}

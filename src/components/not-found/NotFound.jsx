@@ -17,7 +17,6 @@ export default function NotFound() {
                     The book you're looking for might have been moved or deleted.
                 </p>
                 
-                {/* Link back to the home page or catalog */}
                 <Link 
                     to="/" 
                     className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"

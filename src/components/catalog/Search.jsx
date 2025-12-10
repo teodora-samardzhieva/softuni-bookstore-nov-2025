@@ -7,7 +7,7 @@ export default function Search({onSearch}) {
     const handleChange = (e) => {
         const text = e.target.value;
         setValue(text);
-        onSearch(text);      // send to parent
+        onSearch(text);
     };
 
     return (

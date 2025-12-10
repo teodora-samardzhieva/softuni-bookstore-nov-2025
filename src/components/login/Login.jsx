@@ -13,10 +13,8 @@ export default function Login() {
     const { email, password } = values;
 
     let tempErrors = {};
-    // empty field validation
     const validate = () => {
       if (!email.trim()) {
-        // return alert("Email is required!");
         tempErrors.email = "Email is required!";
       } else if (!password.trim()) {
         tempErrors.password = "Password is required!";
@@ -32,8 +30,6 @@ export default function Login() {
 
         navigate("/");
       } catch (error) {
-        // alert('Login failed: ' + error.message);
-        // alert("Login failed: " + error.message);
         tempErrors.error = "Invalid email or password!";
         
         setErrors(tempErrors);

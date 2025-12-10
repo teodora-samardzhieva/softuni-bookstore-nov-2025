@@ -16,12 +16,6 @@ export default function Review({ user, onCreateStart, onCreateEnd }) {
     if (!rating && !reviewText.trim())
       return alert("Please select a rating or write a review before saving.");
 
-    // const data = {
-    //   bookId,
-    //   userId: user._id,
-    //   rating,
-    // };
-
     const data = {
       bookId,
       userId: user._id,

@@ -30,20 +30,15 @@ describe("App", () => {
   });
   describe("Load navigation pages correctly", function () {
     it("Nav", async () => {
-      // const logoElement = screen.getByText('Where dark art meets skin. Book your session with our world-class tattoo artists in Moss.')
       const homeElement = screen.getByText("Home");
       const catalogElement = screen.getByText("Catalog");
       const aboutElement = screen.getByText("About us");
 
-      // expect(logoElement).toBeInTheDocument();
       expect(homeElement).toBeInTheDocument();
       expect(catalogElement).toBeInTheDocument();
       expect(aboutElement).toBeInTheDocument();
     });
     it("Home page", async () => {
-      // const homeLink = screen.getByRole('link', { name: 'Home' });
-      // await userEvent.click(homeLink);
-
       const titleElement = await screen.findByText(
         "Welcome to Bookstore — your world of stories begins here.",
         { selector: "h1" }
@@ -51,7 +46,6 @@ describe("App", () => {
       expect(titleElement).toBeInTheDocument();
     });
     it("Catalog page", async () => {
-      //   const catalogLink = screen.getByText("Catalog");
       const catalogLink = screen.getByRole("link", { name: "Catalog" });
       await userEvent.click(catalogLink);
 

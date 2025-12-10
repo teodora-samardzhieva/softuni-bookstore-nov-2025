@@ -23,7 +23,6 @@ export default function DetailsReviews({ reviews = [] }) {
                   </span>
                 </p>
 
-                {/* Rating Stars */}
                 <div className="flex items-center mt-1">
                   {[1, 2, 3, 4, 5].map((i) => (
                     <svg
@@ -44,7 +43,6 @@ export default function DetailsReviews({ reviews = [] }) {
                 </div>
               </div>
               
-              {/* flex-shrink-0 ensures the date doesn't wrap */}
               <span className="text-xs text-gray-500 flex-shrink-0 ml-4">
                 {(new Date(r._createdOn)).toLocaleDateString()}
               </span>

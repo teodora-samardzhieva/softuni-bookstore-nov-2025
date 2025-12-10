@@ -1,39 +1,12 @@
 import { Link } from "react-router";
-import { HiOutlineInformationCircle } from "react-icons/hi"; // Използваме една икона за детайли
-// import { useEffect, useState } from "react";
-// import request from "../../utils/request.js";
+import { HiOutlineInformationCircle } from "react-icons/hi";
 import useRequest from "../../hooks/useRequest.js";
 
-// Основен компонент за началната страница
 export default function Home() {
-  // server canno decode + to %20
-  // const urlSearchParams = new URLSearchParams({
-  //   sortBy: '_createdOn desc'
-  // })
-
   const { data: latestBooks } = useRequest(
     `/data/books?sortBy=_createdOn%20desc&pageSize=3`,
     []
   );
-
-  // const [latestBooks, setLatestBooks] = useState([]);
-
-  // Comment useEffect to see how it looks without books
-  // useEffect(() => {
-      // // fetch(`${import.meta.env.VITE_APP_SERVER_URL}/data/books`)
-      // //  .then(response => response.json())
-  //   request('/books')
-  //       .then(result => {
-  //         const resultBooks = Object.values(result)
-  //           .sort((a, b) => b._createdOn - a._createdOn)
-  //           .slice(0, 3);
-
-  //         setLatestBooks(resultBooks);
-  //       })
-  //       .catch(err => {
-  //         alert(err.message);
-  //       })
-  //   }, []);
 
   return (
     <div className="relative isolate px-6 lg:px-8">
@@ -57,7 +30,6 @@ export default function Home() {
             </div>
           )}
 
-          {/* Контейнер за книгите */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-15">
             {latestBooks.map((book) => (
               <BookCard
@@ -85,32 +57,27 @@ export default function Home() {
   );
 }
 
-// Мини-компонент за карта на книга
 const BookCard = ({ _id, title, imageUrl }) => {
   return (
     <div className="relative overflow-hidden rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 group flex flex-col min-w-[220px] max-w-xs sm:max-w-[300px] h-[400px] sm:h-[350px] mx-auto">
-  {/* Book Image */}
-  <img
-    src={imageUrl}
-    alt={title}
-    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-  />
+      <img
+        src={imageUrl}
+        alt={title}
+        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+      />
 
-  {/* Overlay with Info */}
-  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-    <h3 className="text-lg sm:text-xl font-bold text-white mb-3 line-clamp-2">
-      {title}
-    </h3>
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-3 line-clamp-2">
+          {title}
+        </h3>
 
-    {/* Details Button */}
-    <Link
-      to={`/books/${_id}/details`}
-      className="flex items-center justify-center bg-indigo-600 text-white px-3 py-2 rounded-lg text-sm sm:text-base hover:bg-indigo-700 transition duration-200"
-    >
-      <HiOutlineInformationCircle className="mr-2 text-lg" /> Details
-    </Link>
-  </div>
-</div>
-
+        <Link
+          to={`/books/${_id}/details`}
+          className="flex items-center justify-center bg-indigo-600 text-white px-3 py-2 rounded-lg text-sm sm:text-base hover:bg-indigo-700 transition duration-200"
+        >
+          <HiOutlineInformationCircle className="mr-2 text-lg" /> Details
+        </Link>
+      </div>
+    </div>
   );
 };

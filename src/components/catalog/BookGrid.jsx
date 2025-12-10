@@ -7,14 +7,14 @@ const BOOKS_PER_LOAD = 10;
 const INITIAL_LOAD = 10;  
 
 export default function BookGrid({ search, sortOrder }) {
-    // State to track the count of books currently visible
+    // state to track the count of books currently visible
     const [visibleCount, setVisibleCount] = useState(INITIAL_LOAD);
     
-    // Fetch ALL books once on mount
+    // fetch all books once on mount
     const { data: allBooks = [] } = useRequest("/data/books", []);
 
 
-    // --- 1. Combined Sort and Filter Logic (Memoized) ---
+    // combine sort and filter
     const filteredAndSortedBooks = useMemo(() => {
         const bookList = allBooks;
 
@@ -22,13 +22,13 @@ export default function BookGrid({ search, sortOrder }) {
             return [];
         }
         
-        // 1. Filter based on search text
+        // filter based on search text
         let result = bookList.filter((book) =>
             book.title.toLowerCase().includes(search.toLowerCase()) ||
             book.author.toLowerCase().includes(search.toLowerCase())
         );
 
-        // 2. Sort the filtered array
+        // sort the filtered array
         const sorted = [...result];
 
         sorted.sort((a, b) => {
@@ -53,21 +53,19 @@ export default function BookGrid({ search, sortOrder }) {
     }, [allBooks, search, sortOrder]);
 
 
-    // Reset Pagination on Filter/Sort Change
+    // reset pagination on filter/sort change
     useEffect(() => {
-        // Reset the visible count whenever the criteria changes
+        // reset the visible count whenever the criteria changes
         setVisibleCount(INITIAL_LOAD);
     }, [search, sortOrder]);
 
 
-    // "See More" Handler 
     const handleLoadMore = () => {
-        // Increase the visible count by the batch size
         setVisibleCount(prevCount => prevCount + BOOKS_PER_LOAD);
     };
 
 
-    // Data for Display
+    // data for display
     const booksToDisplay = filteredAndSortedBooks.slice(0, visibleCount);
     const hasMoreResults = visibleCount < filteredAndSortedBooks.length;
     
