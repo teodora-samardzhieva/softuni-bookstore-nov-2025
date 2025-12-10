@@ -1505,6 +1505,30 @@
                 },
                 _createdOn: 1765051198528,
                 _id: "d531376d-3ae2-471e-827e-9a0de7f80c59"
+            },
+            "bbef80fb-5e0c-413a-91b5-6ef3b9d44884": {
+                _ownerId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+                bookId: "k7l8m9n0-o1p2-q3r4-s5t6-u7v8w9x0y1z2",
+                message: "The book cover is really pretty!",
+                author: {
+                    _id: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+                    username: "vasko21",
+                    email: "vasil21@abv.bg"
+                },
+                _createdOn: 1765379101870,
+                _id: "bbef80fb-5e0c-413a-91b5-6ef3b9d44884"
+            },
+            "a058d0db-9fa2-484d-9342-41d653f067f3": {
+                _ownerId: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
+                bookId: "k7l8m9n0-o1p2-q3r4-s5t6-u7v8w9x0y1z2",
+                message: "The book was fine I guess.",
+                author: {
+                    _id: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
+                    username: "tss",
+                    email: "tedi@abv.bg"
+                },
+                _createdOn: 1765379447739,
+                _id: "a058d0db-9fa2-484d-9342-41d653f067f3"
             }
         },
 
@@ -2033,6 +2057,34 @@
             },
             _createdOn: 1765050866375,
             _id: "0b934aa2-9d07-446e-8f8e-98bed7c4c719"
+        },
+        "184b872d-3190-4466-8f9f-19c5131b0d0a": {
+            _ownerId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+            bookId: "k7l8m9n0-o1p2-q3r4-s5t6-u7v8w9x0y1z2",
+            userId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+            rating: 4,
+            message: "The book was fantastic",
+            author: {
+                _id: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+                username: "vasko21",
+                email: "vasil21@abv.bg"
+            },
+            _createdOn: 1765379070131,
+            _id: "184b872d-3190-4466-8f9f-19c5131b0d0a"
+        },
+        "c834853c-8f3b-47ac-9350-48cd6fcff988": {
+            _ownerId: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
+            bookId: "k7l8m9n0-o1p2-q3r4-s5t6-u7v8w9x0y1z2",
+            userId: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
+            rating: 3,
+            message: "The story was pretty plain.",
+            author: {
+                _id: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
+                username: "tss",
+                email: "tedi@abv.bg"
+            },
+            _createdOn: 1765379411391,
+            _id: "c834853c-8f3b-47ac-9350-48cd6fcff988"
         }
     }
     
