@@ -9,9 +9,8 @@ export default defineConfig({
     tailwindcss(),
   ],
   test: {
-    // globals: true,
+    globals: false, // injects it, expect, should... etc. in global scope if true
     environment: 'jsdom',
-    // setupFiles: './vitest.setup.js',
-    // css: true,
+    setupFiles: ['./src/tests/setupTests.js'],
   },
 })
