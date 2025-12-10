@@ -35,8 +35,8 @@ export default function Header() {
         className="flex items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <Link to="/books" className="-m-1.5 p-1.5 flex items-center">
-            {/* <span className="sr-only">Bookstore</span> */}
+          <Link to="/" className="-m-1.5 p-1.5 flex items-center">
+            {/* <span className="sr-only">Home</span> */}
 
             <img
               alt="Bookstore logo"
