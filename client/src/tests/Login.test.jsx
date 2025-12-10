@@ -46,12 +46,12 @@ describe("Login functionality", () => {
 
     await userEvent.click(loginBtn);
 
-    const errorMessage = await screen.findByText("Invalid email/password", {
+    const errorMessage = await screen.findByText("Invalid email or password!", {
       exact: false,
     });
     expect(errorMessage).toBeInTheDocument();
   });
-  it("Happy path", async () => {
+  it("Logged successfully", async () => {
     const titleElement = await screen.findByText("Log in to your account", {
       selector: "h2",
     });
@@ -64,7 +64,7 @@ describe("Login functionality", () => {
     expect(passwordInput).toBeInTheDocument();
     expect(loginBtn).toBeInTheDocument();
 
-    const errorMessage = screen.queryByText("Invalid username/password");
+    const errorMessage = screen.queryByText("Invalid email or password!");
     expect(errorMessage).not.toBeInTheDocument();  
   });
 });

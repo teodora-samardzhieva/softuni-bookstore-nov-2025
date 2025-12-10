@@ -33,8 +33,8 @@ export default function Login() {
         navigate("/");
       } catch (error) {
         // alert('Login failed: ' + error.message);
-        alert("Login failed: " + error.message);
-        tempErrors.error = "Invalid email/password";
+        // alert("Login failed: " + error.message);
+        tempErrors.error = "Invalid email or password!";
         
         setErrors(tempErrors);
         return Object.keys(tempErrors).length === 0;
