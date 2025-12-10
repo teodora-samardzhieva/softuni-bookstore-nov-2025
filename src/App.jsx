@@ -22,6 +22,7 @@ import "tw-elements";
 
 import { useUserContext } from "./context/UserContext.jsx";
 import MyBooks from "./components/my-books/MyBooks.jsx";
+import { ToastContainer } from "react-toastify";
 
 // import "tw-elements/dist/tw-elements.umd.min.js";
 
@@ -45,6 +46,8 @@ function App() {
           />
         </div>
         <Header /> {/* user={user} */}
+
+        <ToastContainer />
         <Routes>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />

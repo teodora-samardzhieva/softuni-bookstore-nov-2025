@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import UserContext from "../../context/UserContext.jsx";
 import useForm from "../../hooks/useForm.js";
 import { styles } from "../../assets/styles/styles.js";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -29,11 +30,12 @@ export default function Login() {
     if (validate()) {
       try {
         await loginHandler(email, password);
-
+        toast.success(`Successfull Login!`);
         navigate("/");
       } catch (error) {
         // alert('Login failed: ' + error.message);
         // alert("Login failed: " + error.message);
+        toast.error(`Cannot login`);
         tempErrors.error = "Invalid email or password!";
         
         setErrors(tempErrors);

@@ -4,6 +4,7 @@ import useForm from "../../hooks/useForm.js";
 import { useContext, useState } from "react";
 import UserContext from "../../context/UserContext.jsx";
 import { styles } from "../../assets/styles/styles.js";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -49,11 +50,12 @@ export default function Register() {
       try {
         // Register user
         await registerHandler(username, email, password);
-
+        toast.success(`Successfull Register!`);
         //Redirect to home page
         navigate("/");
       } catch (error) {
-        alert("Registration failed: " + error.message);
+        // alert("Registration failed: " + error.message);
+        toast.error(`Registration failed`);
       }
     }
   };
