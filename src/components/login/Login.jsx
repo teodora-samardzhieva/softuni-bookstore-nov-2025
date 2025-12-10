@@ -15,10 +15,10 @@ export default function Login() {
     let tempErrors = {};
     // empty field validation
     const validate = () => {
-      if (!email) {
+      if (!email.trim()) {
         // return alert("Email is required!");
         tempErrors.email = "Email is required!";
-      } else if (!password) {
+      } else if (!password.trim()) {
         tempErrors.password = "Password is required!";
       }
 
