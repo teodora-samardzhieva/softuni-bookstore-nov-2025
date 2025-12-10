@@ -1529,6 +1529,30 @@
                 },
                 _createdOn: 1765379447739,
                 _id: "a058d0db-9fa2-484d-9342-41d653f067f3"
+            },
+            "d5af038d-b1e8-427d-bab9-9650e10b2ebf": {
+                _ownerId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+                bookId: "j6k7l8m9-n0o1-p2q3-r4s5-t6u7v8w9x0y1",
+                message: "Good book with funny characters!",
+                author: {
+                    _id: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+                    username: "vasko21",
+                    email: "vasil21@abv.bg"
+                },
+                _createdOn: 1765379990592,
+                _id: "d5af038d-b1e8-427d-bab9-9650e10b2ebf"
+            },
+            "a0a8db5a-7772-4fe6-8473-05b9e7c588fd": {
+                _ownerId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+                bookId: "j6k7l8m9-n0o1-p2q3-r4s5-t6u7v8w9x0y1",
+                message: "Just my cup of tea! :)",
+                author: {
+                    _id: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+                    username: "vasko21",
+                    email: "vasil21@abv.bg"
+                },
+                _createdOn: 1765380006553,
+                _id: "a0a8db5a-7772-4fe6-8473-05b9e7c588fd"
             }
         },
 
@@ -2085,6 +2109,34 @@
             },
             _createdOn: 1765379411391,
             _id: "c834853c-8f3b-47ac-9350-48cd6fcff988"
+        },
+        "0ee94a2a-05f9-44e0-88ed-03d1de4028f5": {
+            _ownerId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+            bookId: "j6k7l8m9-n0o1-p2q3-r4s5-t6u7v8w9x0y1",
+            userId: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+            rating: 4,
+            message: "Not bad!",
+            author: {
+                _id: "18068b13-d8a6-4de5-bcfc-cf6ddb20d934",
+                username: "vasko21",
+                email: "vasil21@abv.bg"
+            },
+            _createdOn: 1765379969676,
+            _id: "0ee94a2a-05f9-44e0-88ed-03d1de4028f5"
+        },
+        "e2b3be5c-2843-4908-b69e-ffee218fc8b9": {
+            _ownerId: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
+            bookId: "j6k7l8m9-n0o1-p2q3-r4s5-t6u7v8w9x0y1",
+            userId: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
+            rating: 2,
+            message: "I didn't like it.",
+            author: {
+                _id: "942e9be3-83eb-446e-bf2c-f334ed64c6a7",
+                username: "tss",
+                email: "tedi@abv.bg"
+            },
+            _createdOn: 1765380273750,
+            _id: "e2b3be5c-2843-4908-b69e-ffee218fc8b9"
         }
     }
     
