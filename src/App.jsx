@@ -22,6 +22,7 @@ import "tw-elements";
 
 import { useUserContext } from "./context/UserContext.jsx";
 import MyBooks from "./components/my-books/MyBooks.jsx";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { user } = useUserContext();
@@ -41,7 +42,9 @@ function App() {
             className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"
           />
         </div>
-        <Header />
+        <Header /> 
+
+        <ToastContainer />
         <Routes>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />

@@ -8,6 +8,7 @@ import { styles } from "../../assets/styles/styles.js";
 import { Star } from "lucide-react";
 import Review from "../reviews/Review.jsx";
 import DetailsReviews from "../reviews/DetailsReviews.jsx";
+import { toast } from "react-toastify";
 
 export default function Details() {
   const navigate = useNavigate();
@@ -129,7 +130,7 @@ export default function Details() {
       await request(`/data/books/${bookId}`, "DELETE");
       navigate("/books");
     } catch (error) {
-      alert("Unable to delete book: " + (error.message || "An error occurred"));
+      toast.error("Unable to delete book");
     }
   }, [bookId, book.title, navigate, request]);
 
@@ -144,9 +145,7 @@ export default function Details() {
           oldComments.filter((c) => c._id !== commentId)
         );
       } catch (error) {
-        alert(
-          "Unable to delete comment: " + (error.message || "An error occurred")
-        );
+        toast.error("Unable to delete comment");
       }
     },
     [request, setComments]

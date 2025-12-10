@@ -4,6 +4,7 @@ import useForm from "../../hooks/useForm.js";
 import useRequest from "../../hooks/useRequest.js";
 import { styles } from "../../assets/styles/styles.js";
 import { Star } from "lucide-react";
+import { toast } from "react-toastify";
 
 const initialValues = {
   title: "",
@@ -28,7 +29,7 @@ export default function Edit() {
     };
 
     if (Object.values(bookData).some((v) => v === "")) {
-      alert("Please fill in all fields.");
+      toast.error("Please fill in all fields.");
       return;
     }
 
@@ -37,7 +38,8 @@ export default function Edit() {
 
       navigate(`/books/${bookId}/details`);
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
+      toast.error("Edit failed");
     }
   };
 
@@ -51,17 +53,18 @@ export default function Edit() {
     request(`/data/books/${bookId}`)
       .then((result) => {
         setValues({
-          title: result.title || "", 
-          author: result.author || "", 
-          genre: result.genre || "", 
-          releaseDate: result.releaseDate || "", 
-          rating: Number(result.rating) || 0, 
-          summary: result.summary || "", 
-          img: result.img || "", 
+          title: result.title || "",
+          author: result.author || "",
+          genre: result.genre || "",
+          releaseDate: result.releaseDate || "",
+          rating: Number(result.rating) || 0,
+          summary: result.summary || "",
+          img: result.img || "",
         });
       })
       .catch((err) => {
-        alert(err.message);
+        // alert(err.message);
+        toast.error("An error occured - cannot set values");
       });
   }, [bookId, setValues]);
 

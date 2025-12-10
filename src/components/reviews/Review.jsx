@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import { useState } from "react";
 import useRequest from "../../hooks/useRequest.js";
 import { Star } from "lucide-react";
+import { toast } from "react-toastify";
 
 export default function Review({ user, onCreateStart, onCreateEnd }) {
   const { bookId } = useParams();
@@ -12,9 +13,9 @@ export default function Review({ user, onCreateStart, onCreateEnd }) {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (!user) return alert("You must be logged in to rate or leave a review.");
+    if (!user) return toast.error("You must be logged in to rate or leave a review.");
     if (!rating && !reviewText.trim())
-      return alert("Please select a rating or write a review before saving.");
+      toast.error("Please select a rating or write a review before saving.");
 
     const data = {
       bookId,
@@ -30,7 +31,8 @@ export default function Review({ user, onCreateStart, onCreateEnd }) {
       const newRating = await request("/data/ratings", "POST", data);
       onCreateEnd && onCreateEnd(newRating);
     } catch (error) {
-      alert(error.message || error);
+      // alert(error.message || error);
+      toast.error('Rating failed')
     }
   };
 

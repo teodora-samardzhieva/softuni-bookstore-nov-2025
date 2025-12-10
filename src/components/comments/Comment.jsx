@@ -3,6 +3,7 @@ import useRequest from "../../hooks/useRequest.js";
 import useForm from "../../hooks/useForm.js";
 import { styles } from "../../assets/styles/styles.js";
 import {v4 as uuid} from 'uuid';
+import { toast } from "react-toastify";
 
 export default function Comment({ user, onCreateStart, onCreateEnd }) {
   const { bookId } = useParams();
@@ -23,7 +24,8 @@ export default function Comment({ user, onCreateStart, onCreateEnd }) {
 
       onCreateEnd(newComment);
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
+      toast.error('Comment failed')
     }
   };
 
