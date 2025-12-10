@@ -22,17 +22,21 @@ It was created to further develop my React skills and explore building a full-fe
 ---
 
 - Server: 
-    - cd ./server (go to server dir)
-    - node server.js (execute the command in terminal)
+    - `cd ./server` (go to server dir)
+    - `node server.js` (execute the command in terminal)
 ---
 - Client:
 
-    - cd client
-    - npm install
+    - `cd client`
+    - `npm install`
 
     ---
     
-    - npm run dev (this runs the project for development mode)
+    - `npm run dev` (this runs the project for development mode)
+---
+- Tests:
+
+    - `npm run test` OR `npm test`
 
 ## ⚠ NOTE
 
@@ -250,8 +254,8 @@ Stateless and stateful components
 
 - Implement cloud file storage using Firebase(to store photos)
 - Connect to an external API(Google Maps)
+- Unit tests and component tests using vitest
 
-<!-- - Unit tests and component tests using vitest -->
 <!-- Deploy the application in a cloud (Firebase) -->
 
 ## Bonuses not described in the assignment but has practical use:
