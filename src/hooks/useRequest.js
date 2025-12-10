@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../context/UserContext.jsx";
 
-const BASE_URL = 'https://europe-west4-bookstore-nov-2025.cloudfunctions.net/server';
+const BASE_URL = import.meta.env.VITE_APP_SERVER_URL;
 export default function useRequest(url, initState) {
 
     const {user, isAuthenticated} = useContext(UserContext);

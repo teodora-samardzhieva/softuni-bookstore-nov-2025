@@ -10,8 +10,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "server": "firebase emulators:start --only functions",
-    "deploy:server": "firebase deploy --only functions"
-
+    "deploy:server": "firebase deploy --only functions",
+    "deploy:client": "npm run build && firebase deploy --only hosting"
   },
   "dependencies": {
     "@fortawesome/react-fontawesome": "^3.1.1",

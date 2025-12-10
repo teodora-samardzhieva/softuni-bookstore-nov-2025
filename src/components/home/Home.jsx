@@ -20,7 +20,7 @@ export default function Home() {
 
   // Comment useEffect to see how it looks without books
   // useEffect(() => {
-      // // fetch('https://europe-west4-bookstore-nov-2025.cloudfunctions.net/server/data/books')
+      // // fetch(`${import.meta.env.VITE_APP_SERVER_URL}/data/books`)
       // //  .then(response => response.json())
   //   request('/books')
   //       .then(result => {
