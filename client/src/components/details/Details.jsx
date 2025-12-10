@@ -1,5 +1,5 @@
-import { useOptimistic, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { useOptimistic, useState, useCallback, useMemo } from "react";
+import { Link, useNavigate, useParams } from "react-router"; 
 import Comment from "../comments/Comment.jsx";
 import DetailsComments from "../comments/DetailsComments.jsx";
 import useRequest from "../../hooks/useRequest.js";
@@ -9,24 +9,38 @@ import { Star } from "lucide-react";
 import Review from "../reviews/Review.jsx";
 import DetailsReviews from "../reviews/DetailsReviews.jsx";
 
-// import {v4 as uuid} from 'uuid';
-
 export default function Details() {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useUserContext();
   const { bookId } = useParams();
 
-  const { data: book, request } = useRequest(`/data/books/${bookId}`, {});
+  // --- 1. Data Fetching ---
+  const { data: book = {}, request } = useRequest(`/data/books/${bookId}`, {});
 
-  const urlSearchParams = new URLSearchParams({
+  // URLSearchParams for fetching comments linked to this book
+  const commentParams = new URLSearchParams({
     where: `bookId="${bookId}"`,
-    // load: "author=_ownerId:users",
   });
 
   const { data: comments = [], setData: setComments } = useRequest(
-    `/data/comments?${urlSearchParams.toString()}`,
+    `/data/comments?${commentParams.toString()}`,
     []
   );
+
+  const { data: ratings = [], setData: setRatings } = useRequest(
+    `/data/ratings?where=bookId%3D%22${bookId}%22`,
+    []
+  );
+
+  // Fetch the current user's rating, only if authenticated
+  const { data: userRating = [], setData: setUserRating } = useRequest(
+    isAuthenticated
+      ? `/data/ratings?where=bookId%3D%22${bookId}%22%20AND%20userId%3D%22${user._id}%22`
+      : null,
+    []
+  );
+
+  // optimistic state(used for UI responsiveness)
 
   const [optimisticComments, setOptimisticComments] = useOptimistic(
     comments,
@@ -40,23 +54,12 @@ export default function Details() {
     }
   );
 
-  const { data: ratings = [], setData: setRatings } = useRequest(
-    `/data/ratings?where=bookId%3D%22${bookId}%22`
-  );
-
-  const { data: userRating = [], setData: setUserRating } = useRequest(
-    isAuthenticated
-      ? `/data/ratings?where=bookId%3D%22${bookId}%22%20AND%20userId%3D%22${user._id}%22`
-      : null,
-    []
-  );
-
   const [optimisticUserRating, setOptimisticUserRating] = useOptimistic(
-    // userRating,
-    ratings,
+    ratings, // base state(full list of ratings)
     (state, action) => {
       switch (action.type) {
         case "ADD_RATING":
+          // add the optimistic rating to the full list
           return [...state, action.payload];
         default:
           return state;
@@ -64,104 +67,171 @@ export default function Details() {
     }
   );
 
-  const averageRating = ratings?.length
-    ? Number(
-        (
-          ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length
-        ).toFixed(1)
-      )
-    : book?.rating || 0;
-
-  const totalVotes = ratings?.length || 0;
-
-  const visualAverage = Math.round(averageRating * 2) / 2;
 
   const hasUserRated = Array.isArray(userRating) && userRating.length > 0;
-  // || (Array.isArray(optimisticUserRating) && optimisticUserRating.length > 0);
+  const isOwner = user?._id === book?._ownerId;
+  // user can rate only if:
+  const canRate = isAuthenticated && !hasUserRated && !isOwner;
 
-  //     const allRatings = [
-  //   ...(Array.isArray(ratings) ? ratings : []),
-  //   ...(optimisticUserRating?.payload ? [optimisticUserRating.payload] : []),
-  // ];
 
-  const deleteBookHandler = async () => {
-    const isConfirmed = confirm(
-      `Are you sure you want to delete book: ${book.title}?`
-    );
-    if (!isConfirmed) return;
+  const { averageRating, totalVotes, visualAverage } = useMemo(() => {
+    const safeRatings = Array.isArray(optimisticUserRating) ? optimisticUserRating : []; 
+    
+    const totalRatingSum = safeRatings.reduce((sum, r) => sum + r.rating, 0);
+    const votes = safeRatings.length;
+    
+    const avg = votes 
+      ? Number((totalRatingSum / votes).toFixed(1)) 
+      : book?.rating || 0; 
+    // round to the nearest 0.5 for half-star display
+    const visualAvg = Math.round(avg * 2) / 2;
+
+    return {
+      averageRating: avg,
+      totalVotes: votes,
+      visualAverage: visualAvg,
+    };
+}, [optimisticUserRating, book]);
+
+  // sorting state 
+  const [commentSortOrder, setCommentSortOrder] = useState("Newest");
+  const [reviewSortOrder, setReviewSortOrder] = useState("Newest");
+
+  const sortItems = useCallback((items, order) => {
+    // if items are falsy return empty array
+    if (!items || items.length === 0) return [];
+
+    // create a copy to avoid mutating the original state array directly
+    const sorted = [...items];
+
+    sorted.sort((a, b) => {
+      // use pending items creation date
+      const dateA = new Date(a.pending ? a.tempId || Date.now() : a._createdOn);
+      const dateB = new Date(b.pending ? b.tempId || Date.now() : b._createdOn);
+
+      if (order === "Newest") {
+        return dateB - dateA; // desc
+      } else {
+        return dateA - dateB; // asce
+      }
+    });
+    return sorted;
+  }, []); // no need cus the dependencies are stable
+
+  const sortedComments = sortItems(optimisticComments, commentSortOrder);
+  // use optimisticUserRating (includes the base ratings) for sorting reviews
+  const sortedReviews = sortItems(optimisticUserRating, reviewSortOrder);
+
+  // action handlers 
+
+  const deleteBookHandler = useCallback(async () => {
+    if (!window.confirm(`Are you sure you want to delete book: ${book.title}?`))
+      return;
 
     try {
       await request(`/data/books/${bookId}`, "DELETE");
       navigate("/books");
     } catch (error) {
-      alert("Unable to delete book: " + error.message);
+      alert("Unable to delete book: " + (error.message || "An error occurred"));
     }
-  };
+  }, [bookId, book.title, navigate, request]);
 
-  const deleteCommentHandler = async (commentId) => {
-    const isConfirmed = confirm(
-      "Are you sure you want to delete this comment?"
-    );
-    if (!isConfirmed) return;
+  const deleteCommentHandler = useCallback(
+    async (commentId) => {
+      if (!window.confirm("Are you sure you want to delete this comment?"))
+        return;
 
-    try {
-      await request(`/data/comments/${commentId}`, "DELETE");
-      setComments((oldComments) =>
-        oldComments.filter((c) => c._id !== commentId)
-      );
-    } catch (error) {
-      alert("Unable to delete comment: " + error.message);
-    }
-  };
+      try {
+        await request(`/data/comments/${commentId}`, "DELETE");
+        setComments((oldComments) =>
+          oldComments.filter((c) => c._id !== commentId)
+        );
+      } catch (error) {
+        alert(
+          "Unable to delete comment: " + (error.message || "An error occurred")
+        );
+      }
+    },
+    [request, setComments]
+  );
 
-  const createCommentHandlerEnd = (newComment) => {
-    // setRefresh((state) => !state);
-    setComments((prevComments) => [
-      ...prevComments,
-      { ...newComment, author: user },
-    ]);
-  };
+  // comment handlers
+  const createCommentHandlerEnd = useCallback(
+    (newComment) => {
+      // remove the pending/optimistic comment
+      setComments((prevComments) => prevComments.filter((c) => !c.pending));
 
-  const createCommentHandlerStart = (newComment) => {
-    setOptimisticComments({
-      type: "ADD_COMMENT",
-      payload: { ...newComment, author: user, pending: true },
-    });
-  };
+      // add the confirmed comment with full server data
+      setComments((prevComments) => [
+        ...prevComments,
+        { ...newComment, author: user },
+      ]);
+    },
+    [setComments, user]
+  );
 
-  const createRatingHandlerEnd = (newRating) => {
-    // append to both the overall ratings list and the user-specific rating
-    try {
+  const createCommentHandlerStart = useCallback(
+    (newComment) => {
+      setOptimisticComments({
+        type: "ADD_COMMENT",
+        payload: {
+          ...newComment,
+          author: user,
+          pending: true,
+          tempId: Date.now(),
+        },
+      });
+    },
+    [setOptimisticComments, user]
+  );
+
+  // rating handlers
+  const createRatingHandlerEnd = useCallback(
+    (newRating) => {
+      // remove pending/optimistic rating from the full list
+      setRatings((prevRatings) => prevRatings.filter((r) => !r.pending));
+
+      // add the confirmed rating to the full list
       setRatings((prevRatings) => [
         ...(Array.isArray(prevRatings) ? prevRatings : []),
-        // {...newRating, author: user}
         newRating,
       ]);
-    } catch {
-      // noop
-    }
 
-    try {
-      setUserRating((prev) => [
-        ...(Array.isArray(prev) ? prev : []),
-        newRating,
-        // {...newRating, author: user}
-      ]);
-    } catch {
-      // noop
-    }
-    // keep selectedRating so UI shows the user's value
-  };
+      // update the user-specific rating list
+      setUserRating([newRating]);
+    },
+    [setRatings, setUserRating]
+  );
 
-  const createRatingHandlerStart = (newRating) => {
-    // optimistic add for user rating
-    setOptimisticUserRating({
-      type: "ADD_RATING",
-      payload: { ...newRating, author: user, pending: true },
-    });
-  };
+  const createRatingHandlerStart = useCallback(
+    (newRating) => {
+      // optimistic add for user rating
+      setOptimisticUserRating({
+        type: "ADD_RATING",
+        payload: {
+          ...newRating,
+          author: user,
+          pending: true,
+          tempId: Date.now(),
+        },
+      });
+    },
+    [setOptimisticUserRating, user]
+  );
 
-  if (!book) {
+
+  // components
+
+  const HalfStar = () => (
+    <div className="relative w-6 h-6 inline-block">
+      <Star className="absolute w-6 h-6 text-gray-300" />{" "}
+      {/* full empty gray star behind */}
+      {/* Left half filled */}
+      <Star className="absolute w-6 h-6 text-amber-400 fill-amber-400 [clip-path:inset(0_50%_0_0)]" />
+    </div>
+  );
+
+  if (!book.title) {
     return (
       <div className="flex justify-center p-10 text-lg font-semibold">
         Loading book details...
@@ -169,73 +239,12 @@ export default function Details() {
     );
   }
 
-  // const displayRating = canRate
-  //   ? hoverRating || optimisticUserRating || visualAverage
-  //   : visualUserRating || visualAverage;
-
-  const HalfStar = () => (
-    <div className="relative w-6 h-6 inline-block">
-      {/* full gray star behind */}
-      <Star className="absolute w-6 h-6 text-gray-300" />
-
-      {/* left half filled */}
-      <Star className="absolute w-6 h-6 text-amber-400 fill-amber-400 [clip-path:inset(0_50%_0_0)]" />
-    </div>
-  );
-
-  const [commentSortOrder, setCommentSortOrder] = useState("Newest");
-  const [reviewSortOrder, setReviewSortOrder] = useState("Newest"); // For reviews section
-
-  // ... existing handlers (deleteBookHandler, deleteCommentHandler, etc.) ...
-
-  // ✅ NEW: Sorting logic for comments
-  const sortComments = (comments, order) => {
-    // Create a copy to avoid mutating the original state array directly
-    const sorted = [...comments];
-
-    sorted.sort((a, b) => {
-      const dateA = new Date(a._createdOn);
-      const dateB = new Date(b._createdOn);
-
-      if (order === "Newest") {
-        // Newest first (descending date)
-        return dateB - dateA;
-      } else {
-        // Oldest first (ascending date)
-        return dateA - dateB;
-      }
-    });
-    return sorted;
-  };
-
-  const sortReviews = (ratings, order) => {
-    const sorted = [...ratings];
-
-    sorted.sort((a, b) => {
-      const dateA = new Date(a._createdOn);
-      const dateB = new Date(b._createdOn);
-
-      if (order === "Newest") {
-        return dateB - dateA;
-      } else {
-        return dateA - dateB;
-      }
-    });
-    return sorted;
-  };
-
-  const sortedComments = sortComments(
-    optimisticComments || [],
-    commentSortOrder
-  );
-  const sortedReviews = sortReviews(ratings || [], reviewSortOrder);
 
   return (
     <div>
-      <h2>Book Details</h2>
+      <h2 className="text-3xl font-bold text-center py-4">Book Details</h2>
       <div className={styles.detailsForm.container}>
         <div className={styles.detailsForm.div}>
-          {/* Image Section */}
           <div className="flex flex-col items-center justify-center flex-shrink-0 md:w-1/3 p-4">
             <img
               className="w-full max-w-48 h-60 md:h-80 rounded-lg shadow-lg"
@@ -244,7 +253,6 @@ export default function Details() {
             />
           </div>
 
-          {/* Content Section */}
           <div className="flex flex-col justify-start p-6 md:p-10 md:w-2/3">
             <h1 className={styles.detailsForm.h1}>{book.title}</h1>
 
@@ -264,49 +272,33 @@ export default function Details() {
                 </span>
               </p>
 
-              {/* Rating Section */}
+              {/* rating section */}
               <div className="mt-4">
                 <label className={styles.detailsForm.formLabel}>Rating</label>
                 <div className={styles.detailsForm.starsContainer}>
                   {[1, 2, 3, 4, 5].map((i) => {
-                    let StarIcon;
+                    // Determine which Star icon to render based on the visualAverage
+                    const isFull = visualAverage >= i;
+                    const isHalf =
+                      visualAverage >= i - 0.5 && visualAverage < i;
 
-                    if (visualAverage >= i) {
-                      StarIcon = Star; // full
-                    } else if (visualAverage >= i - 0.5) {
-                      // StarIcon = StarHalf; // half
-                      StarIcon = HalfStar; // half
-                    } else {
-                      StarIcon = Star; // empty
+                    if (isHalf) {
+                      // Render the custom HalfStar component
+                      return <HalfStar key={i} />;
                     }
 
-                    const starColor =
-                      visualAverage >= i - 0.5
-                        ? `${styles.detailsForm.starFilled}` // Filled or half-filled stars are amber "text-amber-400"
-                        : `${styles.detailsForm.starEmpty}`; // Empty stars are gray "text-gray-300"
+                    const starColor = isFull
+                      ? `${styles.detailsForm.starFilled}`
+                      : `${styles.detailsForm.starEmpty}`;
 
-                    // if (canRate) {
-                    //   return (
-                    //     <button
-                    //       key={i}
-                    //       type="button"
-                    //       onClick={() => submitRating(i)}
-                    //       onMouseEnter={() => setHoverRating(i)}
-                    //       onMouseLeave={() => setHoverRating(0)}
-                    //       className="focus:outline-none"
-                    //     >
-                    //       {/* <StarIcon className={`w-6 h-6 ${starColor}`} /> */}
-                    //       {StarIcon === HalfStar ? (
-                    //         <HalfStar />
-                    //       ) : (
-                    //         <StarIcon className={`w-6 h-6 ${starColor}`} />
-                    //       )}
-                    //     </button>
-                    //   );
-                    // }
-
+                    // Render Star icon (full or empty)
                     return (
-                      <StarIcon key={i} className={`w-6 h-6 ${starColor}`} />
+                      <Star
+                        key={i}
+                        className={`w-6 h-6 ${starColor} ${
+                          isFull ? "fill-amber-400" : ""
+                        }`}
+                      />
                     );
                   })}
                 </div>
@@ -324,7 +316,6 @@ export default function Details() {
               </div>
             </div>
 
-            {/* Summary */}
             <div className="mt-8">
               <h2 className="text-xl font-bold text-gray-900 mb-2">Summary</h2>
               <p className="text-gray-700 leading-relaxed italic">
@@ -332,18 +323,19 @@ export default function Details() {
               </p>
             </div>
 
-            {/* Owner Actions */}
-            {isAuthenticated && user._id === book._ownerId && (
-              <div className="mt-10 flex flex-wrap-10 gap-10">
+            {/* owner actions */}
+            {isAuthenticated && isOwner && (
+              <div className="mt-10 flex flex-wrap-10 gap-4">
+                {" "}
                 <Link
                   to={`/books/${bookId}/edit`}
-                  className={styles.detailsForm.btn}
+                  className={`${styles.detailsForm.btn} bg-indigo-600 hover:bg-indigo-700 text-white`}
                 >
                   Edit
                 </Link>
                 <button
                   onClick={deleteBookHandler}
-                  className={styles.detailsForm.btn}
+                  className={`${styles.detailsForm.btn} bg-red-600 hover:bg-red-700 text-white`}
                 >
                   Delete
                 </button>
@@ -353,15 +345,16 @@ export default function Details() {
         </div>
       </div>
 
+      {/* reviews section */}
       <section className={styles.detailsForm.commentSection}>
         <div className="flex justify-between items-center mb-6 border-b pb-2">
-          {" "}
-          {/* New Flex container */}
-          <h2 className="text-2xl font-semibold text-gray-800">Reviews</h2>
+          <h2 className="text-2xl font-semibold text-gray-800">
+            Reviews ({totalVotes})
+          </h2>
           <div className="flex space-x-3 text-sm font-medium">
             <button
               onClick={() => setReviewSortOrder("Newest")}
-              className={`${
+              className={`transition ${
                 reviewSortOrder === "Newest"
                   ? "text-blue-600 font-bold"
                   : "text-gray-500 hover:text-gray-800"
@@ -371,7 +364,7 @@ export default function Details() {
             </button>
             <button
               onClick={() => setReviewSortOrder("Oldest")}
-              className={`${
+              className={`transition ${
                 reviewSortOrder === "Oldest"
                   ? "text-blue-600 font-bold"
                   : "text-gray-500 hover:text-gray-800"
@@ -382,16 +375,9 @@ export default function Details() {
           </div>
         </div>
 
-        <DetailsReviews
-          reviews={sortedReviews}
-          // reviews={
-          //   [...(Array.isArray(ratings) ? ratings : [])]
-          //   // ...(Array.isArray(optimisticUserRating)
-          //   //   ? optimisticUserRating
-          //   //   : []),]
-          // }
-        />
-        {isAuthenticated && !hasUserRated && (
+        <DetailsReviews reviews={sortedReviews} />
+
+        {canRate && (
           <Review
             user={user}
             onCreateStart={createRatingHandlerStart}
@@ -399,21 +385,22 @@ export default function Details() {
           />
         )}
         {isAuthenticated && hasUserRated && (
-          <p className="text-sm text-gray-600">
+          <p className="text-base text-gray-600 mt-4 italic">
             You have already left a review for this book.
           </p>
         )}
       </section>
 
-      {/* Comments */}
+      {/* comments section */}
       <section className={styles.detailsForm.commentSection}>
         <div className="flex justify-between items-center mb-6 border-b pb-2">
-          {" "}
-          <h2 className="text-2xl font-semibold text-gray-800">Comments</h2>
+          <h2 className="text-2xl font-semibold text-gray-800">
+            Comments ({comments.length})
+          </h2>
           <div className="flex space-x-3 text-sm font-medium">
             <button
               onClick={() => setCommentSortOrder("Newest")}
-              className={`${
+              className={`transition ${
                 commentSortOrder === "Newest"
                   ? "text-blue-600 font-bold"
                   : "text-gray-500 hover:text-gray-800"
@@ -423,7 +410,7 @@ export default function Details() {
             </button>
             <button
               onClick={() => setCommentSortOrder("Oldest")}
-              className={`${
+              className={`transition ${
                 commentSortOrder === "Oldest"
                   ? "text-blue-600 font-bold"
                   : "text-gray-500 hover:text-gray-800"
@@ -434,7 +421,6 @@ export default function Details() {
           </div>
         </div>
         <DetailsComments
-          // comments={optimisticComments || []}
           comments={sortedComments}
           onDeleteComment={deleteCommentHandler}
         />
