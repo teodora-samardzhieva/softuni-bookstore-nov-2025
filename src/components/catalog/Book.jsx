@@ -5,6 +5,7 @@ import UserContext from "../../context/UserContext.jsx";
 import { useFavorites } from "../../context/FavoriteContext.jsx";
 
 import { styles } from "../../assets/styles/styles.js";
+import { toast } from "react-toastify";
 
 export default function Book({
   _id,
@@ -21,7 +22,7 @@ export default function Book({
     const isAlreadyFavorite = favorites.some((fav) => fav._id === _id);
 
     if (isAlreadyFavorite) {
-      alert("This book is already in your favorites!");
+      toast.error("This book is already in your favorites!");
       return; // stop adding again
     }
 

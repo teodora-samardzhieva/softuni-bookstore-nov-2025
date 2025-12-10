@@ -7,6 +7,7 @@ import { storage } from "../../firebase.js";
 import useRequest from "../../hooks/useRequest.js";
 import { styles } from "../../assets/styles/styles.js";
 import { Star } from "lucide-react";
+import { toast } from "react-toastify";
 
 
 export default function CreateBook() {
@@ -40,7 +41,7 @@ export default function CreateBook() {
         await uploadBytes(imageRef, img);
         bookData.img = await getDownloadURL(imageRef);
       } catch (err) {
-        alert("Image upload failed: " + err.message);
+        toast.error("Image upload failed");
         return; // stop submission
       }
     } else {
@@ -56,7 +57,7 @@ export default function CreateBook() {
       !bookData.summary ||
       !bookData.img
     ) {
-      alert("Please fill in all fields.");
+      toast.error("Please fill in all fields.");
       return;
     }
 
@@ -66,7 +67,8 @@ export default function CreateBook() {
       navigate("/books");
       // setFormData(initialValues);
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
+      toast.error('Create failed');
     }
   };
 
