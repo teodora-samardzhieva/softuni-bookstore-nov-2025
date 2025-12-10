@@ -1,5 +1,7 @@
 ## ReactJS Bookstore Project Assignment
 
+
+
 A SPA built with **React.js** on the frontend and the **SoftUni Practice Server** *(non-persistent)* for the backend.
 This project showcases my abilities in **CRUD operations**, **user authentication**, **route protection**, the **React Context API**, and **custom React hooks**.
 It was created to further develop my React skills and explore building a full-featured single-page application.
@@ -255,8 +257,7 @@ Stateless and stateful components
 - Implement cloud file storage using Firebase(to store photos)
 - Connect to an external API(Google Maps)
 - Unit tests and component tests using vitest
-
-<!-- Deploy the application in a cloud (Firebase) -->
+- Deploy the application in a cloud (Firebase)
 
 ## Bonuses not described in the assignment but has practical use:
 
