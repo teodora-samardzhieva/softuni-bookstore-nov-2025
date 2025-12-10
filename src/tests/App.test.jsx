@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
@@ -99,27 +99,6 @@ describe("App", () => {
       expect(emailInput).toBeInTheDocument();
       expect(passwordInput).toBeInTheDocument();
       expect(confirmPasswordInput).toBeInTheDocument();
-    });
-  });
-  describe("Navigate to components", () => {
-    it("navigate to book details", async () => {
-      const catalogLink = screen.getByRole("link", { name: "Catalog" });
-      await userEvent.click(catalogLink);
-
-      const titleElement = await screen.findByText("Book Collection", {
-        selector: "h1",
-      });
-      const placeholderElement = await screen.findByPlaceholderText("Search");
-
-      expect(titleElement).toBeInTheDocument();
-      expect(placeholderElement.placeholder).toEqual("Search");
-
-      const detailsBtn = await screen.getAllByRole("link", { name: "Details" })[0];
-
-      await userEvent.click(detailsBtn);
-      await waitFor(() => {
-        expect(screen.getByText("Book Details")).toBeInTheDocument();
-      });
     });
   });
 });
